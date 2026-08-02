@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <script>var t="dark";try{t=localStorage.getItem("theme")||"dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="SpeechBubble · 전성훈">
+  <meta property="og:description" content="말풍선 라이브러리를 설계하고 배포한 기록.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d1d1f'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='ui-sans-serif, system-ui, sans-serif' font-size='15' font-weight='600' letter-spacing='-0.5' fill='%23f5f5f7'%3ESJ%3C/text%3E%3Crect x='10.5' y='24' width='11' height='1.6' rx='0.8' fill='%230071e3'/%3E%3C/svg%3E">
+  <title>SpeechBubble · 전성훈</title>
+  <meta name="description" content="UIBezierPath·CAShapeLayer 커스텀 드로잉과 OptionSet API로 설계해 SPM·CocoaPods로 배포한 UIKit 말풍선 라이브러리.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=9">
+  <style>
+    /* ── Layout ─────────────────────────────────────────── */
+
+    /* ── Band ────────────────────────────────────────────── */
+
+    /* ── Nav ─────────────────────────────────────────────── */
+
+    /* ── Hero ────────────────────────────────────────────── */
+
+    .hero {
+      padding-top: 40px;
+      max-width: 720px;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 3.6vw, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.28;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      margin-bottom: 14px;
+    }
+
+    /* ── Metrics strip ───────────────────────────────────── */
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .metric {
+      padding: 24px 28px;
+      border-right: 1px solid var(--border);
+    }
+
+    /* ── Section scaffolding ─────────────────────────────── */
+
+    h2 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      line-height: 1.32;
+      color: var(--ink);
+    }
+
+    /* ── Cells ───────────────────────────────────────────── */
+
+    .cell-visual { transition: transform 500ms ease; min-width: 0; }
+
+    .cell-desc {
+      min-width: 0;
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .cell-tag {
+      font-size: 0.6875rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .cell-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 22px;
+    }
+
+    .cell-visual {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 36px;
+      min-height: 280px;
+    }
+
+    /* ── Before / After ──────────────────────────────────── */
+
+    /* ── Code panel ──────────────────────────────────────── */
+
+    .code-body {
+      padding: 20px 18px;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      line-height: 1.75;
+      color: var(--ink);
+      white-space: pre;
+      overflow-x: auto;
+      tab-size: 4;
+    }
+
+    /* ── Code grid (2 panels side by side) ──────────────── */
+
+    /* ── Record section ──────────────────────────────────── */
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 22px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      border-radius: var(--r-btn);
+      transition: background-color 200ms var(--ease-snap);
+    }
+
+    /* ── Project nav strip ───────────────────────────────── */
+
+    .nav-proj-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+      transition: color var(--t) var(--ease-snap);
+      position: relative;
+    }
+
+    .nav-proj-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+
+    .footer-nav a {
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--t) var(--ease-snap);
+      position: relative;
+    }
+
+    .footer-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+
+    /* ── Scroll fade ─────────────────────────────────────── */
+
+    /* ── Status badge ────────────────────────────────────── */
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.625rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--muted);
+      display: inline-block;
+    }
+
+    /* ── Stagger reveals ────────────────────────────────── */
+
+    /* ── Focus visible ───────────────────────────────────── */
+
+    @media (prefers-reduced-motion: reduce) {
+      .fi { transform: none !important; transition: opacity 240ms var(--ease-snap); transition-delay: 0ms !important; }
+      .fi.vis { opacity: 1; }
+      *::after { transition: none !important; transform: scaleX(0) !important; }
+      .cell-visual { transition: none !important; transform: none !important; }
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+
+    @media (max-width: 1024px) {
+      .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+      .metric:nth-child(3) { border-right: none; }
+      .metric:nth-child(4) { border-top: 1px solid var(--border); }
+      .metric:nth-child(5) { border-top: 1px solid var(--border); border-right: none; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --section-gap: 72px; }
+
+      .nav-links { gap: 18px; }
+      .nav-links li:nth-child(2),
+      .nav-links li:nth-child(3) { display: none; }
+
+      h1 { font-size: clamp(2rem, 8vw, 3rem); }
+
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(1) { border-right: 1px solid var(--border); }
+      .metric:nth-child(2) { border-right: none; }
+      .metric:nth-child(3) { border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
+      .metric:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .metric:nth-child(5) { border-top: 1px solid var(--border); border-right: none; }
+
+      .cell { grid-template-columns: minmax(0, 1fr); }
+      .cell-desc {
+        padding: 32px 24px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        order: 0 !important;
+      }
+      .cell.flip .cell-desc {
+        order: 0 !important;
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .cell-visual { order: 1 !important; min-height: 200px; padding: 28px 24px; }
+
+      .ba-wrap { grid-template-columns: 1fr; }
+      .code-grid { grid-template-columns: 1fr; }
+      .record-grid { grid-template-columns: 1fr; }
+
+      .footer-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-nav { flex-wrap: wrap; gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric { border-right: none !important; }
+      .metric + .metric { border-top: 1px solid var(--border); border-right: none !important; }
+    }
+
+    .status-badge { font-family: var(--font); font-size: 0.875rem; letter-spacing: 0; text-transform: none; color: var(--muted); }
+
+    .status-dot { width: 6px; height: 6px; }
+  </style>
+  <link rel="stylesheet" href="../assets/design-system.css?v=6">
+  <link rel="stylesheet" href="../assets/theme.css?v=8">
+  <script src="../assets/analytics.js?v=2" defer></script>
+</head>
+<body class="page-case page-speechbubble">
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+
+  <!-- ── Band: nav + hero ──────────────────────────────── -->
+  <div class="band">
+    <div class="wrap">
+      <nav aria-label="전역 내비게이션">
+        <a href="../index.html" class="nav-brand">전성훈</a>
+        <ul class="nav-links">
+          <li><a href="../projects.html" aria-current="page">Projects</a></li>
+          <li><a href="../work.html">Work</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../resume.html">이력서</a></li>
+          <li><button class="theme-toggle" type="button" aria-label="라이트/다크 모드 전환">
+            <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M2.9 2.9l1.3 1.3M11.8 11.8l1.3 1.3M13.1 2.9l-1.3 1.3M4.2 11.8l-1.3 1.3"/></svg>
+          </button></li>
+          <li><a href="mailto:jsh097610@gmail.com" class="nav-cta">연락하기</a></li>
+        </ul>
+      </nav>
+
+      <div class="hero">
+        <p class="eyebrow">PROJECT</p>
+        <h1>SpeechBubble</h1>
+        <p class="hero-meta">개인 라이브러리 &middot; UIKit 말풍선 뷰 &middot; 오픈소스(MIT)</p>
+        <span class="status-badge">2024.04 &middot; v0.1.0&ndash;0.1.4 배포</span>
+        <p class="hero-meta" style="margin-top:12px">iOS 13+ &middot; 서드파티 의존성 0 &middot; SPM&middot;CocoaPods</p>
+        <p class="hero-tagline">작은 말풍선 하나에도 결정이 쌓입니다. 드로잉을 부위별로 나누고 타입으로 오용을 막는 API를 설계해 배포까지 해 본 첫 라이브러리입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+  <!-- ── Improvement sections ─────────────────────────── -->
+  <section class="section" aria-labelledby="improvements-hd">
+    <div class="wrap">
+      <p class="sec-eyebrow fi">설계 포인트</p>
+      <h2 id="improvements-hd" class="fi" style="margin-top:4px;">무엇을 결정했나</h2>
+      <div class="cells">
+
+        <!-- 01 · 드로잉 -->
+        <article class="cell fi" aria-label="드로잉: 본체와 꼬리를 다른 기법으로">
+          <div class="cell-desc">
+            <p class="cell-tag">설계 01 &middot; 드로잉</p>
+            <h3 class="cell-title">본체와 꼬리를 다른 기법으로 그린다</h3>
+            <div class="ba-wrap">
+              <div class="ba-block">
+                <span class="ba-label">문제</span>
+                <p class="ba-text">말풍선은 본체(둥근 사각형)와 꼬리(삼각형)의 테두리가 한 획처럼 이어져 보여야 합니다. 점선 스타일까지 지원하려면 layer 테두리만으로는 부족합니다.</p>
+              </div>
+              <div class="ba-block ba-block--after">
+                <span class="ba-label">접근</span>
+                <p class="ba-text">드로잉을 부위별로 분리했습니다. 본체는 CAShapeLayer(둥근 사각 + 점선 대시), 꼬리는 draw(_:)의 UIBezierPath 삼각형. 두 뷰를 borderWidth만큼 겹치는 제약으로 합성해 테두리가 이어집니다.</p>
+              </div>
+            </div>
+            <div class="imp-wrap">
+              <span class="imp-label">핵심 결정</span>
+              <p class="imp-text">꼬리는 모서리 길이 &times; positionRatio로 기준점을 잡고 arrowSize만큼 벌린 3점을 방향별로 계산합니다. 4방향(top/bottom/left/right) 어디든 임의 비율 위치에 붙습니다.</p>
+            </div>
+          </div>
+          <div class="cell-visual">
+            <div class="code-panel">
+              <div class="code-filename">ArrowView.swift &middot; 꼬리 3점 계산·조립</div>
+              <pre class="code-body"><span class="cm">// 모서리 길이 x 비율로 기준점</span>
+<span class="ck">case</span> .top:
+    pointTip   = <span class="ct">CGPoint</span>(x: position, y: rect.height - arrowSize)
+    pointLeft  = <span class="ct">CGPoint</span>(x: position - arrowSize, y: rect.height)
+    pointRight = <span class="ct">CGPoint</span>(x: position + arrowSize, y: rect.height)
+
+<span class="ck">let</span> path = <span class="ct">UIBezierPath</span>()
+path.<span class="ct">move</span>(to: arrowPoints.left)
+path.<span class="ct">addLine</span>(to: arrowPoints.tip)
+path.<span class="ct">addLine</span>(to: arrowPoints.right)
+<span class="ck">if</span> style.contains(.fill) { filledColor.<span class="ct">setFill</span>(); path.<span class="ct">fill</span>() }</pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 · API (flip) -->
+        <article class="cell flip fi" aria-label="API: OptionSet 스타일과 반응형 프로퍼티">
+          <div class="cell-desc">
+            <p class="cell-tag">설계 02 &middot; API</p>
+            <h3 class="cell-title">OptionSet 스타일과 15개 반응형 프로퍼티</h3>
+            <div class="ba-wrap">
+              <div class="ba-block">
+                <span class="ba-label">문제</span>
+                <p class="ba-text">스타일(채움&middot;실선&middot;점선)은 서로 조합되고, 꼬리 위치(4방향)는 배타적입니다. 호출부가 헷갈리지 않게 타입이 오용을 막아야 합니다.</p>
+              </div>
+              <div class="ba-block ba-block--after">
+                <span class="ba-label">접근</span>
+                <p class="ba-text">조합은 OptionSet(.fill / .line / .dottedLine), 배타는 enum(top/bottom/left/right)으로 성격에 맞는 타입을 골랐습니다. 필수 파라미터는 text&middot;style&middot;arrowPosition 3개뿐입니다.</p>
+              </div>
+            </div>
+            <div class="imp-wrap">
+              <span class="imp-label">핵심 결정</span>
+              <p class="imp-text">공개 프로퍼티 15개 전부 didSet으로 런타임에 반응합니다. 값을 바꾸면 서브뷰 전파와 재레이아웃&middot;재드로우까지 이어집니다. SPM과 CocoaPods 이중 배포, 서드파티 의존성 0.</p>
+            </div>
+          </div>
+          <div class="cell-visual">
+            <div class="code-panel">
+              <div class="code-filename">SpeechBubbleStyleOptions.swift &middot; 조합 가능한 스타일</div>
+              <pre class="code-body"><span class="ck">public struct</span> <span class="ct">SpeechBubbleStyleOptions</span>: <span class="ct">OptionSet</span> {
+    <span class="ck">public static let</span> fill       = <span class="ct">Self</span>(rawValue: 1 &lt;&lt; 0)
+    <span class="ck">public static let</span> line       = <span class="ct">Self</span>(rawValue: 1 &lt;&lt; 1)
+    <span class="ck">public static let</span> dottedLine = <span class="ct">Self</span>(rawValue: 1 &lt;&lt; 2)
+}
+
+<span class="cm">// 사용: 채움 + 점선 테두리</span>
+<span class="ct">SpeechBubbleView</span>(text: <span class="cs">"안녕하세요"</span>,
+                 style: [.fill, .dottedLine],
+                 arrowPosition: .top)</pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 · 회고 -->
+        <article class="cell fi" aria-label="회고: 개선 로드맵">
+          <div class="cell-desc">
+            <p class="cell-tag">회고 &middot; 개선 로드맵</p>
+            <h3 class="cell-title">지금 다시 본다면 고칠 것들</h3>
+            <div class="ba-wrap">
+              <div class="ba-block">
+                <span class="ba-label">그때</span>
+                <p class="ba-text">2024년 처음 배포한 라이브러리라 빠진 것들이 있습니다. 테스트는 템플릿 스텁에 머물렀고, 접근성 라벨과 SwiftUI 지원을 넣지 못했습니다.</p>
+              </div>
+              <div class="ba-block ba-block--after">
+                <span class="ba-label">지금 보이는 것</span>
+                <p class="ba-text">UIViewRepresentable 래퍼로 SwiftUI를 지원하고, 합성 뷰 레벨의 accessibilityLabel을 붙이고, 다크 모드 전환 시 traitCollectionDidChange에서 테두리 색을 재적용해야 합니다.</p>
+              </div>
+            </div>
+            <div class="imp-wrap">
+              <span class="imp-label">배운 것</span>
+              <p class="imp-text">공개 파라미터의 오타(cornerRadious)는 배포된 API라 깨지 않고 유지 중입니다. 공개 API 네이밍은 배포 전에 끝내야 한다는 것을 몸으로 배웠습니다.</p>
+            </div>
+          </div>
+          <div class="cell-visual">
+            <div class="code-panel">
+              <div class="code-filename">개선 로드맵</div>
+              <pre class="code-body"><span class="cm">// 1. UIViewRepresentable 래퍼 &#8594; SwiftUI 지원</span>
+<span class="cm">// 2. 합성 뷰 레벨 accessibilityLabel</span>
+<span class="cm">// 3. traitCollectionDidChange &#8594; 테두리 재드로우</span>
+<span class="cm">// 4. 스텁 테스트 &#8594; 드로잉 스냅샷 테스트</span>
+<span class="cm">// 5. (교훈) 공개 API 네이밍은 배포 전에 확정</span></pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="record-hd">
+    <div class="wrap">
+      <p class="sec-eyebrow fi">기록</p>
+      <h2 id="record-hd" class="fi" style="margin-top:4px;">SPM과 CocoaPods로 배포했습니다</h2>
+
+      <div class="record-grid fi">
+        <div class="record-card">
+          <span class="record-num">v0.1.4</span>
+          <p class="record-label">SPM &middot; CocoaPods 이중 배포</p>
+          <p class="record-sub">0.1.0부터 0.1.4까지 다섯 번의 릴리스. MIT 라이선스, 서드파티 의존성 없이 UIKit&middot;Foundation만 사용합니다.</p>
+        </div>
+      </div>
+
+      <div class="record-actions fi">
+        <a
+          href="https://github.com/Jeon0976/SpeechBubble"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary"
+        >
+          GitHub 레포
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2.5 6.5h8M6.5 2.5l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ── Project nav strip ────────────────────────────── -->
+  <div class="nav-strip">
+    <div class="wrap">
+      <div class="nav-strip-inner">
+        <a href="serenade.html" class="nav-proj">
+          <span class="nav-proj-hint">이전 프로젝트</span>
+          <span class="nav-proj-title">← SERENADE</span>
+        </a>
+        <a href="../index.html" class="nav-proj nav-proj--next">
+          <span class="nav-proj-hint">홈으로</span>
+          <span class="nav-proj-title">전성훈 포트폴리오 →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ────────────────────────────────────────── -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <span class="footer-brand">전성훈 · iOS Developer</span>
+        <ul class="footer-nav" aria-label="사이트 링크">
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../work.html">Work</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="https://github.com/Jeon0976" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="mailto:jsh097610@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/case.js?v=1" defer></script>
+
+  <script src="../assets/theme.js" defer></script>
+</body>
+</html>

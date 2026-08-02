@@ -1,0 +1,180 @@
+/* ── 라이트/다크 테마 — theme.js가 <html data-theme>를 관리 ──
+   기본: 시스템 설정 추종 / 토글 시 data-theme(light|dark)로 고정(localStorage) */
+
+/* 다크 팔레트 (수동 선택) */
+:root[data-theme="dark"] {
+  --ds-canvas: #131417;
+  --ds-surface: #1b1d21;
+  --ds-surface-strong: #0c0d0f;
+  --ds-ink: #eceef1;
+  --ds-text: #b7bdc7;
+  --ds-muted: #8f96a1;
+  --ds-line: #2b2e35;
+  --ds-brand: #e2604a;
+  --ds-brand-soft: #35211c;
+  --ds-signal: #7f9dff;
+  --shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+html[data-theme="dark"] { color-scheme: dark; background: var(--ds-canvas); }
+
+/* 다크 팔레트 (시스템 추종 — 수동 light 고정이 아닐 때) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ds-canvas: #131417;
+    --ds-surface: #1b1d21;
+    --ds-surface-strong: #0c0d0f;
+    --ds-ink: #eceef1;
+    --ds-text: #b7bdc7;
+    --ds-muted: #8f96a1;
+    --ds-line: #2b2e35;
+    --ds-brand: #e2604a;
+    --ds-brand-soft: #35211c;
+    --ds-signal: #7f9dff;
+    --shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  html:not([data-theme="light"]) { color-scheme: dark; background: var(--ds-canvas); }
+}
+
+/* ── 다크에서 하드코딩 색 보정 ── */
+:root[data-theme="dark"] .nav-cta { background: var(--ds-ink); color: #131417 !important; }
+:root[data-theme="dark"] .btn-primary { background: var(--ds-ink); color: #131417; }
+:root[data-theme="dark"] .btn-primary:hover { background: var(--ds-brand); color: #fff; }
+:root[data-theme="dark"] .hero-sub { color: var(--ds-text); }
+:root[data-theme="dark"] .pdf-pages img { border-color: #3a3d44; }
+:root[data-theme="dark"] .hero-id-avatar { box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .nav-cta { background: var(--ds-ink); color: #131417 !important; }
+  :root:not([data-theme="light"]) .btn-primary { background: var(--ds-ink); color: #131417; }
+  :root:not([data-theme="light"]) .btn-primary:hover { background: var(--ds-brand); color: #fff; }
+  :root:not([data-theme="light"]) .hero-sub { color: var(--ds-text); }
+  :root:not([data-theme="light"]) .pdf-pages img { border-color: #3a3d44; }
+  :root:not([data-theme="light"]) .hero-id-avatar { box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
+}
+
+/* ── 토글 버튼 ── */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border, #d8dde5);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted, #6c7480);
+  cursor: pointer;
+  padding: 0;
+  transition: color 160ms, border-color 160ms;
+}
+.theme-toggle:hover { color: var(--ink, #111318); border-color: var(--ink, #111318); }
+.theme-toggle svg { width: 16px; height: 16px; display: block; }
+
+/* 아이콘 스위칭: 라이트에선 달(→다크로 전환), 다크에선 해 */
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+}
+
+
+/* ── 다크: 흰색 호버 → 은은한 상승 톤 ── */
+:root[data-theme="dark"] .project-card:hover,
+:root[data-theme="dark"] .proj-card:hover,
+:root[data-theme="dark"] .cell:hover,
+:root[data-theme="dark"] .case-cell:hover {
+  background: #212329;
+  border-color: var(--ds-brand);
+}
+
+/* ── 라이트: 쌩한 순백 톤 다운 (채도·온도 보정) ── */
+:root[data-theme="light"] {
+  --ds-canvas: #eef0f4;
+  --ds-surface: #f9fafc;
+  --ds-line: #d3d8e1;
+  --ds-ink: #14161b;
+  --ds-text: #404650;
+}
+:root[data-theme="light"] .project-card:hover,
+:root[data-theme="light"] .proj-card:hover,
+:root[data-theme="light"] .cell:hover,
+:root[data-theme="light"] .case-cell:hover {
+  background: #f1f3f7;
+}
+
+/* ── 라이트: 대표(반전) 카드는 호버에도 다크 유지 ── */
+
+/* ═══════════════════════════════════════════════════════
+   타이포·태그 재조정 (Claude 소유, 2026-07-31)
+   design-system.css 뒤에 로드되어 크기·명암을 오버라이드.
+   페이지 인라인 <style>은 링크보다 앞서 로드돼 이기지 못하므로
+   전역 크기 조정은 이 블록이 단일 소스.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── 인덱스 히어로 타이틀 행간 (design-system .band h1 1.02 override) ── */
+.hero-copy h1 { line-height: 1.45; }
+
+/* ── 페이지 타이틀 축소 ── */
+.page-standard .band h1,
+.page-case .band h1 {
+  font-size: clamp(2.1rem, 3.4vw, 3rem);
+  letter-spacing: -.04em;
+  line-height: 1.06;
+}
+/* ── 섹션 제목(프로젝트·하는 일·about 장 제목) 축소 ── */
+.page-standard .section h2,
+.page-case .section h2 {
+  font-size: clamp(1.55rem, 2.4vw, 2.05rem);
+  letter-spacing: -.035em;
+  line-height: 1.14;
+}
+
+/* ── 본문·라벨 확대 + 명암 개선 ── */
+.sec-eyebrow,
+.group-chapter,
+.cell-tag,
+.outro-label,
+.record-label,
+.nav-proj-hint { font-size: .82rem; letter-spacing: .04em; }
+
+.hero-sub,
+.proj-context,
+.project-sub,
+.prose-body,
+.record-sub { font-size: 1.0625rem; line-height: 1.72; }
+
+.prose-quote { font-size: 1.3125rem; line-height: 1.58; }
+
+.case-row .row-body,
+.ba-text,
+.imp-text { font-size: .96875rem; line-height: 1.66; }
+.row-label { font-size: .72rem; }
+
+/* ── 태그·칩 통일 (index STACK·프로젝트 태그, projects 수치칩) ── */
+.tag,
+.proj-stats li,
+.project-tags .tag,
+.stack-chips .tag {
+  font-family: var(--ds-font-sans);
+  font-size: .8125rem;
+  letter-spacing: .01em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--ds-line);
+  background: var(--ds-surface);
+  color: var(--ds-text);
+}
+.stack-row--primary .stack-chips .tag {
+  border-color: color-mix(in srgb, var(--ds-brand) 32%, var(--ds-line));
+}
+
+/* ── 라이트 모드: 태그·라벨 명암 보정 ── */
+:root[data-theme="light"] .tag,
+:root[data-theme="light"] .proj-stats li,
+:root[data-theme="light"] .project-tags .tag,
+:root[data-theme="light"] .stack-chips .tag {
+  background: #eef1f6;
+  border-color: #d3d8e1;
+  color: #2c313b;
+}

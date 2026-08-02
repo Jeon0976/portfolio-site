@@ -1,0 +1,159 @@
+/* ─────────────────────────────────────────────────────────────
+   site-shared.css — 루트 페이지(index·work·about·projects) 공통 규칙
+   인라인 <style>보다 먼저 로드되므로 페이지별 인라인이 항상 이길 수 있다.
+   여기 규칙은 4페이지에서 바이트 동일했던 것만 옮긴 것 (2026-08 공통화)
+   ──────────────────────────────────────────────────────────── */
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(--bg);
+color: var(--ink);
+font-family: var(--font);
+font-size: 1.0625rem;
+font-weight: 400;
+line-height: 1.72;
+word-break: keep-all;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+content: "";
+display: block;
+height: 0;
+}
+
+.wrap {
+max-width: var(--max-w);
+margin: 0 auto;
+padding: 0 24px;
+}
+
+.nav-links a {
+font-size: 0.875rem;
+font-weight: 500;
+color: var(--muted);
+text-decoration: none;
+letter-spacing: -0.005em;
+transition: color var(--t) var(--ease-snap);
+position: relative;
+}
+
+.nav-links a:not(.nav-cta)::after {
+content: '';
+position: absolute;
+bottom: -3px;
+left: 0;
+width: 100%;
+height: 1px;
+background: currentColor;
+transform: scaleX(0);
+transform-origin: left;
+transition: transform 300ms var(--ease-snap);
+}
+
+.nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
+
+.nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+display: inline-flex;
+align-items: center;
+padding: 8px 16px;
+background: var(--ink);
+color: #fff !important;
+font-family: var(--font);
+font-size: 0.875rem;
+font-weight: 500;
+letter-spacing: -0.01em;
+text-decoration: none;
+border-radius: var(--r-btn);
+transition: background-color 200ms var(--ease-snap), opacity 200ms var(--ease-snap);
+}
+
+.nav-cta:active { opacity: 0.70; }
+
+.nav-links a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+
+.skip-link {
+position: absolute;
+left: -10000px;
+top: 3px;
+width: 1px;
+height: 1px;
+overflow: hidden;
+background: var(--ink);
+color: #fff;
+font-size: 0.875rem;
+font-weight: 500;
+padding: 8px 16px;
+border-radius: 4px;
+text-decoration: none;
+z-index: 999;
+}
+
+.skip-link:focus {
+left: 24px;
+width: auto;
+height: auto;
+}
+
+.section { padding: var(--section-gap) 0; }
+
+footer {
+border-top: 1px solid var(--border);
+padding: 44px 0 40px;
+background: var(--bg);
+}
+
+.footer-brand {
+font-size: 0.875rem;
+font-weight: 600;
+color: var(--ink);
+letter-spacing: -0.02em;
+}
+
+.footer-nav a {
+font-family: var(--font);
+font-size: 0.8125rem;
+color: var(--muted);
+text-decoration: none;
+transition: color var(--t) var(--ease-snap);
+position: relative;
+}
+
+.footer-nav a::after {
+content: '';
+position: absolute;
+bottom: -2px;
+left: 0;
+width: 100%;
+height: 1px;
+background: currentColor;
+transform: scaleX(0);
+transform-origin: left;
+transition: transform 300ms var(--ease-snap);
+}
+
+.footer-nav a:hover { color: var(--ink); }
+
+.footer-nav a:hover::after { transform: scaleX(1); }
+
+.footer-bottom {
+border-top: 1px solid var(--border);
+padding-top: 20px;
+}
+
+.footer-note {
+font-size: 0.8125rem;
+color: var(--muted);
+}
+
+:focus-visible {
+outline: 2px solid var(--accent);
+outline-offset: 2px;
+border-radius: 3px;
+}

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <script>var t="dark";try{t=localStorage.getItem("theme")||"dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="GitSearch · 전성훈">
+  <meta property="og:description" content="Clean Architecture에서 Micro Feature Architecture로. 같은 앱을 두 번 만들며 무엇을 고쳤나.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d1d1f'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='ui-sans-serif, system-ui, sans-serif' font-size='15' font-weight='600' letter-spacing='-0.5' fill='%23f5f5f7'%3ESJ%3C/text%3E%3Crect x='10.5' y='24' width='11' height='1.6' rx='0.8' fill='%230071e3'/%3E%3C/svg%3E">
+  <title>GitSearch · 전성훈</title>
+  <meta name="description" content="Clean Architecture에서 Micro Feature Architecture로. 같은 앱을 두 번 만들며 무엇을 고쳤나.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=9">
+  <style>
+    /* ── Layout ─────────────────────────────────────────── */
+
+    /* ── Band ────────────────────────────────────────────── */
+
+    /* ── Nav ─────────────────────────────────────────────── */
+
+    /* ── Hero ────────────────────────────────────────────── */
+
+    .hero {
+      padding-top: 40px;
+      max-width: 720px;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 3.6vw, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.28;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      font-size: 0.8125rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      margin-bottom: 14px;
+    }
+
+    .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--muted);
+      line-height: 1.72;
+      max-width: 560px;
+    }
+
+    /* ── Status badge ────────────────────────────────────── */
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font);
+      font-size: 0.875rem;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--muted);
+      display: inline-block;
+    }
+
+    /* ── Section scaffolding ─────────────────────────────── */
+
+    /* ── Group header ────────────────────────────────────── */
+
+    h2 {
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      line-height: 1.32;
+      color: var(--ink);
+    }
+
+    /* ── Case cell ───────────────────────────────────────── */
+
+    .case-right {
+      transition: transform 500ms ease;
+    }
+
+    .cell-tag {
+      font-family: var(--font);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .cell-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    /* ── Case detail rows ────────────────────────────────── */
+
+    .row-body strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ── Case visual ─────────────────────────────────────── */
+
+    .case-right {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 36px;
+      min-height: 320px;
+    }
+
+    /* ── Code panel ──────────────────────────────────────── */
+
+    .code-body {
+      padding: 18px 18px;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      line-height: 1.8;
+      color: var(--ink);
+      white-space: pre;
+      overflow-x: auto;
+      tab-size: 4;
+    }
+
+    /* ── Record section ──────────────────────────────────── */
+
+    /* ── Buttons ─────────────────────────────────────────── */
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 22px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      border-radius: var(--r-btn);
+      white-space: nowrap;
+      transition: background-color 200ms var(--ease-snap);
+    }
+
+    /* ── Project nav strip ───────────────────────────────── */
+
+    .nav-proj-title { font-size: 1rem; font-weight: 500; color: var(--ink); letter-spacing: -0.015em; transition: color var(--t) var(--ease-snap); position: relative; }
+
+    .nav-proj-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+
+    .footer-nav a {
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--t) var(--ease-snap);
+      position: relative;
+    }
+
+    .footer-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+
+    /* ── Scroll fade ─────────────────────────────────────── */
+
+    /* ── Stagger reveals ────────────────────────────────── */
+
+    .cases-stack .fi:nth-child(3) { transition-delay: 80ms; }
+
+    /* ── Focus visible ───────────────────────────────────── */
+
+    @media (prefers-reduced-motion: reduce) {
+      .fi { transform: none !important; transition: opacity 240ms var(--ease-snap); transition-delay: 0ms !important; }
+      .fi.vis { opacity: 1; }
+      *::after { transition: none !important; transform: scaleX(0) !important; }
+      .case-right { transition: none !important; transform: none !important; }
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+
+    @media (max-width: 1024px) {
+      .case-left { padding: 36px 32px; }
+      .case-right { padding: 28px 28px; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --section-gap: 64px; }
+
+      .nav-links li:nth-child(2),
+      .nav-links li:nth-child(3) { display: none; }
+      .nav-links { gap: 18px; }
+
+      h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
+
+      .case-cell {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .case-left {
+        padding: 32px 24px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        order: 1 !important;
+      }
+      .case-cell.flip .case-left {
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .case-right {
+        order: 2 !important;
+        min-height: 240px;
+        padding: 28px 24px;
+      }
+
+      .record-grid { grid-template-columns: 1fr; }
+
+      .footer-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-nav { flex-wrap: wrap; gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .case-row { grid-template-columns: 44px minmax(0, 1fr); gap: 8px; }
+    }
+
+    /* ── 페이지 목차 ── */
+
+    h2[id] { scroll-margin-top: 84px; }
+
+    @media (min-width: 1500px) {
+      .page-toc {
+        display: block;
+        position: fixed;
+        top: 132px;
+        left: max(20px, calc(50vw - 588px - 208px));
+        width: 180px;
+        z-index: 40;
+      }
+      .toc-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 8px 14px;
+      }
+      .page-toc a {
+        display: block;
+        padding: 7px 0 7px 12px;
+        font-size: 0.78rem;
+        line-height: 1.35;
+        color: var(--muted);
+        text-decoration: none;
+        border-left: 2px solid var(--border);
+        transition: color 160ms ease, border-color 160ms ease;
+      }
+      .page-toc a:hover { color: var(--ink); }
+      .page-toc a.active { color: var(--ink); border-left-color: var(--accent); }
+    }
+
+    @media (max-width: 1499px) {
+      .page-toc {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: color-mix(in srgb, var(--canvas) 90%, transparent);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        padding: 10px 24px;
+        border-bottom: 1px solid var(--border);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .page-toc::-webkit-scrollbar { display: none; }
+      .toc-label { display: none; }
+      .page-toc a {
+        flex: none;
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-decoration: none;
+        padding: 6px 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+        white-space: nowrap;
+      }
+      .page-toc a.active { color: var(--ink); border-color: var(--accent); }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/design-system.css?v=6">
+  <link rel="stylesheet" href="../assets/theme.css?v=8">
+  <script src="../assets/analytics.js?v=2" defer></script>
+</head>
+<body class="page-case page-gitsearch">
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+
+  <!-- ── Band: nav + hero ──────────────────────────────── -->
+  <div class="band">
+    <div class="wrap">
+      <nav aria-label="전역 내비게이션">
+        <a href="../index.html" class="nav-brand">전성훈</a>
+        <ul class="nav-links">
+          <li><a href="../projects.html" aria-current="page">Projects</a></li>
+          <li><a href="../work.html">Work</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../resume.html">이력서</a></li>
+          <li><button class="theme-toggle" type="button" aria-label="라이트/다크 모드 전환">
+            <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M2.9 2.9l1.3 1.3M11.8 11.8l1.3 1.3M13.1 2.9l-1.3 1.3M4.2 11.8l-1.3 1.3"/></svg>
+          </button></li>
+          <li><a href="mailto:jsh097610@gmail.com" class="nav-cta">연락하기</a></li>
+        </ul>
+      </nav>
+
+      <div class="hero">
+        <p class="eyebrow">PROJECT</p>
+        <h1>GitSearch<br>같은 앱을 두 번</h1>
+        <p class="hero-meta">개인 프로젝트 &middot; GitHub 검색 앱 &middot; Clean Architecture에서 Micro Feature Architecture(TMA)로</p>
+        <span class="status-badge">2025.03 ~ 2026</span>
+        <p class="hero-sub">GitHub 검색 앱을 Clean Architecture로 만든 뒤, 실무에서 배운 것을 반영해 Micro Feature Architecture로 다시 만들었습니다. 같은 앱을 두 번 만들며 구조가 실제로 무엇을 바꾸는지 확인했습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <nav class="page-toc" aria-label="페이지 목차">
+    <p class="toc-label">목차</p>
+    <a href="#ch1-hd">1장 &middot; 구조를 다시 자른다</a>
+    <a href="#ch2-hd">2장 &middot; 네트워크 계층</a>
+    <a href="#ch3-hd">3장 &middot; 수명 규칙</a>
+    <a href="#ch4-hd">4장 &middot; 밑단까지</a>
+    <a href="#record-hd">기록</a>
+  </nav>
+
+  <main id="main-content">
+
+  <!-- ═══════════════════════════════════════════════════════
+       1장 · 구조를 다시 자른다
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="ch1-hd">
+    <div class="wrap">
+      <div class="group-header fi">
+        <p class="group-chapter">1장</p>
+        <h2 id="ch1-hd">구조를 다시 자른다</h2>
+      </div>
+
+      <div class="cases-stack">
+
+        <!-- Case 01: 절단 방향 전환 -->
+        <article class="case-cell fi" aria-label="케이스 01: 레이어 절단에서 피처 절단으로">
+          <div class="case-left">
+            <p class="cell-tag">Case 01 &middot; TMA / Micro Feature</p>
+            <h3 class="cell-title">레이어 절단에서 피처 절단으로 &middot; 피처 하나 = 5타겟</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">전편은 Domain / Data / Presentation 레이어로 코드를 갈랐습니다. 검색 하나를 고치는 데 세 레이어 모듈을 동시에 수정해야 했습니다. 전편 README에 스스로 적어 둔 한계(모듈 비대화, 테스트 세분화 제한)가 이 프로젝트의 출발점입니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">절단 방향을 수평에서 수직으로 바꿨습니다. 피처 하나를 Interface&middot;구현&middot;Testing&middot;Tests&middot;Demo 다섯 타겟으로 자르면 검색 코드는 <code>FeatureSearch</code> 한 모듈 안에 전부 모입니다. <strong>Micro Feature는 Clean을 버리는 것이 아니라 감쌉니다.</strong> 피처 내부는 여전히 Composition / Domain / Data / Presentation이고 피처 사이만 Interface로 통신합니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body">의존 규칙을 빌드 설정으로 강제했습니다. 피처끼리는 Interface로만 의존하고 구현체 import는 App만 할 수 있습니다. <code>FeatureProfile</code>은 <code>FeatureAuth</code>의 Interface에만 의존하므로 구현 타입을 참조하는 코드는 컴파일되지 않습니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">기능 하나를 고칠 때 건드리는 모듈이 하나가 됐습니다. Testing 타겟이 공개한 Mock을 Tests와 Demo가 재사용해 피처별 단독 테스트와 단독 실행이 가능해졌고 전편의 "테스트 세분화 제한"이 풀렸습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="code-panel">
+              <div class="code-filename">FeatureProfile/Project.swift</div>
+              <pre class="code-body"><span class="ck">let</span> project = <span class="ct">Project</span>.module(
+    name: <span class="ct">ModulePaths</span>.<span class="ct">Feature</span>.FeatureProfile.rawValue,
+    targets: [
+        .interface(
+            module: .feature(.FeatureProfile),
+            dependencies: [.shared(target: .SharedKit)]
+        ),
+        .implements(
+            module: .feature(.FeatureProfile),
+            dependencies: [
+                .feature(target: .FeatureProfile, type: .interface),
+                .shared(target: .SharedKit),
+                .core(target: .CoreNetwork),
+                .core(target: .CoreDesignSystem),
+                <span class="cm">// 유일한 피처 간 의존 - Interface에만</span>
+                .feature(target: .FeatureAuth, type: .interface)
+            ]
+        ),
+        .testing(<span class="cm">/* Stub 공개 */</span>),
+        .tests(<span class="cm">/* Testing 재사용 */</span>),
+        .demo(<span class="cm">/* 단독 실행 앱 */</span>)
+    ]
+)</pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case 02: Tuist 툴링 (flip) -->
+        <article class="case-cell flip fi" aria-label="케이스 02: 반복 선언을 플러그인과 scaffold로">
+          <div class="case-left">
+            <p class="cell-tag">Case 02 &middot; Tuist / Local Plugin</p>
+            <h3 class="cell-title">반복 선언은 플러그인으로, 새 피처는 scaffold 한 줄로</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">수직 절단의 대가는 타겟 수입니다. 모듈 8개에 타겟 31개, 피처마다 같은 모양의 타겟 선언 5개가 반복됩니다. 스킴 구성까지 손으로 맞추면 언젠가 어긋납니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">반복을 Tuist 로컬 플러그인 4개(Environment&middot;Dependency&middot;Configuration&middot;Templates)와 DSL로 줄였습니다. <strong>모듈 목록을 enum 레지스트리 하나에 모으면 워크스페이스가 <code>allCases</code>를 순회하므로 새 피처를 추가해도 기존 모듈은 수정할 것이 없습니다.</strong></p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body">각 피처의 Project.swift는 <code>.interface / .implements / .testing / .tests / .demo</code> 팩토리 호출만으로 구성됩니다. 스킴은 DSL이 생성합니다: 모듈 스킴 8개에 실행 스킴 12개(데모 5개와 본 앱 각각 DEV / PROD). 새 피처는 <code>tuist scaffold</code> 한 줄과 레지스트리 케이스 한 줄이면 됩니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">DEV 데모는 진짜 화면 로직에 Testing 타겟의 목 세션만 갈아 끼운 것입니다. 서버&middot;토큰 없이 페이징과 화면 전환까지 실제 코드가 그대로 돕니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="code-panel">
+              <div class="code-filename">DependencyPlugin &middot; ModulePaths.swift</div>
+              <pre class="code-body"><span class="ck">public enum</span> <span class="ct">ModulePaths</span> {
+    <span class="ck">case</span> shared(<span class="ct">Shared</span>)
+    <span class="ck">case</span> core(<span class="ct">Core</span>)
+    <span class="ck">case</span> feature(<span class="ct">Feature</span>)
+}
+
+<span class="cm">// 피처 5타겟의 네이밍 규칙</span>
+<span class="ck">public enum</span> <span class="ct">MicroTargetType</span>: <span class="ct">String</span> {
+    <span class="ck">case</span> interface = <span class="cs">"Interface"</span>
+    <span class="ck">case</span> sources = <span class="cs">""</span>
+    <span class="ck">case</span> testing = <span class="cs">"Testing"</span>
+    <span class="ck">case</span> unitTest = <span class="cs">"Tests"</span>
+    <span class="ck">case</span> demo = <span class="cs">"Demo"</span>
+}
+
+<span class="ck">public extension</span> <span class="ct">ModulePaths</span> {
+    <span class="ck">enum</span> <span class="ct">Feature</span>: <span class="ct">String</span>, <span class="ct">MicroTargetPathConvertable</span>, <span class="ct">CaseIterable</span> {
+        <span class="ck">case</span> FeatureSearch
+        <span class="ck">case</span> FeatureAuth
+        <span class="ck">case</span> FeatureProfile
+        <span class="cm">// 새 피처 = 케이스 한 줄, 워크스페이스는 allCases 순회</span>
+    }
+}</pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       2장 · 네트워크 계층을 처음부터 만든다
+  ════════════════════════════════════════════════════════ -->
+  <section class="section section--surface" aria-labelledby="ch2-hd">
+    <div class="wrap">
+      <div class="group-header fi">
+        <p class="group-chapter">2장</p>
+        <h2 id="ch2-hd">네트워크 계층을 처음부터 만든다</h2>
+      </div>
+
+      <div class="cases-stack">
+
+        <!-- Case 03: 인터셉터 파이프라인 -->
+        <article class="case-cell fi" aria-label="케이스 03: 인터셉터 파이프라인">
+          <div class="case-left">
+            <p class="cell-tag">Case 03 &middot; CoreNetwork / Interceptor</p>
+            <h3 class="cell-title">인터셉터 파이프라인 &middot; 시점과 정책의 분리</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">토큰 부착 같은 공통 정책을 엔드포인트마다 각자 선언하면 중복과 누락이 생깁니다. 전편은 UseCase가 토큰을 꺼내 파라미터로 전달해 사용처마다 토큰의 존재를 알아야 했습니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">요청의 일생에서 정해진 시점 두 곳에 훅을 뒀습니다. <code>adapt</code>는 전송 직전 요청을 손보고 <code>retry</code>는 실패 직후 재시도를 결정합니다. <strong>시점은 프로토콜이 정의하고 무엇을 끼울지는 Composition Root의 배열이 정합니다.</strong> 파이프라인을 실행하는 NetworkSession은 호출 순서만 알 뿐 정책의 내용을 모릅니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body">기본 구현은 안전한 무행동입니다. adapt는 항등, retry는 <code>.doNotRetry</code>라서 인터셉터는 필요한 훅만 구현합니다. 요청을 바꾸는 인터셉터와 지켜보기만 하는 모니터(<code>NetworkEventMonitor</code>)는 프로토콜 자체를 분리했습니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">새 정책은 새 타입 하나에 조립부 배열 한 줄입니다. 프로토콜도 NetworkSession도 수정하지 않습니다. 토큰은 <code>AuthTokenInterceptor</code>가 자동 부착하므로 사용처는 토큰의 존재를 모릅니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="code-panel">
+              <div class="code-filename">RequestInterceptor.swift &middot; 요지</div>
+              <pre class="code-body"><span class="ck">public protocol</span> <span class="ct">RequestInterceptor</span>: <span class="ct">Sendable</span> {
+    <span class="ck">func</span> adapt(<span class="ck">_</span> request: <span class="ct">URLRequest</span>,
+               endpoint: <span class="ck">some</span> <span class="ct">NetworkEndpoint</span>) <span class="ck">throws</span> -&gt; <span class="ct">URLRequest</span>
+    <span class="ck">func</span> retry(<span class="ck">_</span> endpoint: <span class="ck">some</span> <span class="ct">NetworkEndpoint</span>,
+               dueTo error: <span class="ct">Error</span>,
+               attempt: <span class="ct">Int</span>) <span class="ck">async</span> -&gt; <span class="ct">RetryDecision</span>
+}
+
+<span class="cm">// 기본 구현 = 안전한 무행동</span>
+<span class="ck">extension</span> <span class="ct">RequestInterceptor</span> {
+    <span class="ck">public func</span> adapt(...) <span class="ck">throws</span> -&gt; <span class="ct">URLRequest</span> {
+        request        <span class="cm">// 항등 - 체인에 끼어도 영향 0</span>
+    }
+    <span class="ck">public func</span> retry(...) <span class="ck">async</span> -&gt; <span class="ct">RetryDecision</span> {
+        .doNotRetry    <span class="cm">// 잊어도 사고가 안 나는 방향</span>
+    }
+}
+
+<span class="cm">// NetworkSession.retryDelay - 전원에게 묻되 첫 .retry 채택</span>
+<span class="ck">for</span> interceptor <span class="ck">in</span> interceptors {
+    <span class="ck">if case</span> .retry(<span class="ck">let</span> after) = <span class="ck">await</span> interceptor.retry(
+        endpoint, dueTo: error, attempt: attempt
+    ) { <span class="ck">return</span> after }
+}
+<span class="ck">return nil</span>  <span class="cm">// 아무도 원하지 않으면 에러 그대로</span></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case 04: 멱등과 재시도 (flip) -->
+        <article class="case-cell flip fi" aria-label="케이스 04: 멱등 게이트와 재시도">
+          <div class="case-left">
+            <p class="cell-tag">Case 04 &middot; HTTP / Idempotency</p>
+            <h3 class="cell-title">멱등과 재시도 &middot; 게이트가 뚫리지 않는 자리</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">일시적 네트워크 에러는 다시 보내면 성공할 수 있습니다. 그런데 POST 재전송은 부수효과(토큰 이중 발급류)가 중복 실행될 수 있어 아무 요청이나 재시도하면 사고가 됩니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">사실과 행동을 나눴습니다. "두 번 보내도 안전한가"는 엔드포인트가 <code>isIdempotent</code>로 선언하는 사실이고 그 사실을 보고 재시도를 결정하는 것은 인터셉터의 행동입니다. 기본값은 RFC 9110 정의대로 HTTP 메서드에서 유도합니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body"><strong>재시도는 인터셉터 전원에게 물어 하나라도 <code>.retry</code>면 실행되는 OR 결합입니다. 멱등 게이트를 별도 인터셉터로 빼면 다른 인터셉터의 .retry에 뚫립니다.</strong> 그래서 게이트를 재시도 정책 안쪽의 첫 guard로 뒀습니다. 지연은 인터셉터가 지수 백오프로 계산합니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">비멱등 요청은 에러 종류를 보기도 전에 재시도에서 빠집니다. OAuth 토큰 교환(POST)은 아무 선언 없이도 자동 재시도에서 제외됩니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="code-panel">
+              <div class="code-filename">TransientErrorRetryInterceptor.swift &middot; 요지</div>
+              <pre class="code-body"><span class="ck">public struct</span> <span class="ct">TransientErrorRetryInterceptor</span>: <span class="ct">RequestInterceptor</span> {
+    <span class="ck">public func</span> retry(
+        <span class="ck">_</span> endpoint: <span class="ck">some</span> <span class="ct">NetworkEndpoint</span>,
+        dueTo error: <span class="ck">any</span> <span class="ct">Error</span>,
+        attempt: <span class="ct">Int</span>
+    ) <span class="ck">async</span> -&gt; <span class="ct">RetryDecision</span> {
+        <span class="cm">// 1. 비멱등은 재시도 금지 - 게이트는 정책 안의 첫 guard</span>
+        <span class="ck">guard</span> endpoint.isIdempotent <span class="ck">else</span> { <span class="ck">return</span> .doNotRetry }
+        <span class="cm">// 2. 자체 한도</span>
+        <span class="ck">guard</span> attempt &lt;= maxRetries <span class="ck">else</span> { <span class="ck">return</span> .doNotRetry }
+        <span class="cm">// 3. 일시적 에러만</span>
+        <span class="ck">guard</span> <span class="ct">Self</span>.isTransient(error) <span class="ck">else</span> { <span class="ck">return</span> .doNotRetry }
+
+        <span class="cm">// 지수 백오프: 0.5 -> 1.0 -> 2.0</span>
+        <span class="ck">return</span> .retry(after: baseDelay * pow(2, <span class="ct">Double</span>(attempt - 1)))
+    }
+}
+
+<span class="cm">// NetworkEndpoint.swift - '사실'은 엔드포인트가 선언</span>
+<span class="ck">public var</span> isIdempotent: <span class="ct">Bool</span> {
+    <span class="ck">switch</span> method {
+    <span class="ck">case</span> .get, .put, .delete: <span class="ck">true</span>
+    <span class="ck">case</span> .post, .patch: <span class="ck">false</span>  <span class="cm">// 부수효과 중복 위험</span>
+    }
+}</pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       3장 · 수명 규칙을 타입으로 옮긴다
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="ch3-hd">
+    <div class="wrap">
+      <div class="group-header fi">
+        <p class="group-chapter">3장</p>
+        <h2 id="ch3-hd">수명 규칙을 타입으로 옮긴다</h2>
+      </div>
+
+      <div class="cases-stack">
+
+        <!-- Case 05: ManagedTask -->
+        <article class="case-cell fi" aria-label="케이스 05: ManagedTask">
+          <div class="case-left">
+            <p class="cell-tag">Case 05 &middot; Swift Concurrency / Task</p>
+            <h3 class="cell-title">ManagedTask &middot; 방치된 Task의 규칙 5가지를 타입으로</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">UIKit 진입점(viewDidLoad, 버튼 핸들러)은 동기 함수라 async 작업을 시작하려면 <code>Task {}</code>로 만드는 unstructured task를 쓸 수밖에 없습니다. 이 태스크를 잡아 두지 않으면 화면이 닫혀도 요청이 계속 돌고, 늦게 도착한 옛 응답이 새 화면을 덮는 stale 버그도 생깁니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">핸들 보관, 재진입 취소, deinit 취소, 취소 후 결과 무시, CancellationError 침묵. ViewModel마다 직접 지켜야 하는 이 규칙 5가지를 컴파일러는 하나도 잡아 주지 않습니다. <strong>규칙을 복붙하는 대신 ManagedTask라는 타입 하나에 가뒀습니다.</strong></p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body"><code>replace</code>는 이전 작업을 취소하고 교체합니다(검색). <code>runIfIdle</code>은 진행 중이면 무시합니다(페이징). 슬롯 반납은 generation 비교로 최신 작업만 하게 해 늦게 끝난 이전 작업이 새 작업의 핸들을 지우는 레이스를 막았습니다. 취소는 await 체인을 타고 URLSession까지 내려가 진행 중인 HTTP 요청이 실제로 끊깁니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">동작 5가지를 계약 테스트로 고정했습니다(테스트 24개 중 ManagedTask 5개). 호출부에 반복되던 <code>[weak self]</code>는 owner 오버로드(<code>replace(with:)</code>)와 <code>sink(with:)</code>로 걷어내 20곳을 전환했습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="code-panel">
+              <div class="code-filename">ManagedTask.swift &middot; 요지</div>
+              <pre class="code-body"><span class="ck">@MainActor</span>
+<span class="ck">public final class</span> <span class="ct">ManagedTask</span> {
+    <span class="ck">private var</span> task: <span class="ct">Task</span>&lt;<span class="ct">Void</span>, <span class="ct">Never</span>&gt;?
+    <span class="ck">private var</span> generation = 0
+
+    <span class="ck">deinit</span> { task?.cancel() }  <span class="cm">// 소유자 해제 = 요청 취소</span>
+
+    <span class="ck">public func</span> replace(...) {   <span class="cm">// 검색: 취소 후 교체</span>
+        task?.cancel()
+        start(...)
+    }
+    <span class="ck">public func</span> runIfIdle(...) { <span class="cm">// 페이징: 진행 중이면 무시</span>
+        <span class="ck">guard</span> task == <span class="ck">nil else</span> { <span class="ck">return</span> }
+        start(...)
+    }
+
+    <span class="ck">private func</span> start(...) {
+        generation &amp;+= 1
+        <span class="ck">let</span> startedGeneration = generation
+        task = <span class="ct">Task</span> { [<span class="ck">weak self</span>] <span class="ck">in</span>
+            <span class="ck">do</span> { <span class="ck">try await</span> operation() }
+            <span class="ck">catch is</span> <span class="ct">CancellationError</span> { }  <span class="cm">// 취소는 침묵</span>
+            <span class="ck">catch</span> { <span class="ck">if</span> !<span class="ct">Task</span>.isCancelled { onError?(error) } }
+            <span class="cm">// 최신 작업일 때만 슬롯 반납 - 늦은 완료가</span>
+            <span class="cm">// 새 핸들을 지우는 레이스 방지</span>
+            <span class="ck">if let self</span>, <span class="ck">self</span>.generation == startedGeneration {
+                <span class="ck">self</span>.task = <span class="ck">nil</span>
+            }
+        }
+    }
+}</pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       4장 · 밑단까지 직접 만든다
+  ════════════════════════════════════════════════════════ -->
+  <section class="section section--surface" aria-labelledby="ch4-hd">
+    <div class="wrap">
+      <div class="group-header fi">
+        <p class="group-chapter">4장</p>
+        <h2 id="ch4-hd">밑단까지 직접 만든다</h2>
+      </div>
+
+      <div class="cases-stack">
+
+        <!-- Case 06: Keychain -->
+        <article class="case-cell fi" aria-label="케이스 06: Keychain 토큰 저장소">
+          <div class="case-left">
+            <p class="cell-tag">Case 06 &middot; Security / Keychain</p>
+            <h3 class="cell-title">Keychain 토큰 저장소 &middot; 정책 선언 한 줄의 결정</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">전편은 토큰을 UserDefaults에 저장했습니다. UserDefaults는 평문 plist 파일이라 자격증명이 들어갈 자리가 아닙니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">Keychain으로 옮기며 저장 코드보다 정책 선언에 무게를 뒀습니다. <strong>접근성 상수 <code>AfterFirstUnlockThisDeviceOnly</code> 한 줄이 백그라운드 네트워킹은 허용하고 기기 이전 시에는 재로그인을 강제한다는 토큰의 표준 프로파일을 선언합니다.</strong> 갱신은 로그인 순간뿐인 저빈도 작업이라 SecItemUpdate 분기 대신 delete 후 add로 단순화했습니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body"><code>kSecClassGenericPassword</code>에 service와 account 조합을 키로 씁니다. 데모 앱은 account를 다른 값으로 바꿔 본 앱과 저장 슬롯을 분리합니다. TokenStorage 계약 테스트는 In-memory Mock과 실제 Keychain 구현이 같은 테스트로 통과합니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">호스트 앱 없는 테스트 타겟에서 store()가 조용히 실패하는 원인을 OSStatus로 추적해 -34018(errSecMissingEntitlement)을 실측했습니다. Keychain 테스트에 호스트 앱이 필수라는 것이 확인돼 Tests와 HostedTests를 분리했습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="code-panel">
+              <div class="code-filename">KeychainTokenStorage.swift &middot; 요지</div>
+              <pre class="code-body"><span class="ck">public final class</span> <span class="ct">KeychainTokenStorage</span>: <span class="ct">TokenStorage</span>, <span class="ct">Sendable</span> {
+    <span class="ck">public func</span> store(<span class="ck">_</span> token: <span class="ct">String</span>) {
+        <span class="ct">SecItemDelete</span>(baseQuery <span class="ck">as</span> <span class="ct">CFDictionary</span>)  <span class="cm">// 저빈도라 delete 후 add</span>
+
+        <span class="ck">var</span> query = baseQuery
+        query[kSecValueData <span class="ck">as</span> <span class="ct">String</span>] = <span class="ct">Data</span>(token.utf8)
+        <span class="cm">// 첫 잠금해제 후 접근 가능 + 백업/기기 이전 제외</span>
+        query[kSecAttrAccessible <span class="ck">as</span> <span class="ct">String</span>] =
+            kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+
+        <span class="ck">let</span> status = <span class="ct">SecItemAdd</span>(query <span class="ck">as</span> <span class="ct">CFDictionary</span>, <span class="ck">nil</span>)
+        <span class="cm">// DEBUG에서 OSStatus 확인 - 침묵 실패 방지</span>
+    }
+
+    <span class="ck">public func</span> retrieve() -&gt; <span class="ct">String</span>? { ... }  <span class="cm">// 인터셉터가 동기로 읽는다</span>
+    <span class="ck">public func</span> clear() { ... }
+
+    <span class="cm">// 아이템의 기본키 = 클래스 + service + account</span>
+    <span class="ck">private var</span> baseQuery: [<span class="ct">String</span>: <span class="ck">Any</span>] {
+        [
+            kSecClass <span class="ck">as</span> <span class="ct">String</span>: kSecClassGenericPassword,
+            kSecAttrService <span class="ck">as</span> <span class="ct">String</span>: service,
+            kSecAttrAccount <span class="ck">as</span> <span class="ct">String</span>: account
+        ]
+    }
+}</pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case 07: 이미지 파이프라인 (flip) -->
+        <article class="case-cell flip fi" aria-label="케이스 07: 아바타 이미지 파이프라인">
+          <div class="case-left">
+            <p class="cell-tag">Case 07 &middot; ImageIO / Prefetch</p>
+            <h3 class="cell-title">아바타 이미지 파이프라인 &middot; 2계층 캐시와 다운샘플</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">목록에 비동기 이미지를 붙이면 비용이 겹칩니다. <code>UIImage(data:)</code>는 원본 해상도 그대로 풀 디코딩해 55pt 슬롯에 약 826KB 비트맵을 올립니다. 셀 재사용 시 남의 아바타가 잠깐 뜨는 잔상도 생깁니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">캐시를 "무엇을 담는가"로 나눴습니다. 원본 Data를 담는 바이트 캐시(디스크 영속)는 재다운로드를 줄이고 디코딩된 UIImage를 담는 메모리 캐시는 재디코딩을 줄입니다. 디코딩은 ImageIO 썸네일로 셀 크기(165px)만큼만 해 약 826KB를 약 106KB로 줄였습니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body"><strong>다운샘플은 nonisolated async 함수라 협조적 스레드 풀에서 돌고 non-Sendable인 UIImage는 <code>sending</code> 반환(SE-0430)으로 메인 액터에 넘깁니다.</strong> 셀에는 representedID를 기록해 완료 시 대조합니다. 화면을 벗어난 행은 URLSession까지 취소를 전파하고 prefetch와 load는 userID별 태스크를 공유해 다운로드를 1회로 합칩니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">스크롤 중 디코딩이 메인 스레드를 막지 않고 재사용 잔상은 이중 방어(취소 + representedID 대조)로 차단됩니다. 이 경계 전체가 Swift 6 strict concurrency(전 타겟 complete)에서 컴파일로 검증됩니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="code-panel">
+              <div class="code-filename">ImageDownsampler.swift</div>
+              <pre class="code-body"><span class="ck">enum</span> <span class="ct">ImageDownsampler</span> {
+    <span class="ck">static func</span> makeImage(
+        from data: <span class="ct">Data</span>,
+        pointSize: <span class="ct">CGSize</span>,
+        scale: <span class="ct">CGFloat</span>
+    ) <span class="ck">async</span> -&gt; <span class="ck">sending</span> <span class="ct">UIImage</span>? {
+        <span class="ck">let</span> maxPixel = max(pointSize.width, pointSize.height) * scale
+
+        <span class="ck">let</span> sourceOptions = [kCGImageSourceShouldCache: <span class="ck">false</span>] <span class="ck">as</span> <span class="ct">CFDictionary</span>
+        <span class="ck">guard let</span> source = <span class="ct">CGImageSourceCreateWithData</span>(
+            data <span class="ck">as</span> <span class="ct">CFData</span>, sourceOptions) <span class="ck">else</span> { <span class="ck">return nil</span> }
+
+        <span class="ck">let</span> thumbnailOptions = [
+            kCGImageSourceCreateThumbnailFromImageAlways: <span class="ck">true</span>,
+            kCGImageSourceCreateThumbnailWithTransform: <span class="ck">true</span>,  <span class="cm">// EXIF 회전 반영</span>
+            kCGImageSourceShouldCacheImmediately: <span class="ck">true</span>,  <span class="cm">// 디코딩을 지금, off-main에서</span>
+            kCGImageSourceThumbnailMaxPixelSize: maxPixel  <span class="cm">// 셀 크기만큼만</span>
+        ] <span class="ck">as</span> <span class="ct">CFDictionary</span>
+
+        <span class="ck">guard let</span> cgImage = <span class="ct">CGImageSourceCreateThumbnailAtIndex</span>(
+            source, 0, thumbnailOptions) <span class="ck">else</span> { <span class="ck">return nil</span> }
+
+        <span class="cm">// scale 명시 - 165px / 3 = 55pt (스케일 1 가정 버그 방지)</span>
+        <span class="ck">return</span> <span class="ct">UIImage</span>(cgImage: cgImage, scale: scale, orientation: .up)
+    }
+}</pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Record section ───────────────────────────────── -->
+  <section class="section" aria-labelledby="record-hd">
+    <div class="wrap">
+      <p class="sec-eyebrow fi">기록</p>
+      <h2 id="record-hd" class="fi" style="margin-top:4px;">과정 전체를 문서로 남겼습니다</h2>
+
+      <div class="record-grid fi">
+        <div class="record-card">
+          <span class="record-num">3</span>
+          <p class="record-label">블로그 시리즈</p>
+          <p class="record-sub">왜 이 구조인지, 무엇을 포기했는지까지 velog에 3편으로 나눠 게시했습니다. 아키텍처 결정의 이유부터 트레이드오프까지 글로 정리했습니다.</p>
+          <a class="record-note" href="https://velog.io/@jeon0976/%EA%B0%99%EC%9D%80-%EC%95%B1%EC%9D%84-%EB%91%90-%EB%B2%88-%EB%A7%8C%EB%93%A4%EC%97%88%EB%8B%A4-Clean-Architecture%EC%97%90%EC%84%9C-Micro-Feature-Architecture%EB%A1%9C" target="_blank" rel="noopener noreferrer">1편 읽기 &rarr;</a>
+        </div>
+        <div class="record-card">
+          <span class="record-num">8</span>
+          <p class="record-label">레포 docs/ 구현 노트</p>
+          <p class="record-sub">인터셉터 파이프라인, 멱등과 재시도, ManagedTask, owner 패턴, Keychain, 이미지 파이프라인, weak let 생성자 주입, Swift 6 Sendable. 왜 그렇게 결정했는지와 실제 소스 파일 링크를 노트마다 함께 적었습니다.</p>
+        </div>
+      </div>
+
+      <div class="record-actions fi">
+        <a
+          href="https://github.com/Jeon0976/iOS-TheModularArchitecture-Sample"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary"
+        >
+          재구축 후 레포 (Micro Feature)
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2.5 6.5h8M6.5 2.5l4 4-4 4"/>
+          </svg>
+        </a>
+        <a
+          href="https://github.com/Jeon0976/iOS-CleanArchitecture-Sample"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-text"
+        >
+          재구축 전 레포 (Clean Architecture)
+        </a>
+        <a
+          href="https://velog.io/@jeon0976/%EA%B0%99%EC%9D%80-%EC%95%B1%EC%9D%84-%EB%91%90-%EB%B2%88-%EB%A7%8C%EB%93%A4%EC%97%88%EB%8B%A4-Clean-Architecture%EC%97%90%EC%84%9C-Micro-Feature-Architecture%EB%A1%9C"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-text"
+        >
+          블로그 시리즈 (3편)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ── Project nav strip ────────────────────────────── -->
+  <div class="nav-strip">
+    <div class="wrap">
+      <div class="nav-strip-inner">
+        <a href="kira.html" class="nav-proj">
+          <span class="nav-proj-hint">이전 프로젝트</span>
+          <span class="nav-proj-title">← KIRA</span>
+        </a>
+        <a href="aviro.html" class="nav-proj nav-proj--next">
+          <span class="nav-proj-hint">다음 프로젝트</span>
+          <span class="nav-proj-title">AVIRO →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ────────────────────────────────────────── -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <span class="footer-brand">전성훈 · iOS Developer</span>
+        <ul class="footer-nav" aria-label="사이트 링크">
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../work.html">Work</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="https://github.com/Jeon0976" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="mailto:jsh097610@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/case.js?v=1" defer></script>
+
+  <script src="../assets/theme.js" defer></script>
+
+  <script src="../assets/toc.js?v=1" defer></script>
+</body>
+</html>

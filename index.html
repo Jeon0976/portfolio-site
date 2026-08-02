@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <script>var t="dark";try{t=localStorage.getItem("theme")||"dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="전성훈 · iOS 개발자 포트폴리오. 이력서 프로젝트 항목을 코드와 숫자로 뒷받침하는 자료.">
+  <meta property="og:title" content="전성훈 · iOS Developer">
+  <meta property="og:description" content="전성훈 · iOS 개발자 포트폴리오. 이력서 프로젝트 항목을 코드와 숫자로 뒷받침하는 자료.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d1d1f'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='ui-sans-serif, system-ui, sans-serif' font-size='15' font-weight='600' letter-spacing='-0.5' fill='%23f5f5f7'%3ESJ%3C/text%3E%3Crect x='10.5' y='24' width='11' height='1.6' rx='0.8' fill='%230071e3'/%3E%3C/svg%3E">
+  <title>전성훈 · iOS Developer</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="assets/site-shared.css?v=1">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #f5f5f7;
+      --surface:     #ffffff;
+      --ink:         #1d1d1f;
+      --muted:       #6e6e73;
+      --border:      #d2d2d7;
+      --accent:      #0071e3;
+      --shadow:      0 1px 2px rgba(29,29,31,0.05);
+      --r-card:      10px;
+      --r-btn:       8px;
+      --ease:        cubic-bezier(0.22,0.61,0.36,1);
+      --ease-snap:   cubic-bezier(0.2, 0, 0, 1);
+      --t:           160ms;
+      --max-w:       1120px;
+      --section-gap: 96px;
+      --font:        "Pretendard Variable", Pretendard, "Inter Tight", -apple-system, sans-serif;
+      --mono:        "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    /* ── Layout ─────────────────────────────────────────── */
+
+    /* ── Top band ────────────────────────────────────────── */
+
+    .band {
+      background: var(--bg);
+      padding-bottom: 72px;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 0;
+    }
+
+    .nav-brand {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-num {
+      font-family: var(--font);
+      font-size: 0.625rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-right: 4px;
+      font-variant-numeric: tabular-nums;
+      vertical-align: 0.05em;
+    }
+
+    .nav-cta:hover { opacity: 0.80; color: #fff !important; }
+
+    /* ── Hero ────────────────────────────────────────────── */
+
+    .hero {
+      padding-top: 56px;
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      font-family: var(--font);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.45;
+      color: var(--ink);
+      margin-bottom: 22px;
+    }
+
+    .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--muted);
+      line-height: 1.72;
+      max-width: 580px;
+      margin-bottom: 16px;
+    }
+
+    .hero-evidence-note {
+      font-size: 0.875rem;
+      color: var(--ink);
+      line-height: 1.5;
+      max-width: 580px;
+      margin-bottom: 40px;
+      padding-left: 12px;
+      border-left: 2px solid var(--border);
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 22px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      border-radius: var(--r-btn);
+      transition: background-color 200ms var(--ease-snap);
+    }
+    .btn-primary:hover { background: #0059ba; }
+    .btn-primary:active { background: #004a99; }
+
+    .btn-text {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      padding-bottom: 2px;
+      position: relative;
+      transition: color 200ms var(--ease-snap);
+    }
+    .btn-text::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+    .btn-text:hover { color: var(--accent); }
+    .btn-text:hover::after { transform: scaleX(1); }
+
+    /* ── Metrics strip ───────────────────────────────────── */
+
+    .metrics {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .metric {
+      padding: 28px 32px;
+      border-right: 1px solid var(--border);
+    }
+    .metric:last-child { border-right: none; }
+
+    .metric-val {
+      display: block;
+      font-family: var(--font);
+      font-size: 1.5rem;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-lbl {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── Section scaffolding ─────────────────────────────── */
+
+    .section--surface {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-eyebrow {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      line-height: 1.32;
+      color: var(--ink);
+    }
+
+    /* ── Section header row ──────────────────────────────── */
+
+    .sec-header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .all-link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+      letter-spacing: -0.005em;
+      padding-bottom: 1px;
+      position: relative;
+      transition: color 200ms var(--ease-snap);
+    }
+    .all-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+    .all-link:hover::after { transform: scaleX(1); }
+
+    /* ── Project cards ───────────────────────────────────── */
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: var(--r-card);
+      overflow: hidden;
+      margin-top: 48px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .project-card {
+      padding: 36px 32px;
+      border-right: 1px solid var(--border);
+      transition: background 200ms var(--ease-snap), border-color 200ms var(--ease-snap);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:last-child { border-right: none; }
+    .project-card:nth-child(3n) { border-right: none; }
+    .project-card:nth-child(n+4) { border-top: 1px solid var(--border); }
+    .project-card:hover { background: #fbfbfd; border-color: rgba(0,113,227,0.4); }
+
+    .project-title {
+      font-size: 1.0625rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .project-sub {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 4px;
+      flex: 1;
+      align-content: flex-start;
+    }
+
+    .tag {
+      font-family: var(--font);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      letter-spacing: 0.03em;
+    }
+
+    .tag--more {
+      color: var(--accent);
+      border-color: rgba(0, 113, 227, 0.25);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 24px;
+      position: relative;
+      transition: color 200ms var(--ease-snap);
+    }
+    .project-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+    .project-link:hover::after { transform: scaleX(1); }
+
+    /* ── Status badge ────────────────────────────────────── */
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.625rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--muted);
+      display: inline-block;
+    }
+    .status-dot--live { background: var(--accent); }
+
+    /* ── What I Do ───────────────────────────────────────── */
+
+    .wid-list {
+      margin-top: 56px;
+      border-top: 1px solid var(--border);
+    }
+
+    .wid-row {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 40px;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+
+    .wid-left {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+    }
+
+    .wid-num {
+      font-family: var(--font);
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .wid-title {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .wid-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    /* ── Currently strip ─────────────────────────────────── */
+
+    .currently-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 0;
+    }
+
+    .currently-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .currently-head {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .currently-headline {
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    .currently-sub {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+    }
+
+    .currently-link {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      position: relative;
+      transition: color 200ms var(--ease-snap);
+    }
+    .currently-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+    .currently-link:hover::after { transform: scaleX(1); }
+
+    /* ── Contact CTA ─────────────────────────────────────── */
+
+    .contact-cta {
+      padding: 96px 0;
+    }
+
+    .contact-inner {
+      max-width: 680px;
+    }
+
+    .contact-headline {
+      font-size: clamp(1.875rem, 4vw, 3.25rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .contact-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.72;
+      margin-bottom: 36px;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    /* ── Scroll fade ─────────────────────────────────────── */
+
+    .fi {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 240ms var(--ease-snap), transform 240ms var(--ease-snap);
+    }
+    .fi.vis { opacity: 1; transform: translateY(0); }
+
+    /* ── Stack section ──────────────────────────────────── */
+
+    .stack-list {
+      margin-top: 56px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stack-row {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 40px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .stack-label {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      line-height: 1.3;
+      padding-top: 3px;
+    }
+
+    .stack-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-content: flex-start;
+    }
+
+    .stack-chips .tag {
+      font-family: var(--font);
+      font-size: 0.875rem;
+      padding: 7px 13px;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      letter-spacing: -0.01em;
+    }
+
+    .stack-row--primary .stack-chips .tag {
+      border-color: rgba(0, 113, 227, 0.4);
+    }
+
+    /* ── Currently strip border ─── */
+    .currently-strip {
+      
+    }
+
+    /* ── Code Contact card ──────────────────────────────── */
+    .code-contact {
+      background: #1d1d1f;
+      border-radius: 12px;
+      padding: 36px 40px;
+      max-width: 560px;
+      margin-bottom: 32px;
+    }
+
+    .code-contact-body {
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      line-height: 1.9;
+      white-space: pre;
+      color: #fc6a5d;
+      overflow-x: auto;
+    }
+
+    .cc-comment { color: #6c7986; font-style: italic; }
+    .cc-keyword { color: #fc5fa3; }
+    .cc-type    { color: #5dd8ff; }
+    .cc-link    { color: #fc6a5d; text-decoration: none; position: relative; }
+    .cc-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+    .cc-link:hover::after { transform: scaleX(1); }
+
+    /* ── Stagger reveals ────────────────────────────────── */
+
+    .wid-list .wid-row.fi:nth-child(2) { transition-delay: 40ms; }
+    .wid-list .wid-row.fi:nth-child(3) { transition-delay: 80ms; }
+
+    /* ── Focus visible ───────────────────────────────────── */
+
+    @media (prefers-reduced-motion: reduce) {
+      .fi { transform: none !important; transition: opacity 240ms var(--ease-snap); transition-delay: 0ms !important; }
+      .fi.vis { opacity: 1; }
+      *::after { transition: none !important; transform: scaleX(0) !important; }
+    }
+
+    /* ── Hero inline link ────────────────────────────────── */
+
+    .hero-inline-link {
+      color: var(--accent);
+      text-decoration: none;
+      position: relative;
+      transition: color 200ms var(--ease-snap);
+    }
+    .hero-inline-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 300ms var(--ease-snap);
+    }
+    .hero-inline-link:hover::after { transform: scaleX(1); }
+
+    /* ── Responsive ──────────────────────────────────────── */
+
+    @media (max-width: 1024px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .project-card:nth-child(2) { border-right: none; }
+      .project-card:nth-child(3) { border-right: none; border-top: 1px solid var(--border); }
+      .wid-row { grid-template-columns: 220px 1fr; gap: 28px; }
+      .stack-row { grid-template-columns: 220px 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --section-gap: 72px; }
+
+      .nav-links li:nth-child(2),
+      .nav-links li:nth-child(3) { display: none; }
+      .nav-links { gap: 16px; }
+
+      h1 { font-size: clamp(2rem, 8vw, 3rem); }
+
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(2) { border-right: none; }
+      .metric:nth-child(3) { border-top: 1px solid var(--border); }
+      .metric:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { border-right: none !important; }
+      .project-card + .project-card { border-top: 1px solid var(--border); }
+
+      .wid-row { grid-template-columns: 1fr; gap: 10px; padding: 28px 0; }
+      .stack-row { grid-template-columns: 1fr; gap: 10px; padding: 20px 0; }
+
+      .footer-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-nav { flex-wrap: wrap; gap: 16px; }
+
+      .currently-inner { flex-direction: column; gap: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric { border-right: none !important; }
+      .metric + .metric { border-top: 1px solid var(--border); }
+    }
+      .status-badge { font-family: var(--font); font-size: 0.875rem; letter-spacing: 0; text-transform: none; color: var(--muted); }
+    .status-dot { width: 6px; height: 6px; }
+
+    /* ── Homepage direction: evidence-led editorial ─────── */
+    :root {
+      --bg: #f3f0e9;
+      --surface: #fbfaf7;
+      --ink: #15181d;
+      --muted: #667078;
+      --border: #cdd0cc;
+      --accent: #006f5f;
+      --accent-soft: #d9eee7;
+      --signal: #ff6b35;
+      --max-w: 1180px;
+      --r-card: 2px;
+      --r-btn: 999px;
+    }
+
+    .band {
+      min-height: min(820px, 100svh);
+      padding-bottom: 72px;
+      background:
+        radial-gradient(circle at 78% 24%, rgba(0,111,95,.10), transparent 32%),
+        var(--bg);
+    }
+
+    nav {
+      padding-top: 24px;
+      border-bottom: 1px solid rgba(21,24,29,.16);
+      padding-bottom: 20px;
+    }
+
+    .nav-brand {
+      font-size: 1rem;
+      letter-spacing: -.035em;
+    }
+
+    .hero {
+      max-width: none;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(360px, .9fr);
+      gap: clamp(48px, 7vw, 108px);
+      align-items: center;
+      padding-top: clamp(64px, 9vw, 116px);
+    }
+
+    .hero-copy { min-width: 0; }
+
+    .eyebrow {
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 600;
+      line-height: 1.34;
+      letter-spacing: -.03em;
+      margin-bottom: 26px;
+    }
+
+    .hero-sub {
+      max-width: 650px;
+      color: #465159;
+      font-size: clamp(1.05rem, 1.4vw, 1.22rem);
+      line-height: 1.68;
+      margin-bottom: 34px;
+    }
+
+    .hero-cta { gap: 14px; }
+
+    .btn-primary {
+      padding: 13px 22px;
+      background: var(--ink);
+      border-radius: 999px;
+    }
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 20px;
+      border: 1px solid rgba(21,24,29,.42);
+      border-radius: 999px;
+      color: var(--ink);
+      font-size: .9375rem;
+      font-weight: 560;
+      text-decoration: none;
+      transition: border-color 180ms var(--ease-snap), background 180ms var(--ease-snap);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* ── Hero V3: 인물 ID 라인 + Swift 코드 카드 ── */
+    .hero-id { display: flex; align-items: center; gap: 18px; margin-bottom: 26px; }
+    .hero-id-avatar {
+      width: 92px; height: 92px; border-radius: 24px;
+      background: #e9e9ee;
+      overflow: hidden; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(29,29,31,0.12);
+    }
+    .hero-id-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; }
+    .hero-id-name { font-size: 1.0625rem; font-weight: 600; line-height: 1.4; }
+    .hero-id-role { font-size: 0.875rem; color: var(--muted); line-height: 1.4; }
+
+    .hero-code {
+      background: #1f1f24; border-radius: 14px; padding: 26px 28px;
+      box-shadow: 0 12px 32px rgba(29,29,31,0.16);
+    }
+    .hero-code pre {
+      font-family: var(--mono); font-size: 0.84rem; line-height: 1.78;
+      color: #dfdfe0; overflow-x: auto;
+    }
+    .hc-comment { color: #6c7986; } .hc-kw { color: #fc5fa3; }
+    .hc-type { color: #5dd8ff; } .hc-str { color: #fc6a5d; } .hc-num { color: #d0bf69; }
+
+    .case-visual {
+      position: relative;
+      min-height: 510px;
+      padding: 22px;
+      overflow: hidden;
+      color: #f8f7f3;
+      background: #141d1c;
+      border: 1px solid rgba(21,24,29,.7);
+      box-shadow: 18px 18px 0 rgba(0,111,95,.14);
+    }
+
+    .case-visual::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -96px;
+      top: -88px;
+      border: 1px solid rgba(217,238,231,.32);
+      border-radius: 50%;
+      box-shadow: 0 0 0 42px rgba(217,238,231,.04), 0 0 0 84px rgba(217,238,231,.025);
+    }
+
+    .case-meta {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font);
+      font-size: .7rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #a9bbb6;
+    }
+
+    .case-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .case-live::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #62d6ad;
+      box-shadow: 0 0 0 5px rgba(98,214,173,.12);
+    }
+
+    .case-title {
+      position: relative;
+      margin-top: 78px;
+      max-width: 380px;
+      font-size: clamp(2.4rem, 4vw, 4.2rem);
+      font-weight: 620;
+      letter-spacing: -.055em;
+      line-height: .96;
+    }
+
+    .case-title span {
+      display: block;
+      margin-top: 14px;
+      color: #90a29d;
+      font-family: var(--font);
+      font-size: .72rem;
+      font-weight: 450;
+      line-height: 1.5;
+      letter-spacing: .02em;
+    }
+
+    .system-flow {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 78px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 9px;
+      align-items: center;
+    }
+
+    .flow-node {
+      padding: 14px 10px;
+      border: 1px solid rgba(217,238,231,.28);
+      background: rgba(217,238,231,.045);
+      color: #d9eee7;
+      font-family: var(--font);
+      font-size: .68rem;
+      text-align: center;
+    }
+    .flow-arrow { color: var(--signal); font-family: var(--font); }
+
+    .case-link {
+      position: absolute;
+      left: 22px;
+      bottom: 24px;
+      color: #f8f7f3;
+      font-size: .88rem;
+      font-weight: 560;
+      text-decoration: none;
+    }
+    .case-link span { color: var(--signal); margin-left: 7px; }
+
+    .metrics { background: var(--ink); border-color: var(--ink); }
+    .metric { border-color: rgba(255,255,255,.16); }
+    .metric-val { color: #f8f7f3; }
+    .metric-lbl { color: #9da6aa; }
+
+    .projects-grid {
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+      gap: 16px;
+      border: 0;
+    }
+
+    .project-card {
+      min-height: 360px;
+      border: 1px solid var(--border) !important;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card .project-link { margin-top: auto; }
+
+    @media (max-width: 900px) {
+      .band { min-height: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .case-visual { min-height: 440px; }
+    }
+
+    @media (max-width: 600px) {
+      .band { background: var(--bg); }
+      nav { padding-top: 18px; }
+      .hero { padding-top: 54px; gap: 48px; }
+      h1 { font-size: clamp(1.6rem, 6.4vw, 2rem); line-height: 1.38; }
+      .hero-id-avatar { width: 72px; height: 72px; border-radius: 18px; }
+      .hero-code pre { font-size: 0.78rem; }
+      .case-visual { min-height: 410px; padding: 18px; box-shadow: 9px 9px 0 rgba(0,111,95,.14); }
+      .case-title { margin-top: 64px; }
+      .system-flow { left: 18px; right: 18px; bottom: 72px; gap: 5px; }
+      .flow-node { padding: 12px 4px; font-size: .59rem; }
+      .case-link { left: 18px; bottom: 20px; }
+      .hero-cta { align-items: stretch; }
+      .btn-primary, .btn-secondary { justify-content: center; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/design-system.css?v=6">
+  <link rel="stylesheet" href="assets/theme.css?v=8">
+  <script src="assets/analytics.js?v=2" defer></script>
+</head>
+<body class="page-home">
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+  <main id="main-content">
+
+  <!-- ── Band: nav + hero ──────────────────────────────── -->
+  <div class="band">
+    <div class="wrap">
+      <nav aria-label="전역 내비게이션">
+        <a href="index.html" class="nav-brand">전성훈</a>
+        <ul class="nav-links">
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="resume.html">이력서</a></li>
+          <li><button class="theme-toggle" type="button" aria-label="라이트/다크 모드 전환">
+            <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M2.9 2.9l1.3 1.3M11.8 11.8l1.3 1.3M13.1 2.9l-1.3 1.3M4.2 11.8l-1.3 1.3"/></svg>
+          </button></li>
+          <li><a href="mailto:jsh097610@gmail.com" class="nav-cta">연락하기</a></li>
+        </ul>
+      </nav>
+
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="hero-id">
+            <span class="hero-id-avatar"><img src="assets/profile.jpg" alt="전성훈 프로필 사진"></span>
+            <div>
+              <p class="hero-id-name">전성훈</p>
+              <p class="hero-id-role">iOS Developer</p>
+            </div>
+          </div>
+          <h1>문제는 발생하기 전에 예방하고,<br>교훈은 <span style="color:var(--accent)">팀의 자산으로 남깁니다.</span></h1>
+          <p class="hero-sub">
+            문제가 발생한 뒤에 해결하는 것이 아니라, 발생하기 전에 미리 대비하는 개발을 지향합니다.
+            유지보수하기 쉬운 구조와 확장에 열린 코드가 제품을 오래 살게 한다고 믿습니다.
+          </p>
+          <div class="hero-cta">
+            <a href="work.html" class="btn-primary">
+            경력 자세히 보기
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2.5 6.5h8M6.5 2.5l4 4-4 4"/>
+            </svg>
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-code" aria-label="코드로 쓴 자기소개">
+<pre><span class="hc-kw">struct</span> <span class="hc-type">SeonghunJeon</span>: <span class="hc-type">iOSDeveloper</span> {
+    <span class="hc-kw">let</span> years = <span class="hc-num">3</span>
+    <span class="hc-kw">let</span> platforms: [<span class="hc-type">Platform</span>] =
+        [.iOS, .android, .web]
+    <span class="hc-kw">let</span> career: [<span class="hc-type">Company</span>] =
+        [.우리요, .일루미나리안, .키라앤컴퍼니]
+
+    <span class="hc-kw">func</span> work(on problem: <span class="hc-type">Problem</span>) {
+        prevent(problem)
+        <span class="hc-kw">let</span> lesson = document(problem)
+        share(lesson, with: .team)
+    }
+}</pre>
+        </aside>
+        </div>
+    </div>
+  </div>
+
+  <!-- ── 01 Selected ──────────────────────────────────── -->
+  <section class="section" aria-labelledby="projects-hd">
+    <div class="wrap">
+      <div class="sec-header-row">
+        <div>
+          <p class="sec-eyebrow fi">SELECTED</p>
+          <h2 id="projects-hd" class="fi" style="margin-top: 4px;">프로젝트</h2>
+        </div>
+        <a href="projects.html" class="all-link fi">All projects →</a>
+      </div>
+
+      <div class="projects-grid fi">
+
+        <div class="project-card">
+          <span class="status-badge">2025.05 &ndash; 2026.07 · 1년 3개월</span>
+          <h3 class="project-title">KIRA (Katsby)</h3>
+          <p class="project-sub">금융 교육 앱, iOS 주도 (Android·Web 겸업)</p>
+          <div class="project-tags">
+            <span class="tag">SwiftUI</span>
+            <span class="tag">Swift Concurrency</span>
+            <span class="tag">Clean Architecture</span>
+            <span class="tag">StoreKit 2</span>
+            <span class="tag">Tuist</span>
+          </div>
+          <a href="projects/kira.html" class="project-link">
+            개선 포인트 보기
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <div class="project-card">
+          <span class="status-badge">2025.03 &ndash; 2026</span>
+          <h3 class="project-title">GitSearch: Clean → Micro Feature</h3>
+          <p class="project-sub">같은 앱을 Clean에서 Micro Feature로 다시 만든 개인 프로젝트</p>
+          <div class="project-tags">
+            <span class="tag">Swift 6</span>
+            <span class="tag">Tuist</span>
+            <span class="tag">Micro Feature</span>
+            <span class="tag">Clean Architecture</span>
+          </div>
+          <p class="project-sub" style="margin-top: 16px; margin-bottom: 0;">블로그 3편·docs 노트 8편으로 전 과정 기록</p>
+          <a href="projects/gitsearch.html" class="project-link">
+            구조 보기
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <div class="project-card">
+          <span class="status-badge">2025.02 &ndash; 2025.07</span>
+          <h3 class="project-title">SERENADE</h3>
+          <p class="project-sub">웨딩 정보 서비스, 체크리스트&middot;예산&middot;마이페이지 담당 (iOS 2인)</p>
+          <div class="project-tags">
+            <span class="tag">ReactorKit</span>
+            <span class="tag">RxSwift</span>
+            <span class="tag">Clean Architecture</span>
+            <span class="tag">Tuist</span>
+          </div>
+          <a href="projects/serenade.html" class="project-link">
+            자세히 보기
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <div class="project-card">
+          <span class="status-badge">SPM &middot; CocoaPods 배포</span>
+          <h3 class="project-title">SpeechBubble</h3>
+          <p class="project-sub">외부 의존 없는 UIKit 말풍선 라이브러리</p>
+          <div class="project-tags">
+            <span class="tag">UIKit</span>
+            <span class="tag">UIBezierPath</span>
+            <span class="tag">OptionSet API</span>
+            <span class="tag">SPM·CocoaPods</span>
+          </div>
+          <a href="projects/speechbubble.html" class="project-link">
+            자세히 보기
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <div class="project-card">
+          <span class="status-badge">2023.05 &ndash; 2026.04</span>
+          <h3 class="project-title">AVIRO</h3>
+          <p class="project-sub">비건 식당 공유 플랫폼 · 팀 중 iOS 전담</p>
+          <div class="project-tags">
+            <span class="tag">UIKit</span>
+            <span class="tag">Realm</span>
+            <span class="tag">NaverMap</span>
+          </div>
+          <a href="projects/aviro.html" class="project-link">
+            프로젝트 보기
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 02 What I Do ─────────────────────────────────── -->
+  <section class="section section--surface" aria-labelledby="wid-hd">
+    <div class="wrap">
+      <p class="sec-eyebrow fi">WHAT I DO</p>
+      <h2 id="wid-hd" class="fi" style="margin-top: 4px;">하는 일</h2>
+
+      <div class="wid-list">
+
+        <div class="wid-row fi">
+          <div class="wid-left">
+            <span class="wid-num">01</span>
+            <span class="wid-title">iOS 깊이</span>
+          </div>
+          <p class="wid-desc">SwiftUI 기반으로 화면 구현부터 내비게이션, 딥링크, 상태 관리까지 iOS 전반을 다룹니다. 매주 바뀌는 제품을 지탱한 결정들을 14건의 케이스로 풀어 두었습니다.</p>
+        </div>
+
+        <div class="wid-row fi">
+          <div class="wid-left">
+            <span class="wid-num">02</span>
+            <span class="wid-title">프론트 전반</span>
+          </div>
+          <p class="wid-desc">우리요에서 Android QA 대응으로 시작해 KIRA(Katsby)에서는 퀴즈 등 피처 단위 Android 구현과 React 웹 구현까지 진행했습니다. iOS의 깊이에 프론트 전반의 폭을 더합니다.</p>
+        </div>
+
+        <div class="wid-row fi">
+          <div class="wid-left">
+            <span class="wid-num">03</span>
+            <span class="wid-title">AI 워크플로우</span>
+          </div>
+          <p class="wid-desc">헤드리스 에이전트 파이프라인을 설계하고 운영합니다. AI 산출물 검증까지 묶어 반복 작업을 제거합니다.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 Stack ────────────────────────────────────────── -->
+  <section class="section section--surface" aria-labelledby="stack-hd">
+    <div class="wrap">
+      <p class="sec-eyebrow fi">STACK</p>
+      <h2 id="stack-hd" class="fi" style="margin-top: 4px;">쓰는 기술</h2>
+
+      <div class="stack-list">
+
+        <div class="stack-row stack-row--primary fi">
+          <span class="stack-label">iOS</span>
+          <div class="stack-chips">
+            <span class="tag">Swift 6</span>
+            <span class="tag">SwiftUI</span>
+            <span class="tag">UIKit</span>
+            <span class="tag">Swift Concurrency</span>
+            <span class="tag">Combine</span>
+            <span class="tag">RxSwift</span>
+            <span class="tag">Objective-C</span>
+            <span class="tag">URLSession</span>
+            <span class="tag">StoreKit 2</span>
+          </div>
+        </div>
+
+        <div class="stack-row fi">
+          <span class="stack-label">아키텍처·테스트</span>
+          <div class="stack-chips">
+            <span class="tag">멀티모듈 (Tuist)</span>
+            <span class="tag">Clean Architecture</span>
+            <span class="tag">MVI</span>
+            <span class="tag">MVVM+C</span>
+            <span class="tag">XCTest</span>
+            <span class="tag">Swift Testing</span>
+          </div>
+        </div>
+
+        <div class="stack-row fi">
+          <span class="stack-label">Android &middot; Web</span>
+          <div class="stack-chips">
+            <span class="tag">Kotlin</span>
+            <span class="tag">Jetpack Compose</span>
+            <span class="tag">React</span>
+            <span class="tag">TypeScript</span>
+          </div>
+        </div>
+
+        <div class="stack-row fi">
+          <span class="stack-label">데이터·분석</span>
+          <div class="stack-chips">
+            <span class="tag">Realm</span>
+            <span class="tag">CoreData</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Amplitude</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 Currently ──────────────────────────────────── -->
+  <div class="currently-strip" role="region" aria-label="최근 이력">
+    <div class="wrap">
+      <div class="currently-inner fi">
+        <div class="currently-head">
+          <p class="sec-eyebrow">Recent Work</p>
+          <p class="currently-headline">KIRA(Katsby)의 iOS를 주도하며 프로덕트 개발 전반에 관여했습니다.</p>
+          <p class="currently-sub">좋은 제품을 함께 만들 다음 팀을 찾고 있습니다.</p>
+        </div>
+        <a href="projects/kira.html" class="currently-link">
+          개선 포인트 보기
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5h8M6.5 2.5l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Contact CTA ───────────────────────────────────── -->
+  <div class="contact-cta">
+    <div class="wrap">
+      <div class="contact-inner fi">
+        <h2 class="contact-headline">편하게 연락 주세요</h2>
+        <div class="code-contact">
+          <pre class="code-contact-body"><span class="cc-keyword">let</span> contact = <span class="cc-type">Contact</span>(
+    email:  &quot;<a href="mailto:jsh097610@gmail.com" class="cc-link">jsh097610@gmail.com</a>&quot;,
+    github: &quot;<a href="https://github.com/Jeon0976" target="_blank" rel="noopener noreferrer" class="cc-link">github.com/Jeon0976</a>&quot;
+)</pre>
+        </div>
+        <a href="mailto:jsh097610@gmail.com" class="btn-primary">
+          연락하기
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2.5 6.5h8M6.5 2.5l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <!-- ── Footer ────────────────────────────────────────── -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <span class="footer-brand">전성훈 · iOS Developer</span>
+        <ul class="footer-nav" aria-label="사이트 링크">
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="https://github.com/Jeon0976" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="mailto:jsh097610@gmail.com">Email</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="assets/reveal.js?v=1"></script>
+
+  <script src="assets/theme.js" defer></script>
+</body>
+</html>

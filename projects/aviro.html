@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <script>var t="dark";try{t=localStorage.getItem("theme")||"dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AVIRO · 전국 비건 식당 공유 플랫폼. 동아리 팀 중 iOS 전담, 2023–2026 운영.">
+  <meta property="og:title" content="AVIRO · 전성훈">
+  <meta property="og:description" content="전국 비건 식당 공유 플랫폼 iOS 앱. 팀 출시·iOS 전담, 3년 운영한 케이스 스터디.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d1d1f'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='ui-sans-serif, system-ui, sans-serif' font-size='15' font-weight='600' letter-spacing='-0.5' fill='%23f5f5f7'%3ESJ%3C/text%3E%3Crect x='10.5' y='24' width='11' height='1.6' rx='0.8' fill='%230071e3'/%3E%3C/svg%3E">
+  <title>AVIRO · 전성훈 포트폴리오</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=9">
+  <style>
+    /* ── Layout ─────────────────────────────────────────── */
+
+    /* ── Top iridescent band ─────────────────────────────── */
+
+    /* ── Nav ─────────────────────────────────────────────── */
+
+    /* ── Hero ────────────────────────────────────────────── */
+
+    .hero {
+      padding-top: 40px;
+      max-width: 640px;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 3.6vw, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.28;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      margin-bottom: 14px;
+    }
+
+    .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--muted);
+      line-height: 1.72;
+      max-width: 540px;
+    }
+
+    /* ── Metrics strip ───────────────────────────────────── */
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .metric {
+      padding: 24px 32px;
+      border-right: 1px solid var(--border);
+    }
+
+    /* ── Section scaffolding ─────────────────────────────── */
+
+    h2 {
+      font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      line-height: 1.32;
+      color: var(--ink);
+    }
+
+    /* ── Cells ───────────────────────────────────────────── */
+
+    .cases {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .cell-visual { transition: transform 500ms ease; min-width: 0; }
+
+    .cell-desc {
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border-right: 1px solid var(--border);
+    }
+
+    .cell-desc h2 { margin-bottom: 20px; }
+
+    .cell-desc .sec-eyebrow { margin-bottom: 10px; }
+
+    /* ── Bullet list ─────────────────────────────────────── */
+
+    .impl-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 4px;
+    }
+
+    .impl-item {
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .impl-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .impl-item-title {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .impl-item-body {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Architecture list ──────────────────────────────── */
+
+    .arch-intro {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.72;
+      margin-bottom: 28px;
+    }
+
+    .arch-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .arch-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .arch-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .arch-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 2px;
+      white-space: nowrap;
+    }
+
+    .arch-body {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .arch-body strong {
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ── Code panel ──────────────────────────────────────── */
+
+    .cell-visual {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 44px 36px;
+      min-height: 280px;
+    }
+
+    .code-body {
+      padding: 20px 18px;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      line-height: 1.75;
+      color: var(--ink);
+      white-space: pre;
+      overflow-x: auto;
+      tab-size: 4;
+    }
+
+    .cn { color: #0071e3; }
+
+    /* ── Phone frames ────────────────────────────────────── */
+
+    .phones-duo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .phone-wrap {
+      position: relative;
+      width: 130px;
+      flex-shrink: 0;
+    }
+
+    .phone-wrap svg { width: 100%; display: block; }
+
+    .phone-label {
+      position: absolute;
+      bottom: 40px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.5625rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Repo button row ─────────────────────────────────── */
+
+    .repo-row {
+      padding: 0 0 var(--section-gap);
+      display: flex;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 22px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      border-radius: var(--r-btn);
+      transition: background-color 200ms var(--ease-snap);
+    }
+
+    /* ── Nav strip ───────────────────────────────────────── */
+
+    .nav-proj-title { position: relative; font-size: 1rem; font-weight: 500; color: var(--ink); letter-spacing: -0.015em; transition: color 200ms var(--ease-snap); }
+
+    .nav-proj-title::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 300ms var(--ease-snap); }
+
+    /* ── Footer ──────────────────────────────────────────── */
+
+    .footer-nav a {
+      position: relative;
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 200ms var(--ease-snap);
+    }
+
+    .footer-nav a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 300ms var(--ease-snap); }
+
+    /* ── Scroll fade ─────────────────────────────────────── */
+
+    /* ── Status badge ────────────────────────────────────── */
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.625rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--muted);
+      display: inline-block;
+    }
+
+    /* ── Stagger reveals ────────────────────────────────── */
+
+    .cases .fi:nth-child(2) { transition-delay: 40ms; }
+
+    /* ── Focus visible ───────────────────────────────────── */
+
+    @media (prefers-reduced-motion: reduce) {
+      .fi { transform: none !important; transition: opacity 240ms var(--ease-snap); transition-delay: 0ms !important; }
+      .fi.vis { opacity: 1; }
+      *::after { transition: none !important; transform: scaleX(0) !important; }
+      .cell-visual { transition: none !important; transform: none !important; }
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+
+    @media (max-width: 768px) {
+      :root { --section-gap: 64px; }
+
+      .nav-links { gap: 18px; }
+      .nav-links li:nth-child(2),
+      .nav-links li:nth-child(3) { display: none; }
+
+      h1 { font-size: clamp(2rem, 8vw, 3rem); }
+
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(2) { border-right: none; }
+      .metric:nth-child(3) { border-top: 1px solid var(--border); }
+      .metric:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+
+      .cell { grid-template-columns: minmax(0, 1fr); }
+      .cell-desc {
+        padding: 36px 28px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .cell.flip .cell-desc {
+        order: 0;
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .cell.flip .cell-visual { order: 1; }
+      .cell-visual { min-height: 220px; padding: 32px 24px; }
+
+      .footer-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-nav { flex-wrap: wrap; gap: 16px; }
+
+      .phones-duo { gap: 16px; }
+      .phone-wrap { width: 100px; }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric { border-right: none !important; }
+      .metric + .metric { border-top: 1px solid var(--border); }
+    }
+
+    .status-badge { font-family: var(--font); font-size: 0.875rem; letter-spacing: 0; text-transform: none; color: var(--muted); }
+
+    .status-dot { width: 6px; height: 6px; }
+  </style>
+  <link rel="stylesheet" href="../assets/design-system.css?v=6">
+  <link rel="stylesheet" href="../assets/theme.css?v=8">
+  <script src="../assets/analytics.js?v=2" defer></script>
+</head>
+<body class="page-case page-aviro">
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+
+  <!-- ── Band: nav + hero ──────────────────────────────── -->
+  <div class="band">
+    <div class="wrap">
+      <nav aria-label="전역 내비게이션">
+        <a href="../index.html" class="nav-brand">전성훈</a>
+        <ul class="nav-links">
+          <li><a href="../projects.html" aria-current="page">Projects</a></li>
+          <li><a href="../work.html">Work</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../resume.html">이력서</a></li>
+          <li><button class="theme-toggle" type="button" aria-label="라이트/다크 모드 전환">
+            <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M2.9 2.9l1.3 1.3M11.8 11.8l1.3 1.3M13.1 2.9l-1.3 1.3M4.2 11.8l-1.3 1.3"/></svg>
+          </button></li>
+          <li><a href="mailto:jsh097610@gmail.com" class="nav-cta">연락하기</a></li>
+        </ul>
+      </nav>
+
+      <div class="hero">
+        <p class="eyebrow">PROJECT</p>
+        <h1>AVIRO</h1>
+        <p class="hero-meta">동아리 팀(기획·디자인·서버·Android) · iOS 전담 · 2023.05–2026.04</p>
+        <p class="hero-sub">개발자로 전환한 뒤 팀으로 출시한 첫 앱입니다. 2023년부터 3년간 운영하다 2026년 4월 서비스를 정리했습니다.</p>
+        <p class="hero-meta" style="margin-top:12px">누적 유저 1,300+ &middot; App Store 평점 4.9 &middot; 등록 비건 식당 1,300+ &middot; 리뷰 200+</p>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+  <!-- ── Body sections ────────────────────────────────── -->
+  <section class="section" aria-labelledby="arch-hd">
+    <div class="wrap">
+      <div class="cases">
+
+        <!-- Cell 2 (flip): phones + architecture -->
+        <article class="cell flip fi" aria-label="지도와 데이터">
+          <div class="cell-desc">
+            <p class="sec-eyebrow">지도 · 데이터</p>
+            <h2 id="arch-hd">지도와 데이터를 다루며</h2>
+            <p class="arch-intro">MVP 패턴으로 빠르게 출시해 3년을 운영했습니다. 지도와 데이터를 다루며 마주친 문제들을 코드로 풀었고, 유지보수의 한계도 몸으로 배웠습니다.</p>
+            <ul class="arch-list" role="list">
+              <li class="arch-item">
+                <span class="arch-label">동기화</span>
+                <div class="arch-body">
+                  <strong>변경분만 받는 동기화</strong>
+                  전국 식당 마커를 매번 전량 내려받지 않고, 마지막 갱신 이후 바뀐 곳과 삭제된 곳만 받아 Realm에 반영했습니다. 로컬 데이터로 먼저 지도를 그린 뒤 변경분만 맞춰 시작 속도와 오프라인 대응, 트래픽을 함께 챙겼습니다.
+                </div>
+              </li>
+              <li class="arch-item">
+                <span class="arch-label">지도</span>
+                <div class="arch-body">
+                  <strong>겹친 핀도 개별 선택되게</strong>
+                  좌표가 완전히 겹친 식당들은 핀이 포개져 고를 수 없어서, 경도를 조금씩 밀어 분산시켜 하나씩 선택되게 했습니다.
+                </div>
+              </li>
+              <li class="arch-item">
+                <span class="arch-label">학습</span>
+                <div class="arch-body">
+                  <strong>MVP의 한계가 아키텍처 학습의 출발점</strong>
+                  화면과 데이터가 한 레이어에 뒤섞인 구조로 개발하다가 대규모 업데이트에서 유지보수 한계를 겪었습니다. 이 경험이 Clean Architecture를 학습하고 다음 실무에서 구조를 직접 설계하는 계기가 됐습니다.
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="cell-visual">
+            <div class="code-panel">
+              <div class="code-filename">MarkerModelManager.swift &middot; 요지</div>
+              <pre class="code-body"><span class="ck">func</span> fetchRawData() {
+    <span class="cm">// 로컬에 데이터가 있으면 Realm으로 먼저 그린다</span>
+    haveStoredData ? fetchFromRealm() : fetchFromServer()
+}
+
+<span class="cm">// 마지막 갱신 시각을 실어 변경분만 요청</span>
+<span class="ck">func</span> syncDelta() {
+    <span class="ck">let</span> dto = <span class="ct">AVIROMapModelDTO</span>(time: updateTime)
+    api.loadPlaces(dto) { result <span class="ck">in</span>
+        result.updatedPlace.forEach {
+            realm.add($0, update: .modified)   <span class="cm">// upsert</span>
+        }
+        result.deletedPlace.forEach {
+            realm.delete(placeBy: $0)          <span class="cm">// 삭제 반영</span>
+        }
+        updateTime = <span class="ct">Date</span>()                 <span class="cm">// 다음 변경분 기준</span>
+    }
+}</pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Repo button -->
+      <div class="repo-row fi" style="margin-top: 40px;">
+        <a href="https://github.com/AVIRO-official/AVIRO-iOS"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="btn-primary"
+           aria-label="AVIRO-iOS GitHub 저장소 (공개)">
+          GitHub &middot; AVIRO-iOS
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2.5 6.5h8M6.5 2.5l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ── Nav strip ─────────────────────────────────────── -->
+  <div class="nav-strip">
+    <div class="wrap">
+      <div class="nav-strip-inner">
+        <a href="gitsearch.html" class="nav-proj">
+          <span class="nav-proj-hint">이전 프로젝트</span>
+          <span class="nav-proj-title">← GitSearch</span>
+        </a>
+        <a href="serenade.html" class="nav-proj nav-proj--next">
+          <span class="nav-proj-hint">다음 프로젝트</span>
+          <span class="nav-proj-title">SERENADE →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ────────────────────────────────────────── -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <span class="footer-brand">전성훈 · iOS Developer</span>
+        <ul class="footer-nav" aria-label="사이트 링크">
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../work.html">Work</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="https://github.com/Jeon0976" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="mailto:jsh097610@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/case.js?v=1" defer></script>
+
+  <script src="../assets/theme.js" defer></script>
+</body>
+</html>
