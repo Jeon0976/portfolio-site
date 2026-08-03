@@ -146,17 +146,8 @@ html[data-theme="dark"] { color-scheme: dark; background: var(--ds-canvas); }
 
 .prose-quote { font-size: 1.3125rem; line-height: 1.58; }
 
-.case-row .row-body,
-.ba-text,
-.imp-text,
-.arch-body { font-size: .96875rem; line-height: 1.66; }
-.row-label,
-.ba-label,
-.imp-label,
-.arch-label { font-size: .8125rem; font-weight: 600; color: var(--ink); }
-
-/* 라벨 컬럼 폭도 전 페이지 동일하게 */
-.arch-item { grid-template-columns: 72px minmax(0, 1fr); }
+.case-row .row-body { font-size: .96875rem; line-height: 1.66; }
+.row-label { font-size: .8125rem; font-weight: 600; color: var(--ink); }
 
 /* 케이스 라벨(CASE 01 …)은 전 페이지 브랜드색으로 고정 */
 .cell-tag { color: var(--ds-brand); }

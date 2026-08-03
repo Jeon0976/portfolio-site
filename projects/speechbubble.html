@@ -11,7 +11,7 @@
   <meta name="description" content="UIBezierPath·CAShapeLayer 커스텀 드로잉과 OptionSet API로 설계해 SPM·CocoaPods로 배포한 UIKit 말풍선 라이브러리.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=12">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=13">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -260,7 +260,6 @@
       }
       .cell-visual { order: 1 !important; min-height: 200px; padding: 28px 24px; }
 
-      .ba-wrap { grid-template-columns: 1fr; }
       .code-grid { grid-template-columns: 1fr; }
       .record-grid { grid-template-columns: 1fr; }
 
@@ -278,8 +277,8 @@
 
     .status-dot { width: 6px; height: 6px; }
   </style>
-  <link rel="stylesheet" href="../assets/design-system.css?v=6">
-  <link rel="stylesheet" href="../assets/theme.css?v=9">
+  <link rel="stylesheet" href="../assets/design-system.css?v=7">
+  <link rel="stylesheet" href="../assets/theme.css?v=10">
   <script src="../assets/analytics.js?v=2" defer></script>
 </head>
 <body class="page-case page-speechbubble">
@@ -328,19 +327,19 @@
           <div class="cell-desc">
             <p class="cell-tag">Case 01 &middot; 드로잉</p>
             <h3 class="cell-title">본체와 꼬리를 다른 기법으로 그린다</h3>
-            <div class="ba-wrap">
-              <div class="ba-block">
-                <span class="ba-label">문제</span>
-                <p class="ba-text">말풍선은 본체(둥근 사각형)와 꼬리(삼각형)의 테두리가 한 획처럼 이어져 보여야 합니다. 점선 스타일까지 지원하려면 layer 테두리만으로는 부족합니다.</p>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">말풍선은 본체(둥근 사각형)와 꼬리(삼각형)의 테두리가 한 획처럼 이어져 보여야 합니다. 점선 스타일까지 지원하려면 layer 테두리만으로는 부족합니다.</p>
               </div>
-              <div class="ba-block ba-block--after">
-                <span class="ba-label">접근</span>
-                <p class="ba-text">드로잉을 부위별로 분리했습니다. 본체는 CAShapeLayer(둥근 사각 + 점선 대시), 꼬리는 draw(_:)의 UIBezierPath 삼각형. 두 뷰를 borderWidth만큼 겹치는 제약으로 합성해 테두리가 이어집니다.</p>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">드로잉을 부위별로 분리했습니다. 본체는 CAShapeLayer(둥근 사각 + 점선 대시), 꼬리는 draw(_:)의 UIBezierPath 삼각형. 두 뷰를 borderWidth만큼 겹치는 제약으로 합성해 테두리가 이어집니다.</p>
               </div>
-            </div>
-            <div class="imp-wrap">
-              <span class="imp-label">핵심 결정</span>
-              <p class="imp-text">꼬리를 4방향(top/bottom/left/right) 어디든, 변의 임의 비율 위치에 붙일 수 있습니다. positionRatio로 기준점을 잡고 arrowSize만큼 벌려 그립니다.</p>
+              <div class="case-row">
+                <span class="row-label">핵심 결정</span>
+                <p class="row-body">꼬리를 4방향(top/bottom/left/right) 어디든, 변의 임의 비율 위치에 붙일 수 있습니다. positionRatio로 기준점을 잡고 arrowSize만큼 벌려 그립니다.</p>
+              </div>
             </div>
           </div>
           <div class="cell-visual">
@@ -366,19 +365,19 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
           <div class="cell-desc">
             <p class="cell-tag">Case 02 &middot; API</p>
             <h3 class="cell-title">OptionSet 스타일과 15개 반응형 프로퍼티</h3>
-            <div class="ba-wrap">
-              <div class="ba-block">
-                <span class="ba-label">문제</span>
-                <p class="ba-text">스타일(채움&middot;실선&middot;점선)은 서로 조합되고, 꼬리 위치(4방향)는 배타적입니다. 잘못된 조합을 아예 쓸 수 없도록 타입으로 막아야 합니다.</p>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">스타일(채움&middot;실선&middot;점선)은 서로 조합되고, 꼬리 위치(4방향)는 배타적입니다. 잘못된 조합을 아예 쓸 수 없도록 타입으로 막아야 합니다.</p>
               </div>
-              <div class="ba-block ba-block--after">
-                <span class="ba-label">접근</span>
-                <p class="ba-text">조합은 OptionSet(.fill / .line / .dottedLine), 배타는 enum(top/bottom/left/right)으로 성격에 맞는 타입을 골랐습니다. 필수 파라미터는 text&middot;style&middot;arrowPosition 3개뿐입니다.</p>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">조합은 OptionSet(.fill / .line / .dottedLine), 배타는 enum(top/bottom/left/right)으로 성격에 맞는 타입을 골랐습니다. 필수 파라미터는 text&middot;style&middot;arrowPosition 3개뿐입니다.</p>
               </div>
-            </div>
-            <div class="imp-wrap">
-              <span class="imp-label">핵심 결정</span>
-              <p class="imp-text">공개 프로퍼티 15개 전부 didSet으로 런타임에 반응합니다. 값을 바꾸면 서브뷰 전파와 재레이아웃&middot;재드로우까지 이어집니다.</p>
+              <div class="case-row">
+                <span class="row-label">핵심 결정</span>
+                <p class="row-body">공개 프로퍼티 15개 전부 didSet으로 런타임에 반응합니다. 값을 바꾸면 서브뷰 전파와 재레이아웃&middot;재드로우까지 이어집니다.</p>
+              </div>
             </div>
           </div>
           <div class="cell-visual">
@@ -403,14 +402,14 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
           <div class="cell-desc">
             <p class="cell-tag">회고 &middot; 개선 로드맵</p>
             <h3 class="cell-title">지금 다시 본다면 고칠 것들</h3>
-            <div class="ba-wrap">
-              <div class="ba-block">
-                <span class="ba-label">그때</span>
-                <p class="ba-text">2024년 처음 배포한 라이브러리라 빠진 것들이 있습니다. 테스트는 템플릿 스텁에 머물렀고, 접근성 라벨과 SwiftUI 지원을 넣지 못했습니다.</p>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">그때</span>
+                <p class="row-body">2024년 처음 배포한 라이브러리라 빠진 것들이 있습니다. 테스트는 템플릿 스텁에 머물렀고, 접근성 라벨과 SwiftUI 지원을 넣지 못했습니다.</p>
               </div>
-              <div class="ba-block ba-block--after">
-                <span class="ba-label">지금 보이는 것</span>
-                <p class="ba-text">UIViewRepresentable 래퍼로 SwiftUI를 지원하고, 합성 뷰 레벨의 accessibilityLabel을 붙이고, 다크 모드 전환 시 traitCollectionDidChange에서 테두리 색을 재적용해야 합니다.</p>
+              <div class="case-row">
+                <span class="row-label">지금 보이는 것</span>
+                <p class="row-body">UIViewRepresentable 래퍼로 SwiftUI를 지원하고, 합성 뷰 레벨의 accessibilityLabel을 붙이고, 다크 모드 전환 시 traitCollectionDidChange에서 테두리 색을 재적용해야 합니다.</p>
               </div>
             </div>
           </div>

@@ -137,7 +137,6 @@ h1, h2, h3 { color: var(--ds-ink); text-wrap: balance; }
 .proj-context,
 .project-sub,
 .prose-body,
-.arch-body,
 .cell-desc p,
 .case-row .row-body,
 .tl-bullets,
@@ -311,11 +310,9 @@ h1, h2, h3 { color: var(--ds-ink); text-wrap: balance; }
 .tl-note { color: var(--ds-muted); }
 
 /* About */
-.prose-grid,
-.arch-item { border-color: var(--ds-line); }
+.prose-grid { border-color: var(--ds-line); }
 
-.prose-label,
-.arch-label {
+.prose-label {
   color: var(--ds-brand);
   font-family: var(--ds-font-sans);
 }

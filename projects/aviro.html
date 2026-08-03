@@ -11,7 +11,7 @@
   <title>AVIRO · 전성훈 포트폴리오</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=12">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=13">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -142,39 +142,12 @@
       margin-bottom: 28px;
     }
 
-    .arch-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
 
-    .arch-item {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 12px 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
 
-    .arch-item:last-child { border-bottom: none; padding-bottom: 0; }
 
-    .arch-label {
-      font-size: 0.6875rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding-top: 2px;
-      white-space: nowrap;
-    }
 
-    .arch-body {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
 
-    .arch-body strong {
+    .row-body strong {
       font-weight: 600;
       color: var(--ink);
       display: block;
@@ -359,8 +332,8 @@
 
     .status-dot { width: 6px; height: 6px; }
   </style>
-  <link rel="stylesheet" href="../assets/design-system.css?v=6">
-  <link rel="stylesheet" href="../assets/theme.css?v=9">
+  <link rel="stylesheet" href="../assets/design-system.css?v=7">
+  <link rel="stylesheet" href="../assets/theme.css?v=10">
   <script src="../assets/analytics.js?v=2" defer></script>
 </head>
 <body class="page-case page-aviro">
@@ -407,24 +380,24 @@
             <p class="sec-eyebrow">지도 · 데이터</p>
             <h2 id="arch-hd">지도와 데이터를 다루며</h2>
             <p class="arch-intro">MVP 패턴으로 빠르게 출시해 3년을 운영했습니다. 지도와 데이터를 다루며 마주친 문제들을 코드로 풀었고, 유지보수의 한계도 몸으로 배웠습니다.</p>
-            <ul class="arch-list" role="list">
-              <li class="arch-item">
-                <span class="arch-label">동기화</span>
-                <div class="arch-body">
+            <ul class="case-rows" role="list">
+              <li class="case-row">
+                <span class="row-label">동기화</span>
+                <div class="row-body">
                   <strong>변경분만 받는 동기화</strong>
                   전국 식당 마커를 매번 전량 내려받지 않고, 마지막 갱신 이후 바뀐 곳과 삭제된 곳만 받아 Realm에 반영했습니다. 로컬 데이터로 먼저 지도를 그린 뒤 변경분만 맞춰 시작 속도와 오프라인 대응, 트래픽을 함께 챙겼습니다.
                 </div>
               </li>
-              <li class="arch-item">
-                <span class="arch-label">지도</span>
-                <div class="arch-body">
+              <li class="case-row">
+                <span class="row-label">지도</span>
+                <div class="row-body">
                   <strong>겹친 핀도 개별 선택되게</strong>
                   좌표가 완전히 겹친 식당들은 핀이 포개져 고를 수 없어서, 경도를 조금씩 밀어 분산시켜 하나씩 선택되게 했습니다.
                 </div>
               </li>
-              <li class="arch-item">
-                <span class="arch-label">학습</span>
-                <div class="arch-body">
+              <li class="case-row">
+                <span class="row-label">학습</span>
+                <div class="row-body">
                   <strong>MVP의 한계가 아키텍처 학습의 출발점</strong>
                   화면과 데이터가 한 레이어에 뒤섞인 구조로 개발하다가 대규모 업데이트에서 유지보수 한계를 겪었습니다. 이 경험이 Clean Architecture를 학습하고 다음 실무에서 구조를 직접 설계하는 계기가 됐습니다.
                 </div>

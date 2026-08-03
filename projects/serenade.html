@@ -11,7 +11,7 @@
   <meta name="description" content="SERENADE · 웨딩 정보 서비스. ReactorKit 단방향과 RxDataSources diff 렌더링으로 체크리스트·예산·마이페이지를 구현한 2인 팀 프로젝트.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=12">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=13">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -260,7 +260,6 @@
       }
       .cell-visual { order: 1 !important; min-height: 200px; padding: 28px 24px; }
 
-      .ba-wrap { grid-template-columns: 1fr; }
       .code-grid { grid-template-columns: 1fr; }
       .record-grid { grid-template-columns: 1fr; }
 
@@ -278,8 +277,8 @@
 
     .status-dot { width: 6px; height: 6px; }
   </style>
-  <link rel="stylesheet" href="../assets/design-system.css?v=6">
-  <link rel="stylesheet" href="../assets/theme.css?v=9">
+  <link rel="stylesheet" href="../assets/design-system.css?v=7">
+  <link rel="stylesheet" href="../assets/theme.css?v=10">
   <script src="../assets/analytics.js?v=2" defer></script>
 </head>
 <body class="page-case page-serenade">
@@ -328,19 +327,19 @@
           <div class="cell-desc">
             <p class="cell-tag">Case 01 &middot; 단방향</p>
             <h3 class="cell-title">토글은 낙관적으로, 예산은 비관적으로</h3>
-            <div class="ba-wrap">
-              <div class="ba-block">
-                <span class="ba-label">문제</span>
-                <p class="ba-text">체크리스트는 토글이 잦아 서버 응답을 기다리면 조작감이 죽습니다. 반대로 예산 수정은 틀린 값이 잠깐이라도 보이면 안 됩니다.</p>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">체크리스트는 토글이 잦아 서버 응답을 기다리면 조작감이 죽습니다. 반대로 예산 수정은 틀린 값이 잠깐이라도 보이면 안 됩니다.</p>
               </div>
-              <div class="ba-block ba-block--after">
-                <span class="ba-label">접근</span>
-                <p class="ba-text">같은 ReactorKit 단방향 안에서 흐름별로 전략을 나눴습니다. 토글은 UI를 먼저 반영하는 낙관적 업데이트, 예산은 로딩&#8594;서버&#8594;재조회의 비관적 업데이트.</p>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">같은 ReactorKit 단방향 안에서 흐름별로 전략을 나눴습니다. 토글은 UI를 먼저 반영하는 낙관적 업데이트, 예산은 로딩&#8594;서버&#8594;재조회의 비관적 업데이트.</p>
               </div>
-            </div>
-            <div class="imp-wrap">
-              <span class="imp-label">핵심 결정</span>
-              <p class="imp-text">Action&#8594;Mutation&#8594;State 규칙은 그대로 두고 mutate의 방출 순서만 바꿉니다. 화면마다 다른 요구를 하나의 아키텍처 규칙 안에서 소화했습니다.</p>
+              <div class="case-row">
+                <span class="row-label">핵심 결정</span>
+                <p class="row-body">Action&#8594;Mutation&#8594;State 규칙은 그대로 두고 mutate의 방출 순서만 바꿉니다. 화면마다 다른 요구를 하나의 아키텍처 규칙 안에서 소화했습니다.</p>
+              </div>
             </div>
           </div>
           <div class="cell-visual">
@@ -366,19 +365,19 @@
           <div class="cell-desc">
             <p class="cell-tag">Case 02 &middot; 렌더링</p>
             <h3 class="cell-title">섹션 diff로 바뀐 행만 다시 그린다</h3>
-            <div class="ba-wrap">
-              <div class="ba-block">
-                <span class="ba-label">문제</span>
-                <p class="ba-text">카테고리 접기&middot;펼치기와 체크 토글마다 reloadData를 부르면 화면 전체가 깜빡이고 스크롤 위치가 흔들립니다.</p>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">카테고리 접기&middot;펼치기와 체크 토글마다 reloadData를 부르면 화면 전체가 깜빡이고 스크롤 위치가 흔들립니다.</p>
               </div>
-              <div class="ba-block ba-block--after">
-                <span class="ba-label">접근</span>
-                <p class="ba-text">RxDataSources AnimatableSectionModel &middot; 셀 모델이 identity와 Equatable을 나눠 구현해, 바뀐 행만 fade로 삽입&middot;삭제&middot;갱신됩니다.</p>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">RxDataSources AnimatableSectionModel &middot; 셀 모델이 identity와 Equatable을 나눠 구현해, 바뀐 행만 fade로 삽입&middot;삭제&middot;갱신됩니다.</p>
               </div>
-            </div>
-            <div class="imp-wrap">
-              <span class="imp-label">핵심 결정</span>
-              <p class="imp-text">State의 sections를 distinctUntilChanged로 바인딩해 같은 상태가 다시 방출되면 렌더링 자체를 건너뜁니다. 펼친 카테고리는 UserDefaults에 저장해 다음 실행에서 복원됩니다.</p>
+              <div class="case-row">
+                <span class="row-label">핵심 결정</span>
+                <p class="row-body">State의 sections를 distinctUntilChanged로 바인딩해 같은 상태가 다시 방출되면 렌더링 자체를 건너뜁니다. 펼친 카테고리는 UserDefaults에 저장해 다음 실행에서 복원됩니다.</p>
+              </div>
             </div>
           </div>
           <div class="cell-visual">

@@ -218,6 +218,7 @@ nav {
       display: flex;
       flex-direction: column;
       gap: 0;
+      list-style: none;
     }
 
 .case-row {
@@ -505,61 +506,14 @@ footer {
       margin-top: 56px;
     }
 
-.ba-wrap {
-      display: block;
-    }
 
-.ba-block {
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr);
-      gap: 12px;
-      padding: 12px 0;
-      border-top: 1px solid var(--border);
-    }
 
-.ba-wrap:last-child .ba-block:last-child { border-bottom: 1px solid var(--border); }
 
-.ba-block--after {
-      border-color: var(--border);
-      background: none;
-    }
 
-.ba-label {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--ink);
-      letter-spacing: 0.01em;
-      padding-top: 2px;
-    }
 
-.ba-text {
-      font-size: 0.9375rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
 
-.imp-wrap {
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr);
-      gap: 12px;
-      padding: 12px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
 
-.imp-label {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--ink);
-      letter-spacing: 0.01em;
-      padding-top: 2px;
-    }
 
-.imp-text {
-      font-size: 0.9375rem;
-      color: var(--ink);
-      line-height: 1.6;
-    }
 
 .code-grid {
       display: grid;
@@ -589,8 +543,8 @@ footer {
   .case-clip video, .case-clip img { width: 220px; }
 }
 
-.row-body, .ba-text, .imp-text, .arch-body, .cell-title, .row-label { overflow-wrap: break-word; word-break: break-word; }
-.row-body code, .arch-body code, .ba-text code { word-break: break-all; }
+.row-body, .cell-title, .row-label { overflow-wrap: break-word; word-break: break-word; }
+.row-body code { word-break: break-all; }
 
 /* ═══ 모바일 단일 열 붕괴 (case-shared가 인라인보다 늦게 로드되므로 여기서 확정) ═══ */
 @media (max-width: 768px) {
