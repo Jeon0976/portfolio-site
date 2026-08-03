@@ -431,6 +431,16 @@ footer {
 
 .page-standard .band .eyebrow { margin-bottom: 22px; }
 
+.page-standard.page-about .band h1 { line-height: 1.1; }
+
+.page-about .eyebrow,
+.page-about .sec-eyebrow,
+.page-projects .eyebrow,
+.page-work .eyebrow,
+.page-work .group-chapter {
+  font-size: .82rem;
+}
+
 .page-standard .band h1 {
   margin: 0 0 24px;
   font-size: clamp(3.25rem, 6vw, 5.2rem);
