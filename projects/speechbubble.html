@@ -276,7 +276,7 @@
         <p class="hero-meta">개인 라이브러리 &middot; UIKit 말풍선 뷰 &middot; 오픈소스(MIT)</p>
         <span class="status-badge">2024.04 &middot; v0.1.0&ndash;0.1.4 배포</span>
         <p class="hero-meta" style="margin-top:12px">iOS 13+ &middot; SPM&middot;CocoaPods</p>
-        <p class="hero-tagline">말풍선 드로잉을 부위별로 나누고 API까지 설계해 배포한 첫 라이브러리입니다.</p>
+        <p class="hero-tagline">말풍선 드로잉을 부위별로 나누고, 사용할 속성을 API로 정리해 배포했습니다.</p>
       </div>
     </div>
   </div>
@@ -293,10 +293,10 @@
       <div class="cases-stack">
 
         <!-- 01 · 드로잉 -->
-        <article class="case-cell fi" aria-label="드로잉: 본체와 꼬리를 다른 기법으로">
+        <article class="case-cell fi" aria-label="드로잉: 본체와 꼬리를 나눠 그리기">
           <div class="case-left">
             <p class="cell-tag">Case 01 &middot; 드로잉</p>
-            <h3 class="cell-title">본체와 꼬리를 다른 기법으로 그린다</h3>
+            <h3 class="cell-title">본체와 꼬리를 나눠 그린다</h3>
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
@@ -304,7 +304,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">드로잉을 부위별로 분리했습니다. 본체는 CAShapeLayer(둥근 사각 + 점선 대시), 꼬리는 draw(_:)의 UIBezierPath 삼각형. 두 뷰를 borderWidth만큼 겹치는 제약으로 합성해 테두리가 이어집니다.</p>
+                <p class="row-body">본체는 CAShapeLayer로 둥근 사각형과 점선을 그리고, 꼬리는 draw(_:)에서 UIBezierPath로 삼각형을 그렸습니다. 두 뷰는 테두리가 끊겨 보이지 않도록 borderWidth만큼 겹쳐 배치했습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">핵심 결정</span>
@@ -329,10 +329,10 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
         </article>
 
         <!-- 02 · API (flip) -->
-        <article class="case-cell fi" aria-label="API: OptionSet 스타일과 반응형 프로퍼티">
+        <article class="case-cell fi" aria-label="API: 조합과 위치를 타입으로 구분">
           <div class="case-left">
             <p class="cell-tag">Case 02 &middot; API</p>
-            <h3 class="cell-title">OptionSet 스타일과 15개 반응형 프로퍼티</h3>
+            <h3 class="cell-title">조합과 위치를 타입으로 구분한다</h3>
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
@@ -340,11 +340,11 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">조합은 OptionSet(.fill / .line / .dottedLine), 배타는 enum(top/bottom/left/right)으로 성격에 맞는 타입을 골랐습니다. 필수 파라미터는 text&middot;style&middot;arrowPosition 3개뿐입니다.</p>
+                <p class="row-body">함께 사용할 수 있는 스타일은 OptionSet(.fill / .line / .dottedLine)으로, 하나만 선택해야 하는 꼬리 위치는 enum(top/bottom/left/right)으로 구분했습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">핵심 결정</span>
-                <p class="row-body">공개 프로퍼티 15개 전부 didSet으로 런타임에 반응합니다. 값을 바꾸면 서브뷰 전파와 재레이아웃&middot;재드로우까지 이어집니다.</p>
+                <p class="row-body">생성에 필요한 값은 text&middot;style&middot;arrowPosition 세 가지로 제한하고, 색상&middot;두께&middot;여백에는 기본값을 뒀습니다. 필요한 항목만 바꿔 사용할 수 있습니다.</p>
               </div>
             </div>
           </div>
@@ -367,15 +367,15 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
         <article class="case-cell fi" aria-label="회고: 개선 로드맵">
           <div class="case-left">
             <p class="cell-tag">회고 &middot; 개선 로드맵</p>
-            <h3 class="cell-title">지금 다시 본다면 고칠 것들</h3>
+            <h3 class="cell-title">배포 후 남은 개선점</h3>
             <div class="case-rows">
               <div class="case-row">
-                <span class="row-label">그때</span>
-                <p class="row-body">2024년 처음 배포한 라이브러리라 빠진 것들이 있습니다. 테스트는 템플릿 스텁에 머물렀고, 접근성 라벨과 SwiftUI 지원을 넣지 못했습니다.</p>
+                <span class="row-label">배포 당시</span>
+                <p class="row-body">2024년 배포 당시 테스트는 템플릿 스텁에 머물렀고, 접근성 라벨과 SwiftUI 지원을 넣지 못했습니다.</p>
               </div>
               <div class="case-row">
-                <span class="row-label">지금 보이는 것</span>
-                <p class="row-body">UIViewRepresentable 래퍼로 SwiftUI를 지원하고, 합성 뷰 레벨의 accessibilityLabel을 붙이고, 다크 모드 전환 시 traitCollectionDidChange에서 테두리 색을 재적용해야 합니다.</p>
+                <span class="row-label">개선 방향</span>
+                <p class="row-body">드로잉 스냅샷 테스트, SwiftUI 래퍼, 접근성 라벨을 추가하고 다크 모드 전환 시 테두리 색상이 갱신되도록 보완할 수 있습니다.</p>
               </div>
             </div>
           </div>
@@ -402,7 +402,7 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
         <div class="record-card">
           <span class="record-num">v0.1.4</span>
           <p class="record-label">SPM &middot; CocoaPods 이중 배포</p>
-          <p class="record-sub">0.1.0부터 0.1.4까지 다섯 번의 릴리스. MIT 라이선스, 서드파티 의존성 없이 UIKit&middot;Foundation만 사용합니다.</p>
+          <p class="record-sub">UIKit 기반으로 구현해 MIT 라이선스로 공개했습니다.</p>
         </div>
       </div>
 
