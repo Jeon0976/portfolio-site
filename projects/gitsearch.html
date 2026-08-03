@@ -339,7 +339,7 @@
     <p class="toc-label">목차</p>
     <a href="#ch1-hd">1장 &middot; 모듈을 다시 나눈다</a>
     <a href="#ch2-hd">2장 &middot; Task 관리</a>
-    <a href="#ch3-hd">3장 &middot; 이미지 로딩</a>
+    <a href="#ch3-hd">3장 &middot; 이미지 캐시</a>
     <a href="#record-hd">기록</a>
   </nav>
 
@@ -490,13 +490,13 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
-       3장 · 이미지 로딩을 직접 만든다
+       3장 · 이미지 캐시를 직접 만든다
   ════════════════════════════════════════════════════════ -->
   <section class="section section--surface" aria-labelledby="ch3-hd">
     <div class="wrap">
       <div class="group-header fi">
         <p class="group-chapter">3장</p>
-        <h2 id="ch3-hd">이미지 로딩을 직접 만든다</h2>
+        <h2 id="ch3-hd">이미지 캐시를 직접 만든다</h2>
       </div>
 
       <div class="cases-stack">
@@ -509,7 +509,7 @@
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">아바타 원본은 목록에 필요한 크기보다 훨씬 큽니다. UIImage(data:)는 <strong>이 원본을 그대로 펼쳐서 55pt짜리 자리에 올립니다.</strong> 화면에 쓰는 크기의 몇십 배를 메모리에 들고 있는 셈입니다. 셀을 재사용할 때 이전 사람 아바타가 잠깐 보이는 문제도 있었습니다.</p>
+                <p class="row-body">아바타 원본은 목록에 필요한 크기보다 훨씬 큽니다. UIImage(data:)는 <strong>원본 해상도 그대로 메모리에 올려 두고, 화면에만 55pt로 줄여 보여줍니다.</strong> 실제로 쓰는 크기의 몇십 배를 계속 들고 있는 셈입니다. 셀을 재사용할 때 이전 사람 아바타가 잠깐 보이는 문제도 있었습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
