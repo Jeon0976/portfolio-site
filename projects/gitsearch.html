@@ -337,7 +337,7 @@
 
   <nav class="page-toc" aria-label="페이지 목차">
     <p class="toc-label">목차</p>
-    <a href="#ch1-hd">1장 &middot; 구조를 다시 자른다</a>
+    <a href="#ch1-hd">1장 &middot; 모듈을 다시 나눈다</a>
     <a href="#ch2-hd">2장 &middot; 네트워크 계층</a>
     <a href="#ch3-hd">3장 &middot; 수명 규칙</a>
     <a href="#ch4-hd">4장 &middot; 이미지 로딩</a>
@@ -353,32 +353,32 @@
     <div class="wrap">
       <div class="group-header fi">
         <p class="group-chapter">1장</p>
-        <h2 id="ch1-hd">구조를 다시 자른다</h2>
+        <h2 id="ch1-hd">모듈을 다시 나눈다</h2>
       </div>
 
       <div class="cases-stack">
 
-        <!-- Case 01: 절단 방향 전환 -->
-        <article class="case-cell fi" aria-label="케이스 01: 레이어 절단에서 피처 절단으로">
+        <!-- Case 01: 레이어 대신 피처로 -->
+        <article class="case-cell fi" aria-label="케이스 01: 레이어 대신 피처로 나누기">
           <div class="case-left">
             <p class="cell-tag">Case 01 &middot; TMA / Micro Feature</p>
-            <h3 class="cell-title">레이어 절단에서 피처 절단으로 &middot; 피처 하나 = 5타겟</h3>
+            <h3 class="cell-title">레이어 대신 피처로 나누기 &middot; 피처 하나 = 5타겟</h3>
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">전편은 Domain / Data / Presentation 레이어로 코드를 갈랐습니다. 검색 하나를 고치는 데 세 레이어 모듈을 동시에 수정해야 했습니다. 전편 README에 스스로 적어 둔 한계(모듈 비대화, 테스트 세분화 제한)가 이 프로젝트의 출발점입니다.</p>
+                <p class="row-body">전편은 Domain / Data / Presentation 레이어로 모듈을 나눴습니다. 그래서 <strong>검색 기능 하나를 고치려면 세 모듈을 동시에 열어야 했습니다.</strong> 전편 README에 적어 둔 한계(모듈이 계속 커지고, 테스트를 잘게 나누기 어려움)가 이 프로젝트의 출발점입니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">절단 방향을 수평에서 수직으로 바꿨습니다. 피처 하나를 Interface&middot;구현&middot;Testing&middot;Tests&middot;Demo 다섯 타겟으로 자르면 검색 코드는 <code>FeatureSearch</code> 한 모듈 안에 전부 모입니다. <strong>Micro Feature는 Clean을 버리는 것이 아니라 감쌉니다.</strong> 피처 내부는 여전히 Composition / Domain / Data / Presentation이고 피처 사이만 Interface로 통신합니다.</p>
+                <p class="row-body">레이어 대신 <strong>피처 단위로 모듈을 나눴습니다.</strong> 피처 하나를 Interface·구현·Testing·Tests·Demo 다섯 타겟으로 만들면 검색 관련 코드는 FeatureSearch 한 모듈에 모입니다. Clean Architecture를 버린 것은 아닙니다. 피처 안은 그대로 Composition / Domain / Data / Presentation이고, 피처끼리만 Interface로 주고받습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body">의존 규칙을 빌드 설정으로 강제했습니다. 피처끼리는 Interface로만 의존하고 구현체 import는 App만 할 수 있습니다. <code>FeatureProfile</code>은 <code>FeatureAuth</code>의 Interface에만 의존하므로 구현 타입을 참조하는 코드는 컴파일되지 않습니다.</p>
+                <p class="row-body">의존 규칙은 빌드 설정으로 막았습니다. 피처끼리는 Interface로만 의존하고 구현체는 App에서만 import할 수 있습니다. <strong>FeatureProfile은 FeatureAuth의 Interface만 알기 때문에, 구현 타입을 쓰면 컴파일이 실패합니다.</strong></p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">기능 하나를 고칠 때 건드리는 모듈이 하나가 됐습니다. Testing 타겟이 공개한 Mock을 Tests와 Demo가 재사용해 피처별 단독 테스트와 단독 실행이 가능해졌고 전편의 "테스트 세분화 제한"이 풀렸습니다.</p>
+                <p class="row-body">기능 하나를 고칠 때 <strong>여는 모듈이 하나로 줄었습니다.</strong> Testing 타겟이 공개한 Mock을 Tests와 Demo가 같이 써서, 피처별로 따로 테스트하고 따로 실행할 수 있습니다.</p>
               </div>
             </div>
           </div>
@@ -418,19 +418,19 @@
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">수직 절단의 대가는 타겟 수입니다. 모듈 8개에 타겟 31개, 피처마다 같은 모양의 타겟 선언 5개가 반복됩니다. 스킴 구성까지 손으로 맞추면 언젠가 어긋납니다.</p>
+                <p class="row-body">피처 단위로 나누니 타겟이 많아졌습니다. <strong>모듈 8개에 타겟 31개</strong>, 피처마다 똑같은 선언이 5개씩 반복됩니다. 스킴까지 손으로 만들면 빠뜨리기 쉽습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">반복을 Tuist 로컬 플러그인 4개(Environment&middot;Dependency&middot;Configuration&middot;Templates)와 DSL로 줄였습니다. <strong>모듈 목록을 enum 레지스트리 하나에 모으면 워크스페이스가 <code>allCases</code>를 순회하므로 새 피처를 추가해도 기존 모듈은 수정할 것이 없습니다.</strong></p>
+                <p class="row-body">반복되는 선언을 <strong>Tuist 로컬 플러그인 4개</strong>(Environment·Dependency·Configuration·Templates)로 옮겼습니다. 모듈 목록을 enum 한 곳에 모아 두면 워크스페이스가 allCases를 돌기 때문에, 새 피처를 추가해도 기존 모듈은 고칠 것이 없습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body">각 피처의 Project.swift는 <code>.interface / .implements / .testing / .tests / .demo</code> 팩토리 호출만으로 구성됩니다. 스킴은 DSL이 생성합니다: 모듈 스킴 8개에 실행 스킴 12개(데모 5개와 본 앱 각각 DEV / PROD). 새 피처는 <code>tuist scaffold</code> 한 줄과 레지스트리 케이스 한 줄이면 됩니다.</p>
+                <p class="row-body">피처의 Project.swift에는 .interface / .implements / .testing / .tests / .demo 호출만 남습니다. 스킴은 플러그인이 만듭니다 — 모듈 스킴 8개, 실행 스킴 12개(데모 5개와 본 앱 DEV / PROD). <strong>새 피처는 tuist scaffold 한 줄과 enum 케이스 한 줄이면 됩니다.</strong></p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">DEV 데모는 진짜 화면 로직에 Testing 타겟의 목 세션만 갈아 끼운 것입니다. 서버&middot;토큰 없이 페이징과 화면 전환까지 실제 코드가 그대로 돕니다.</p>
+                <p class="row-body">DEV 데모는 실제 화면 코드에 <strong>Testing 타겟의 가짜 세션만 끼운 것</strong>입니다. 서버와 토큰 없이도 페이징과 화면 전환이 실제 코드로 동작합니다.</p>
               </div>
             </div>
           </div>
@@ -486,19 +486,19 @@
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">토큰 부착 같은 공통 정책을 엔드포인트마다 각자 선언하면 중복과 누락이 생깁니다. 전편은 UseCase가 토큰을 꺼내 파라미터로 전달해 사용처마다 토큰의 존재를 알아야 했습니다.</p>
+                <p class="row-body">토큰을 붙이는 것 같은 공통 처리를 엔드포인트마다 따로 쓰면 중복되고 빠뜨리게 됩니다. 전편은 UseCase가 토큰을 직접 꺼내 넘겨서, <strong>토큰을 쓰는 곳마다 토큰의 존재를 알아야 했습니다.</strong></p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">요청의 일생에서 정해진 시점 두 곳에 훅을 뒀습니다. <code>adapt</code>는 전송 직전 요청을 손보고 <code>retry</code>는 실패 직후 재시도를 결정합니다. <strong>시점은 프로토콜이 정의하고 무엇을 끼울지는 Composition Root의 배열이 정합니다.</strong> 파이프라인을 실행하는 NetworkSession은 호출 순서만 알 뿐 정책의 내용을 모릅니다.</p>
+                <p class="row-body">요청 처리 과정에 <strong>훅 두 개</strong>를 뒀습니다. adapt는 보내기 직전에 요청을 손보고, retry는 실패한 뒤 다시 보낼지 정합니다. 어느 시점에 끼울지는 프로토콜이, 무엇을 끼울지는 Composition Root의 배열이 정합니다. 실행하는 NetworkSession은 순서만 알고 내용은 모릅니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body">기본 구현은 안전한 무행동입니다. adapt는 항등, retry는 <code>.doNotRetry</code>라서 인터셉터는 필요한 훅만 구현합니다. 요청을 바꾸는 인터셉터와 지켜보기만 하는 모니터(<code>NetworkEventMonitor</code>)는 프로토콜 자체를 분리했습니다.</p>
+                <p class="row-body"><strong>기본 구현은 아무것도 하지 않습니다.</strong> adapt는 요청을 그대로 두고 retry는 .doNotRetry라서, 인터셉터는 필요한 훅만 구현하면 됩니다. 요청을 바꾸는 인터셉터와 보기만 하는 모니터(NetworkEventMonitor)는 프로토콜을 따로 뒀습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">새 정책은 새 타입 하나에 조립부 배열 한 줄입니다. 프로토콜도 NetworkSession도 수정하지 않습니다. 토큰은 <code>AuthTokenInterceptor</code>가 자동 부착하므로 사용처는 토큰의 존재를 모릅니다.</p>
+                <p class="row-body">새 정책은 <strong>타입 하나를 만들고 배열에 한 줄 추가</strong>하면 됩니다. 프로토콜도 NetworkSession도 고치지 않습니다. 토큰은 AuthTokenInterceptor가 붙이므로 쓰는 쪽은 토큰을 신경 쓰지 않습니다.</p>
               </div>
             </div>
           </div>
@@ -512,7 +512,7 @@
                attempt: <span class="ct">Int</span>) <span class="ck">async</span> -&gt; <span class="ct">RetryDecision</span>
 }
 
-<span class="cm">// 기본 구현 = 안전한 무행동</span>
+<span class="cm">// 기본 구현 = 아무것도 하지 않음</span>
 <span class="ck">extension</span> <span class="ct">RequestInterceptor</span> {
     <span class="ck">public func</span> adapt(...) <span class="ck">throws</span> -&gt; <span class="ct">URLRequest</span> {
         request        <span class="cm">// 항등 - 체인에 끼어도 영향 0</span>
@@ -536,23 +536,23 @@
         <article class="case-cell fi" aria-label="케이스 04: 멱등 게이트와 재시도">
           <div class="case-left">
             <p class="cell-tag">Case 04 &middot; HTTP / Idempotency</p>
-            <h3 class="cell-title">멱등과 재시도 &middot; 게이트가 뚫리지 않는 자리</h3>
+            <h3 class="cell-title">멱등과 재시도 &middot; 안전 검사를 어디에 둘까</h3>
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">일시적 네트워크 에러는 다시 보내면 성공할 수 있습니다. 그런데 POST 재전송은 부수효과(토큰 이중 발급류)가 중복 실행될 수 있어 아무 요청이나 재시도하면 사고가 됩니다.</p>
+                <p class="row-body">네트워크 오류는 다시 보내면 성공할 때가 많습니다. 그런데 <strong>POST를 다시 보내면 토큰이 두 번 발급되는 것처럼 같은 작업이 중복 실행</strong>될 수 있어, 아무 요청이나 재시도하면 사고가 납니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">사실과 행동을 나눴습니다. "두 번 보내도 안전한가"는 엔드포인트가 <code>isIdempotent</code>로 선언하는 사실이고 그 사실을 보고 재시도를 결정하는 것은 인터셉터의 행동입니다. 기본값은 RFC 9110 정의대로 HTTP 메서드에서 유도합니다.</p>
+                <p class="row-body">"두 번 보내도 안전한가"는 <strong>엔드포인트가 isIdempotent로 선언</strong>하고, 다시 보낼지는 인터셉터가 그 값을 보고 정합니다. 따로 선언하지 않으면 RFC 9110대로 HTTP 메서드에서 기본값을 가져옵니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body"><strong>재시도는 인터셉터 전원에게 물어 하나라도 <code>.retry</code>면 실행되는 OR 결합입니다. 멱등 게이트를 별도 인터셉터로 빼면 다른 인터셉터의 .retry에 뚫립니다.</strong> 그래서 게이트를 재시도 정책 안쪽의 첫 guard로 뒀습니다. 지연은 인터셉터가 지수 백오프로 계산합니다.</p>
+                <p class="row-body">재시도는 인터셉터 전체에 물어서 하나라도 .retry면 실행됩니다. 그래서 <strong>안전 검사를 별도 인터셉터로 빼면 다른 인터셉터의 .retry에 밀려 무시됩니다.</strong> 검사를 재시도 정책 안쪽 첫 guard로 옮긴 이유입니다. 재시도 간격은 지수 백오프로 계산합니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">비멱등 요청은 에러 종류를 보기도 전에 재시도에서 빠집니다. OAuth 토큰 교환(POST)은 아무 선언 없이도 자동 재시도에서 제외됩니다.</p>
+                <p class="row-body">다시 보내면 안 되는 요청은 <strong>오류 종류를 보기도 전에 재시도 대상에서 빠집니다.</strong> OAuth 토큰 교환(POST)은 따로 선언하지 않아도 제외됩니다.</p>
               </div>
             </div>
           </div>
@@ -606,23 +606,23 @@
         <article class="case-cell fi" aria-label="케이스 05: ManagedTask">
           <div class="case-left">
             <p class="cell-tag">Case 05 &middot; Swift Concurrency / Task</p>
-            <h3 class="cell-title">ManagedTask &middot; 방치된 Task의 규칙 5가지를 타입으로</h3>
+            <h3 class="cell-title">ManagedTask &middot; Task 관리 규칙 5가지를 타입으로</h3>
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">UIKit 진입점(viewDidLoad, 버튼 핸들러)은 동기 함수라 async 작업을 시작하려면 <code>Task {}</code>로 만드는 unstructured task를 쓸 수밖에 없습니다. 이 태스크를 잡아 두지 않으면 화면이 닫혀도 요청이 계속 돌고, 늦게 도착한 옛 응답이 새 화면을 덮는 stale 버그도 생깁니다.</p>
+                <p class="row-body">UIKit 진입점(viewDidLoad, 버튼 핸들러)은 동기 함수라 async 작업을 시작하려면 Task {}를 써야 합니다. 이 Task를 들고 있지 않으면 <strong>화면을 닫아도 요청이 계속 돌고, 늦게 온 예전 응답이 새 화면을 덮어씁니다.</strong></p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">핸들 보관, 재진입 취소, deinit 취소, 취소 후 결과 무시, CancellationError 침묵. ViewModel마다 직접 지켜야 하는 이 규칙 5가지를 컴파일러는 하나도 잡아 주지 않습니다. <strong>규칙을 복붙하는 대신 ManagedTask라는 타입 하나에 가뒀습니다.</strong></p>
+                <p class="row-body">핸들 보관, 재진입 시 취소, deinit 취소, 취소 후 결과 무시, CancellationError 무시. <strong>ViewModel마다 지켜야 하는 규칙 5가지인데 컴파일러는 하나도 잡아 주지 않습니다.</strong> 매번 복사하는 대신 ManagedTask 타입 하나에 넣었습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body"><code>replace</code>는 이전 작업을 취소하고 교체합니다(검색). <code>runIfIdle</code>은 진행 중이면 무시합니다(페이징). 슬롯 반납은 generation 비교로 최신 작업만 하게 해 늦게 끝난 이전 작업이 새 작업의 핸들을 지우는 레이스를 막았습니다. 취소는 await 체인을 타고 URLSession까지 내려가 진행 중인 HTTP 요청이 실제로 끊깁니다.</p>
+                <p class="row-body">replace는 이전 작업을 취소하고 새 작업으로 바꿉니다(검색). runIfIdle은 이미 돌고 있으면 무시합니다(페이징). 슬롯을 비울 때 generation을 비교해 <strong>늦게 끝난 예전 작업이 새 작업의 핸들을 지우지 않게</strong> 했습니다. 취소는 await 체인을 타고 URLSession까지 내려가 HTTP 요청이 실제로 끊깁니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">동작 5가지를 계약 테스트로 고정했습니다(테스트 24개 중 ManagedTask 5개). 호출부에 반복되던 <code>[weak self]</code>는 owner 오버로드(<code>replace(with:)</code>)와 <code>sink(with:)</code>로 걷어내 20곳을 전환했습니다.</p>
+                <p class="row-body">동작 5가지를 테스트로 고정했습니다(전체 24개 중 5개). 호출부마다 있던 <strong>[weak self]는 owner 오버로드</strong>(replace(with:), sink(with:))로 없애 20곳을 바꿨습니다.</p>
               </div>
             </div>
           </div>
@@ -687,19 +687,19 @@
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">목록에 비동기 이미지를 붙이면 비용이 겹칩니다. <code>UIImage(data:)</code>는 원본 해상도 그대로 풀 디코딩해 55pt 슬롯에 약 826KB 비트맵을 올립니다. 셀 재사용 시 남의 아바타가 잠깐 뜨는 잔상도 생깁니다.</p>
+                <p class="row-body">아바타 원본은 목록에 필요한 크기보다 훨씬 큽니다. UIImage(data:)는 <strong>이 원본을 그대로 펼쳐서 55pt짜리 자리에 올립니다.</strong> 화면에 쓰는 크기의 몇십 배를 메모리에 들고 있는 셈입니다. 셀을 재사용할 때 이전 사람 아바타가 잠깐 보이는 문제도 있었습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">캐시를 "무엇을 담는가"로 나눴습니다. 원본 Data를 담는 바이트 캐시(디스크 영속)는 재다운로드를 줄이고 디코딩된 UIImage를 담는 메모리 캐시는 재디코딩을 줄입니다.</p>
+                <p class="row-body"><strong>캐시를 두 개로 나눴습니다.</strong> 내려받은 Data는 디스크에 저장해 같은 이미지를 다시 받지 않게 하고(Data 계층), 셀 크기로 줄인 UIImage는 메모리에 저장해 다시 만들지 않게 합니다(Presentation 계층).</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body"><strong>다운샘플러는 ImageIO로 셀 크기만큼만 디코딩해 메모리 캐시에 넣습니다.</strong> 디코딩은 메인 스레드 밖에서 처리합니다. 셀에는 representedID를 기록해 완료 시 대조하고, 화면을 벗어난 행은 다운로드까지 취소합니다.</p>
+                <p class="row-body"><strong>다운샘플러가 ImageIO로 셀 크기만큼만 이미지를 만들어</strong> 메모리 캐시에 넣습니다. 이 작업은 메인 스레드 밖에서 합니다. 셀에는 어떤 사용자의 이미지를 기다리는지 representedID로 적어 두고, 이미지가 도착하면 지금 그 셀이 맞는지 확인한 뒤 붙입니다. 화면 밖으로 나간 행은 다운로드를 취소합니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">스크롤 중 디코딩이 메인 스레드를 막지 않고 셀 재사용 잔상은 취소와 representedID 대조로 차단됩니다. </p>
+                <p class="row-body">스크롤할 때 <strong>이미지 처리 때문에 화면이 멈추지 않습니다.</strong> 셀을 빠르게 재사용해도 이전 사람의 아바타가 나타나지 않습니다.</p>
               </div>
             </div>
           </div>
