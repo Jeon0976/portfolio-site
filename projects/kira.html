@@ -1051,7 +1051,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body">진행&rarr;젬&rarr;완료 연출을 async/await로 순차 실행하고 도중 이탈 시 Task를 취소합니다. 콜백으로만 끝나는 젬 연출은 <code>withCheckedContinuation</code>으로 잇되 <strong>중복 resume을 가드</strong>해 보상 중복 가산을 막고, 스냅샷 확정은 연출이 끝난 뒤에만 합니다.</p>
+                <p class="row-body">진행&rarr;젬&rarr;완료 순서로 연출을 async/await로 이어서 실행하고, 도중에 화면을 벗어나면 Task를 취소합니다. 젬 연출만 콜백으로 끝나서 <code>withCheckedContinuation</code>으로 감쌌고, <strong>resume이 두 번 불리지 않게 막아 보상이 중복으로 쌓이지 않도록</strong> 했습니다. 스냅샷은 연출이 다 끝난 뒤에 확정합니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
