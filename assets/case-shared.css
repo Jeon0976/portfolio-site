@@ -507,7 +507,6 @@ footer {
 
 .ba-wrap {
       display: block;
-      margin-bottom: 18px;
     }
 
 .ba-block {
@@ -518,7 +517,7 @@ footer {
       border-top: 1px solid var(--border);
     }
 
-.ba-block:last-child { border-bottom: 1px solid var(--border); }
+.ba-wrap:last-child .ba-block:last-child { border-bottom: 1px solid var(--border); }
 
 .ba-block--after {
       border-color: var(--border);
@@ -533,8 +532,6 @@ footer {
       padding-top: 2px;
     }
 
-.ba-block--after .ba-label { color: var(--accent); }
-
 .ba-text {
       font-size: 0.9375rem;
       color: var(--muted);
@@ -547,12 +544,13 @@ footer {
       gap: 12px;
       padding: 12px 0;
       border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
 .imp-label {
       font-size: 0.8125rem;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--ink);
       letter-spacing: 0.01em;
       padding-top: 2px;
     }
