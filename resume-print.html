@@ -191,11 +191,11 @@
         </div>
         <ul>
           <li>베타 출시 1주일 전 합류해 QA 공백을 메우며 시작, 비동기 혼재와 흩어진 상태 관리를 진단해 네트워크&middot;상태&middot;화면 인프라의 <strong>뼈대를 다시 세움</strong></li>
-          <li>Moya 의존을 걷어내고 <strong>URLSession 기반 커스텀 APIClient로 전면 재설계</strong>, 자동 재시도에 멱등 가드를 걸어 중복 요청 사고를 예방</li>
+          <li>퀴즈&middot;퀘스트 진행을 <strong>enum 상태머신으로 모델링</strong>해 불가능한 상태를 타입에서 제거, 기능이 늘어나도 확장되는 구조로 구현</li>
           <li>Crashlytics&middot;Instruments로 <strong>런치 간헐 크래시(DI 스레드 비안전)와 탭 전환 severe hang(거대 Store)</strong>을 원인 단위로 해결</li>
           <li>푸시&middot;URL <strong>딥링크가 온보딩&middot;오버레이 위로 도착하면 보류했다 닫히는 시점에 한 번만 실행</strong>하도록 설계 (최신 링크만 유지, 1회 소비)</li>
           <li><strong>AI 브리핑 콘텐츠 파이프라인</strong>을 설계해 생성부터 발행까지 사람 개입 없이 <strong>매일 자동 발행</strong>, 브리핑을 보여주는 iOS 화면도 구현</li>
-          <li>iOS 개발 외에도 <strong>기획 회의&middot;채용&middot;온보딩&middot;CS까지 참여</strong>, 리워드 비용 절감 A/B를 설계해 반영하고 Android&middot;Web 코드도 작성</li>
+          <li>iOS 개발 외에도 <strong>기획 회의&middot;채용&middot;온보딩&middot;CS까지 참여</strong>, 리워드 비용 절감 A/B 테스트를 설계해 반영하고 Android&middot;Web 코드도 작성</li>
         </ul>
       </div>
 
@@ -233,7 +233,6 @@
         <ul>
           <li>대대급 무인항공기(UAV) 조종사&middot;선임 교관, <strong>5년간 500회 이상 무사고 비행</strong></li>
           <li>비상상황 조치를 실경험 기반으로 <strong>문서화해 사단&middot;군단 전파</strong>, 기체 손상 확률을 낮춰 정비 유공 표창&middot;민가 화재 초동조치로 소방 표창</li>
-          <li>부대에 처음 생긴 직무의 체계를 직접 구축, <strong>즉응 태세(예방 정비) 최우선</strong> 원칙으로 운용</li>
         </ul>
       </div>
     </section>
@@ -259,9 +258,9 @@
           <span class="row-main">SERENADE <span class="proj-tech">| Swift, ReactorKit, RxSwift&middot;RxCocoa&middot;RxDataSources, Tuist</span></span>
           <span class="row-side">2025.02 &ndash; 2025.07 (6개월)</span>
         </div>
-        <div class="subrow"><span>웨딩 정보 서비스 &middot; iOS 2인 &middot; 체크리스트&middot;예산&middot;마이페이지 피처 담당 &middot; 키라 합류 후 시간 제약으로 인계</span></div>
+        <div class="subrow"><span>웨딩 정보 서비스 &middot; iOS 2인 &middot; 체크리스트&middot;예산&middot;마이페이지 피처 담당</span></div>
         <ul>
-          <li>Tuist 모듈 구조에서 Domain&ndash;Data&ndash;Presentation 계층 직접 구현, <strong>ReactorKit 단방향</strong>(Action&rarr;Mutation&rarr;State) Reactor 직접 작성&middot;RxDataSources 섹션 diff 렌더링</li>
+          <li><strong>ReactorKit 단방향</strong>(Action&rarr;Mutation&rarr;State) Reactor 직접 작성&middot;RxDataSources 섹션 diff 렌더링</li>
         </ul>
       </div>
 
@@ -282,7 +281,7 @@
           <span class="row-main">SpeechBubble <span class="proj-tech">| UIKit, UIBezierPath, SPM&middot;CocoaPods 배포</span></span>
         </div>
         <ul>
-          <li>외부 의존 없는 <strong>커스텀 말풍선 라이브러리</strong>, UIBezierPath 커스텀 드로잉&middot;OptionSet API 설계 &middot; 오픈소스 iOS-CleanArchitecture-MVVM(kudoleh) 컨트리뷰터</li>
+          <li>외부 의존 없는 <strong>커스텀 말풍선 라이브러리</strong>, UIBezierPath 커스텀 드로잉&middot;OptionSet API 설계</li>
         </ul>
       </div>
     </section>
@@ -309,6 +308,16 @@
           <span class="row-side">2019.03 &ndash; 2023.02</span>
         </div>
         <div class="subrow"><span>소프트웨어학과 학사</span></div>
+      </div>
+    </section>
+
+    <!-- ── 기타 ── -->
+    <section class="sec">
+      <h2 class="sec-title">기타</h2>
+      <div class="entry">
+        <div class="row">
+          <span class="row-main">오픈소스 컨트리뷰터 <span class="co">| iOS-CleanArchitecture-MVVM (kudoleh)</span></span>
+        </div>
       </div>
     </section>
 
