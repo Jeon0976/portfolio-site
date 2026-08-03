@@ -436,10 +436,10 @@ footer {
 
 .page-standard.page-about .band h1 { line-height: 1.1; }
 
-.page-about .eyebrow,
-.page-about .sec-eyebrow,
-.page-projects .eyebrow,
-.page-work .eyebrow,
+/* 페이지 히어로 eyebrow는 전 페이지 동일 크기 (resume 누락 정정) */
+.page-standard .eyebrow,
+.page-standard .sec-eyebrow,
+.page-case .eyebrow,
 .page-work .group-chapter {
   font-size: .82rem;
 }
