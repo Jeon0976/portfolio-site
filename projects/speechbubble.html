@@ -11,7 +11,7 @@
   <meta name="description" content="UIBezierPath·CAShapeLayer 커스텀 드로잉과 OptionSet API로 설계해 SPM·CocoaPods로 배포한 UIKit 말풍선 라이브러리.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=9">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=10">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -308,8 +308,8 @@
         <h1>SpeechBubble</h1>
         <p class="hero-meta">개인 라이브러리 &middot; UIKit 말풍선 뷰 &middot; 오픈소스(MIT)</p>
         <span class="status-badge">2024.04 &middot; v0.1.0&ndash;0.1.4 배포</span>
-        <p class="hero-meta" style="margin-top:12px">iOS 13+ &middot; 서드파티 의존성 0 &middot; SPM&middot;CocoaPods</p>
-        <p class="hero-tagline">작은 말풍선 하나에도 결정이 쌓입니다. 드로잉을 부위별로 나누고 타입으로 오용을 막는 API를 설계해 배포까지 해 본 첫 라이브러리입니다.</p>
+        <p class="hero-meta" style="margin-top:12px">iOS 13+ &middot; SPM&middot;CocoaPods</p>
+        <p class="hero-tagline">말풍선 드로잉을 부위별로 나누고 API까지 설계해 배포한 첫 라이브러리입니다.</p>
       </div>
     </div>
   </div>
@@ -326,7 +326,7 @@
         <!-- 01 · 드로잉 -->
         <article class="cell fi" aria-label="드로잉: 본체와 꼬리를 다른 기법으로">
           <div class="cell-desc">
-            <p class="cell-tag">설계 01 &middot; 드로잉</p>
+            <p class="cell-tag">Case 01 &middot; 드로잉</p>
             <h3 class="cell-title">본체와 꼬리를 다른 기법으로 그린다</h3>
             <div class="ba-wrap">
               <div class="ba-block">
@@ -340,7 +340,7 @@
             </div>
             <div class="imp-wrap">
               <span class="imp-label">핵심 결정</span>
-              <p class="imp-text">꼬리는 모서리 길이 &times; positionRatio로 기준점을 잡고 arrowSize만큼 벌린 3점을 방향별로 계산합니다. 4방향(top/bottom/left/right) 어디든 임의 비율 위치에 붙습니다.</p>
+              <p class="imp-text">꼬리를 4방향(top/bottom/left/right) 어디든, 변의 임의 비율 위치에 붙일 수 있습니다. positionRatio로 기준점을 잡고 arrowSize만큼 벌려 그립니다.</p>
             </div>
           </div>
           <div class="cell-visual">
@@ -364,12 +364,12 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
         <!-- 02 · API (flip) -->
         <article class="cell flip fi" aria-label="API: OptionSet 스타일과 반응형 프로퍼티">
           <div class="cell-desc">
-            <p class="cell-tag">설계 02 &middot; API</p>
+            <p class="cell-tag">Case 02 &middot; API</p>
             <h3 class="cell-title">OptionSet 스타일과 15개 반응형 프로퍼티</h3>
             <div class="ba-wrap">
               <div class="ba-block">
                 <span class="ba-label">문제</span>
-                <p class="ba-text">스타일(채움&middot;실선&middot;점선)은 서로 조합되고, 꼬리 위치(4방향)는 배타적입니다. 호출부가 헷갈리지 않게 타입이 오용을 막아야 합니다.</p>
+                <p class="ba-text">스타일(채움&middot;실선&middot;점선)은 서로 조합되고, 꼬리 위치(4방향)는 배타적입니다. 잘못된 조합을 아예 쓸 수 없도록 타입으로 막아야 합니다.</p>
               </div>
               <div class="ba-block ba-block--after">
                 <span class="ba-label">접근</span>
@@ -378,7 +378,7 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
             </div>
             <div class="imp-wrap">
               <span class="imp-label">핵심 결정</span>
-              <p class="imp-text">공개 프로퍼티 15개 전부 didSet으로 런타임에 반응합니다. 값을 바꾸면 서브뷰 전파와 재레이아웃&middot;재드로우까지 이어집니다. SPM과 CocoaPods 이중 배포, 서드파티 의존성 0.</p>
+              <p class="imp-text">공개 프로퍼티 15개 전부 didSet으로 런타임에 반응합니다. 값을 바꾸면 서브뷰 전파와 재레이아웃&middot;재드로우까지 이어집니다.</p>
             </div>
           </div>
           <div class="cell-visual">
@@ -412,10 +412,6 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
                 <span class="ba-label">지금 보이는 것</span>
                 <p class="ba-text">UIViewRepresentable 래퍼로 SwiftUI를 지원하고, 합성 뷰 레벨의 accessibilityLabel을 붙이고, 다크 모드 전환 시 traitCollectionDidChange에서 테두리 색을 재적용해야 합니다.</p>
               </div>
-            </div>
-            <div class="imp-wrap">
-              <span class="imp-label">배운 것</span>
-              <p class="imp-text">공개 파라미터의 오타(cornerRadious)는 배포된 API라 깨지 않고 유지 중입니다. 공개 API 네이밍은 배포 전에 끝내야 한다는 것을 몸으로 배웠습니다.</p>
             </div>
           </div>
           <div class="cell-visual">

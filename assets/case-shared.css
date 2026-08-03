@@ -231,11 +231,10 @@ nav {
 .case-row:last-child { border-bottom: 1px solid var(--border); }
 
 .row-label {
-      font-size: 0.6875rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--ink);
       padding-top: 2px;
       flex-shrink: 0;
     }
@@ -526,10 +525,10 @@ footer {
     }
 
 .ba-label {
-      font-size: 0.625rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.01em;
       display: block;
       margin-bottom: 7px;
     }
@@ -550,10 +549,10 @@ footer {
     }
 
 .imp-label {
-      font-size: 0.5625rem;
+      font-size: 0.75rem;
+      font-weight: 600;
       color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
       display: block;
       margin-bottom: 5px;
     }
