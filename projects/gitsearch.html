@@ -11,7 +11,7 @@
   <meta name="description" content="Clean Architecture에서 Micro Feature Architecture로. 같은 앱을 두 번 만들며 무엇을 고쳤나.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=17">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=18">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -122,10 +122,7 @@
     /* ── Code panel ──────────────────────────────────────── */
 
     .code-body {
-      padding: 18px 18px;
       font-family: var(--mono);
-      font-size: 0.8125rem;
-      line-height: 1.8;
       color: var(--ink);
       white-space: pre;
       overflow-x: auto;
@@ -506,7 +503,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">RequestInterceptor.swift &middot; 요지</summary>
+            <summary class="code-filename">RequestInterceptor.swift</summary>
               <pre class="code-body"><span class="ck">public protocol</span> <span class="ct">RequestInterceptor</span>: <span class="ct">Sendable</span> {
     <span class="ck">func</span> adapt(<span class="ck">_</span> request: <span class="ct">URLRequest</span>,
                endpoint: <span class="ck">some</span> <span class="ct">NetworkEndpoint</span>) <span class="ck">throws</span> -&gt; <span class="ct">URLRequest</span>
@@ -560,7 +557,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">TransientErrorRetryInterceptor.swift &middot; 요지</summary>
+            <summary class="code-filename">TransientErrorRetryInterceptor.swift</summary>
               <pre class="code-body"><span class="ck">public struct</span> <span class="ct">TransientErrorRetryInterceptor</span>: <span class="ct">RequestInterceptor</span> {
     <span class="ck">public func</span> retry(
         <span class="ck">_</span> endpoint: <span class="ck">some</span> <span class="ct">NetworkEndpoint</span>,
@@ -630,7 +627,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">ManagedTask.swift &middot; 요지</summary>
+            <summary class="code-filename">ManagedTask.swift</summary>
               <pre class="code-body"><span class="ck">@MainActor</span>
 <span class="ck">public final class</span> <span class="ct">ManagedTask</span> {
     <span class="ck">private var</span> task: <span class="ct">Task</span>&lt;<span class="ct">Void</span>, <span class="ct">Never</span>&gt;?
@@ -706,7 +703,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">KeychainTokenStorage.swift &middot; 요지</summary>
+            <summary class="code-filename">KeychainTokenStorage.swift</summary>
               <pre class="code-body"><span class="ck">public final class</span> <span class="ct">KeychainTokenStorage</span>: <span class="ct">TokenStorage</span>, <span class="ct">Sendable</span> {
     <span class="ck">public func</span> store(<span class="ck">_</span> token: <span class="ct">String</span>) {
         <span class="ct">SecItemDelete</span>(baseQuery <span class="ck">as</span> <span class="ct">CFDictionary</span>)  <span class="cm">// 저빈도라 delete 후 add</span>

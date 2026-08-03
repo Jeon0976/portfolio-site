@@ -11,7 +11,7 @@
   <title>AVIRO · 전성훈 포트폴리오</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=17">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=18">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -146,10 +146,7 @@
 
 
     .code-body {
-      padding: 20px 18px;
       font-family: var(--mono);
-      font-size: 0.8125rem;
-      line-height: 1.75;
       color: var(--ink);
       white-space: pre;
       overflow-x: auto;
@@ -372,7 +369,7 @@
             </ul>
           </div>
           <details class="case-code">
-            <summary class="code-filename">MarkerModelManager.swift &middot; 요지</summary>
+            <summary class="code-filename">MarkerModelManager.swift</summary>
               <pre class="code-body"><span class="ck">func</span> fetchRawData() {
     <span class="cm">// 로컬에 데이터가 있으면 Realm으로 먼저 그린다</span>
     haveStoredData ? fetchFromRealm() : fetchFromServer()

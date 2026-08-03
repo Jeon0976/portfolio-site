@@ -11,7 +11,7 @@
   <title>KIRA (Katsby) · 전성훈 iOS</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=17">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=18">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -162,10 +162,7 @@
     /* ── Code panel ──────────────────────────────────────── */
 
     .code-body {
-      padding: 18px 18px;
       font-family: var(--mono);
-      font-size: 0.8125rem;
-      line-height: 1.8;
       color: var(--ink);
       white-space: pre;
       overflow-x: auto;
@@ -474,7 +471,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">BriefingStore.swift &middot; 요지</summary>
+            <summary class="code-filename">BriefingStore.swift</summary>
               <pre class="code-body"><span class="ck">@Observable</span>
 <span class="ck">final class</span> <span class="ct">BriefingStore</span> {
     <span class="cm">// slideID → HTML (메모리 캐시)</span>
@@ -593,7 +590,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">QuizMapView.swift &middot; 요지</summary>
+            <summary class="code-filename">QuizMapView.swift</summary>
               <pre class="code-body"><span class="ck">private let</span> prefetchTriggerDistance: <span class="ct">CGFloat</span> = 500
 
 <span class="ck">private func</span> checkAndTriggerPrefetch(nextCourseViewY: <span class="ct">CGFloat</span>) {
@@ -655,7 +652,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">Router.swift &middot; 요지</summary>
+            <summary class="code-filename">Router.swift</summary>
               <pre class="code-body"><span class="ck">@MainActor</span> <span class="ck">@Observable</span>
 <span class="ck">final class</span> <span class="ct">Router</span> {
     <span class="ck">var</span> path: [<span class="ct">Route</span>] = []  <span class="cm">// NavigationStack(path:)에 바인딩</span>
@@ -715,7 +712,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">BottomSheetCoordinator.swift &middot; 요지</summary>
+            <summary class="code-filename">BottomSheetCoordinator.swift</summary>
               <pre class="code-body"><span class="ck">@MainActor</span> <span class="ck">@Observable</span>
 <span class="ck">final class</span> <span class="ct">BottomSheetCoordinator</span> {
     <span class="cm">// 현재 시트를 스택에 보관하고 새 시트로</span>
@@ -824,7 +821,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">CustomTabBar.swift &middot; 요지</summary>
+            <summary class="code-filename">CustomTabBar.swift</summary>
               <pre class="code-body"><span class="ck">enum</span> <span class="ct">TabBarMode</span> { <span class="ck">case</span> main, play }
 
 <span class="ck">@State private var</span> mode: <span class="ct">TabBarMode</span> = .main
@@ -877,7 +874,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">PendingDeepLink.swift &middot; 요지</summary>
+            <summary class="code-filename">PendingDeepLink.swift</summary>
               <pre class="code-body"><span class="cm">// 보류 저장소: 새 링크가 오면 최신으로 교체, 꺼내면 1회 소비 후 비움</span>
 <span class="ck">enum</span> <span class="ct">PendingDeepLink</span> {
     <span class="ck">private static var</span> destination: <span class="ct">DeepLinkDestination</span>?
@@ -934,7 +931,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">ToastWindowManager.swift &middot; 요지</summary>
+            <summary class="code-filename">ToastWindowManager.swift</summary>
               <pre class="code-body"><span class="ck">@MainActor</span>
 <span class="ck">final class</span> <span class="ct">ToastWindowManager</span> {
     <span class="ck">private var</span> toastWindows: [<span class="ct">ToastWindow</span>] = []
@@ -1113,7 +1110,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">PurchaseRepository.swift &middot; 요지</summary>
+            <summary class="code-filename">PurchaseRepository.swift</summary>
               <pre class="code-body"><span class="ck">actor</span> <span class="ct">PurchaseRepository</span> {
     <span class="ck">func</span> listen() {
         <span class="ck">for await</span> update <span class="ck">in</span> <span class="ct">Transaction</span>.updates {
@@ -1218,7 +1215,7 @@
             </div>
           </div>
           <details class="case-code">
-            <summary class="code-filename">QuestStorageImpl.swift &middot; 요지</summary>
+            <summary class="code-filename">QuestStorageImpl.swift</summary>
               <pre class="code-body"><span class="ck">actor</span> <span class="ct">QuestStorageImpl</span>: <span class="ct">QuestStorage</span> {
     <span class="ck">private var</span> snapshot: [<span class="ct">Quest</span>] = []  <span class="cm">// 직전(본) 상태</span>
     <span class="ck">private var</span> current:  [<span class="ct">Quest</span>] = []
