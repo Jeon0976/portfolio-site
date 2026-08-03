@@ -1030,8 +1030,9 @@
         <aside class="hero-code" aria-label="코드로 쓴 자기소개">
 <pre><span class="hc-kw">struct</span> <span class="hc-type">SeonghunJeon</span>: <span class="hc-type">iOSDeveloper</span> {
     <span class="hc-kw">let</span> years = <span class="hc-num">3</span>
-    <span class="hc-kw">let</span> platforms: [<span class="hc-type">Platform</span>] =
-        [.iOS, .android, .web]
+    <span class="hc-kw">let</span> primary: <span class="hc-type">Platform</span> = .iOS
+    <span class="hc-kw">let</span> secondary: [<span class="hc-type">Platform</span>] =
+        [.android, .web]
     <span class="hc-kw">let</span> career: [<span class="hc-type">Company</span>] =
         [.우리요, .일루미나리안, .키라앤컴퍼니]
 
@@ -1086,7 +1087,6 @@
             <span class="tag">Micro Feature</span>
             <span class="tag">Clean Architecture</span>
           </div>
-          <p class="project-sub" style="margin-top: 16px; margin-bottom: 0;">블로그 3편·docs 노트 8편으로 전 과정 기록</p>
           <a href="projects/gitsearch.html" class="project-link">
             구조 보기
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
