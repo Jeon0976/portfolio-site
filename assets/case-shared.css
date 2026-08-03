@@ -182,6 +182,7 @@ nav {
 .case-cell {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
       border: 1px solid var(--border);
       border-radius: var(--r-card);
       overflow: hidden;
@@ -194,8 +195,49 @@ nav {
       border-color: rgba(0,113,227,0.4);
     }
 
-.case-cell:hover .case-right {
+/* 미디어(.case-right)가 없는 셀은 설명이 전체폭 — 코드는 항상 아래 전체폭 */
+.case-cell:not(:has(> .case-right)) { grid-template-columns: minmax(0, 1fr); }
+
+.case-cell:hover .case-right .case-clip {
       transform: scale(1.04);
+    }
+
+/* ── 접히는 코드 (details) ── */
+.case-code {
+      grid-column: 1 / -1;
+      order: 3;                 /* flip(.case-left order:2)보다 뒤 — 항상 최하단 */
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+.case-code > summary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      border-bottom: 0;
+      transition: color 160ms var(--ease-snap);
+    }
+
+.case-code > summary::-webkit-details-marker { display: none; }
+
+.case-code > summary::before {
+      content: "\25B8";
+      font-size: 0.75em;
+      transition: transform 160ms var(--ease-snap);
+    }
+
+.case-code[open] > summary::before { transform: rotate(90deg); }
+
+.case-code[open] > summary { border-bottom: 1px solid var(--border); }
+
+.case-code > summary:hover { color: var(--accent); }
+
+.case-code > summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
     }
 
 .case-left {
@@ -256,13 +298,6 @@ nav {
       line-height: 1.6;
     }
 
-.code-panel {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-code);
-      overflow: hidden;
-    }
 
 .code-filename {
       font-family: var(--mono);
@@ -273,13 +308,16 @@ nav {
       border-bottom: 1px solid var(--border);
     }
 
-.ck { color: #0071e3; }
+/* Swift 문법 강조 — Xcode 다크 팔레트 (index 히어로와 동일) */
+.ck { color: #fc5fa3; }   /* 키워드 */
 
-.ct { color: #0369a1; }
+.ct { color: #5dd8ff; }   /* 타입 */
 
-.cs { color: #0071e3; }
+.cs { color: #fc6a5d; }   /* 문자열 */
 
-.cm { color: #9ca3af; font-style: italic; }
+.cn { color: #d0bf69; }   /* 숫자 */
+
+.cm { color: #6c7986; font-style: italic; }   /* 주석 */
 
 .nav-proj:hover .nav-proj-title { color: var(--accent); }
 
@@ -519,7 +557,7 @@ footer {
    그리드 자식을 축소 가능(min-width:0)하게 하고 코드는 내부 스크롤. */
 .case-left, .case-right,
 
-.code-panel { max-width: 100%; overflow: hidden; }
+.case-code { max-width: 100%; overflow: hidden; }
 .code-body { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
 .case-clip video, .case-clip img,
 .case-media video, .case-media img,
@@ -555,6 +593,9 @@ footer {
     min-height: 240px;
     padding: 28px 24px;
   }
+  .case-code { order: 3 !important; }
+  .case-code > summary { padding: 12px 24px; }
+  .case-code .code-body { padding: 14px 24px; font-size: 0.75rem; }
 }
 
 .case-cell--solo { grid-template-columns: minmax(0, 1fr); }

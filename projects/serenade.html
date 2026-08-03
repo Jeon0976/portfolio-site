@@ -11,7 +11,7 @@
   <meta name="description" content="SERENADE · 웨딩 정보 서비스. ReactorKit 단방향과 RxDataSources diff 렌더링으로 체크리스트·예산·마이페이지를 구현한 2인 팀 프로젝트.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=16">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=17">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -248,7 +248,7 @@
 
     .status-dot { width: 6px; height: 6px; }
   </style>
-  <link rel="stylesheet" href="../assets/design-system.css?v=8">
+  <link rel="stylesheet" href="../assets/design-system.css?v=9">
   <link rel="stylesheet" href="../assets/theme.css?v=10">
   <script src="../assets/analytics.js?v=2" defer></script>
 </head>
@@ -315,9 +315,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">FullCheckListReactor.swift &middot; 낙관적 업데이트 (요지)</div>
+          <details class="case-code">
+            <summary class="code-filename">FullCheckListReactor.swift &middot; 낙관적 업데이트 (요지)</summary>
               <pre class="code-body"><span class="ck">case let</span> .toggleCheckListItem(id, isCompleted):
     <span class="cm">// 1) UI 먼저: 목록이 즉시 반응</span>
     <span class="ck">let</span> uiUpdate = Observable.<span class="ct">just</span>(
@@ -329,12 +328,11 @@
 
 <span class="cm">// 예산 수정은 반대: 로딩 → 서버 → 재조회</span>
 <span class="ck">return</span> .<span class="ct">concat</span>([setLoading(<span class="ck">true</span>), update, refetch()])</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- 02 · 렌더링 (flip) -->
-        <article class="case-cell flip fi" aria-label="렌더링: RxDataSources 섹션 diff">
+        <article class="case-cell fi" aria-label="렌더링: RxDataSources 섹션 diff">
           <div class="case-left">
             <p class="cell-tag">Case 02 &middot; 렌더링</p>
             <h3 class="cell-title">섹션 diff로 바뀐 행만 다시 그린다</h3>
@@ -353,9 +351,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">CategoryCheckListCellModel.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">CategoryCheckListCellModel.swift</summary>
               <pre class="code-body"><span class="cm">// identity + Equatable: 둘 다 있어야 diff가 정확</span>
 <span class="ck">struct</span> <span class="ct">CellModel</span>: <span class="ct">IdentifiableType</span>, <span class="ct">Equatable</span> {
     <span class="ck">var</span> identity: String { item.id }
@@ -368,8 +365,7 @@
 reactor.state.<span class="ct">map</span>(\.sections)
     .<span class="ct">distinctUntilChanged</span>()
     .<span class="ct">bind</span>(to: tableView.rx.items(dataSource: dataSource))</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>

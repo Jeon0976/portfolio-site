@@ -11,7 +11,7 @@
   <title>KIRA (Katsby) · 전성훈 iOS</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=16">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=17">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -385,7 +385,7 @@
       .page-toc a.active { color: var(--ink); border-color: var(--accent); }
     }
   </style>
-  <link rel="stylesheet" href="../assets/design-system.css?v=8">
+  <link rel="stylesheet" href="../assets/design-system.css?v=9">
   <link rel="stylesheet" href="../assets/theme.css?v=10">
   <script src="../assets/analytics.js?v=2" defer></script>
 </head>
@@ -466,14 +466,15 @@
                 <p class="row-body">넘기는 즉시 다음 장이 뜨고, 되돌아와도 다시 그리지 않습니다.</p>
               </div>
             </div>
+          </div>
+          <div class="case-right">
             <div class="case-clip">
               <video autoplay muted loop playsinline poster="../assets/kira/poster-briefing.webp" src="../assets/kira/briefing-demo.mp4" aria-label="브리핑 뷰어 좌우 스와이프 데모"></video>
               <p class="clip-cap">실기기 데모 &middot; 브리핑 뷰어</p>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">BriefingStore.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">BriefingStore.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">@Observable</span>
 <span class="ck">final class</span> <span class="ct">BriefingStore</span> {
     <span class="cm">// slideID → HTML (메모리 캐시)</span>
@@ -512,14 +513,13 @@
 
     <span class="ck">deinit</span> { task?.cancel() }
 }</pre>
-            </div>
-          </div>
+          </details>
         
         
         </article>
 
         <!-- Case 02: 요청 취소 + generation 토큰 (code panel, flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 02: 요청 자동 취소 + generation 토큰">
+        <article class="case-cell fi" aria-label="케이스 02: 요청 자동 취소 + generation 토큰">
           <div class="case-left">
             <p class="cell-tag">Case 02 &middot; URLSession / Concurrency</p>
             <h3 class="cell-title">네트워크 요청 자동 취소 + generation 토큰</h3>
@@ -542,9 +542,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">PagedListStore.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">PagedListStore.swift</summary>
               <pre class="code-body"><span class="ck">func</span> load() {
     loadGeneration &amp;+= 1
     <span class="ck">let</span> generation = loadGeneration
@@ -560,8 +559,7 @@
         items = result
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 03: 세로 맵 스크롤 선 로딩 -->
@@ -587,14 +585,15 @@
                 <p class="row-body">경계에 닿기 전에 다음 코스가 준비돼, 넘어갈 때 로딩 없이 곧바로 화면이 갱신됩니다.</p>
               </div>
             </div>
+          </div>
+          <div class="case-right">
             <div class="case-clip">
               <video autoplay muted loop playsinline poster="../assets/kira/poster-map.webp" src="../assets/kira/map-demo.mp4" aria-label="퀴즈맵 세로 스크롤 선 로딩 데모"></video>
               <p class="clip-cap">실기기 데모 &middot; 퀴즈맵 스크롤</p>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">QuizMapView.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">QuizMapView.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">private let</span> prefetchTriggerDistance: <span class="ct">CGFloat</span> = 500
 
 <span class="ck">private func</span> checkAndTriggerPrefetch(nextCourseViewY: <span class="ct">CGFloat</span>) {
@@ -612,8 +611,7 @@
     <span class="cm">// 위치 기준으로 다음 챕터 미리 받기</span>
     store.dispatch(.prefetchNextCourse(courseId: nextCourseId))
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>
@@ -656,9 +654,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">Router.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">Router.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">@MainActor</span> <span class="ck">@Observable</span>
 <span class="ck">final class</span> <span class="ct">Router</span> {
     <span class="ck">var</span> path: [<span class="ct">Route</span>] = []  <span class="cm">// NavigationStack(path:)에 바인딩</span>
@@ -684,8 +681,7 @@
         path = <span class="ct">Array</span>(path.prefix(target))
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 05: 바텀시트 코디네이터 (phone frame) -->
@@ -711,14 +707,15 @@
                 <p class="row-body">새 흐름도 같은 패턴으로 확장되고, 시트는 늘 의도한 화면 위에서 한 번만 뜹니다.</p>
               </div>
             </div>
+          </div>
+          <div class="case-right">
             <div class="case-clip">
               <video autoplay muted loop playsinline poster="../assets/kira/poster-sheet.webp" src="../assets/kira/sheet-demo.mp4" aria-label="바텀시트 구매에서 충전으로 전환 데모"></video>
               <p class="clip-cap">실기기 데모 &middot; 시트 전환 (구매 &rarr; 충전)</p>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">BottomSheetCoordinator.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">BottomSheetCoordinator.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">@MainActor</span> <span class="ck">@Observable</span>
 <span class="ck">final class</span> <span class="ct">BottomSheetCoordinator</span> {
     <span class="cm">// 현재 시트를 스택에 보관하고 새 시트로</span>
@@ -742,8 +739,7 @@
 <span class="cm">// 마운트는 여러 곳, 렌더는 한 곳</span>
 <span class="ct">NavigationStack</span> { … }.<span class="ct">bottomSheetCoordinator</span>()
 <span class="ct">StreakView</span>().<span class="ct">bottomSheetCoordinator</span>(screenId: <span class="cs">"streak"</span>)</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 06: 스트릭 달력 (code panel, flip) -->
@@ -769,14 +765,15 @@
                 <p class="row-body">주 경계·불연속·월 전환·단독일 어느 경우에도 브릿지가 어긋나지 않습니다.</p>
               </div>
             </div>
+          </div>
+          <div class="case-right">
             <div class="case-clip">
               <img src="../assets/kira/streak-1.webp" alt="연속학습 달력: 연속일 브릿지 표시" loading="lazy">
               <p class="clip-cap">실기기 화면 &middot; 스트릭 달력</p>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">StreakCalendarView.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">StreakCalendarView.swift</summary>
               <pre class="code-body"><span class="ck">enum</span> <span class="ct">StreakBridgeType</span> {
     <span class="ck">case</span> solo
     <span class="cm">// 앞뒤 연속 없음</span>
@@ -791,8 +788,7 @@
 <span class="cm">// 1) 날짜 상태 매핑</span>
 <span class="cm">// 2) 이전/다음 연속 검사</span>
 <span class="cm">//    → 타입 확정</span></pre>
-            </div>
-          </div>
+          </details>
         
         
         </article>
@@ -820,14 +816,15 @@
                 <p class="row-body">영역 전환이 끊김 없이 한 호흡으로 이어집니다.</p>
               </div>
             </div>
+          </div>
+          <div class="case-right">
             <div class="case-clip">
               <video autoplay muted loop playsinline poster="../assets/kira/poster-tabbar.webp" src="../assets/kira/tabbar-demo.mp4" aria-label="메인과 플레이 탭바 전환 데모"></video>
               <p class="clip-cap">실기기 데모 &middot; 메인 &harr; 플레이 전환</p>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">CustomTabBar.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">CustomTabBar.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">enum</span> <span class="ct">TabBarMode</span> { <span class="ck">case</span> main, play }
 
 <span class="ck">@State private var</span> mode: <span class="ct">TabBarMode</span> = .main
@@ -852,12 +849,11 @@
         value: mode
     )
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 08: 딥링크 보류와 재개 -->
-        <article class="case-cell flip fi" aria-label="케이스 08: 딥링크 보류와 재개">
+        <article class="case-cell fi" aria-label="케이스 08: 딥링크 보류와 재개">
           <div class="case-left">
             <p class="cell-tag">Case 08 &middot; DeepLink / Pending</p>
             <h3 class="cell-title">딥링크 보류와 재개 &middot; 오버레이가 닫힌 뒤 한 번만</h3>
@@ -880,9 +876,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">PendingDeepLink.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">PendingDeepLink.swift &middot; 요지</summary>
               <pre class="code-body"><span class="cm">// 보류 저장소: 새 링크가 오면 최신으로 교체, 꺼내면 1회 소비 후 비움</span>
 <span class="ck">enum</span> <span class="ct">PendingDeepLink</span> {
     <span class="ck">private static var</span> destination: <span class="ct">DeepLinkDestination</span>?
@@ -911,8 +906,7 @@
         pendingNavigation = d
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 09: 토스트 별도 윈도우 -->
@@ -939,9 +933,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">ToastWindowManager.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">ToastWindowManager.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">@MainActor</span>
 <span class="ck">final class</span> <span class="ct">ToastWindowManager</span> {
     <span class="ck">private var</span> toastWindows: [<span class="ct">ToastWindow</span>] = []
@@ -963,8 +956,7 @@
         repositionToasts()
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>
@@ -1007,9 +999,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">거대 Store 분리 &middot; Before / After</div>
+          <details class="case-code">
+            <summary class="code-filename">거대 Store 분리 &middot; Before / After</summary>
               <pre class="code-body"><span class="cm">// Before: 약 800줄, 성격 다른 책임이 한 객체에</span>
 <span class="ck">final class</span> <span class="ct">TabBarStore</span>: <span class="ct">ObservableObject</span> {
     <span class="ck">@Published var</span> selection: <span class="ct">MainTab</span> = .home
@@ -1036,12 +1027,11 @@
     <span class="ck">@State private var</span> remainingTime: <span class="ct">TimeInterval</span> = 0
     <span class="cm">// 시트가 떠 있을 때만 돌고 이 화면만 갱신</span>
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 11: DI 스레드 안전성 (code panel, flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 11: DI 컨테이너 스레드 안전성">
+        <article class="case-cell fi" aria-label="케이스 11: DI 컨테이너 스레드 안전성">
           <div class="case-left">
             <p class="cell-tag">Case 11 &middot; Swinject / Crashlytics</p>
             <h3 class="cell-title">런치 간헐 크래시 &middot; Crashlytics 리포트에서 DI 스레드 문제까지</h3>
@@ -1064,9 +1054,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">DIContainer.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">DIContainer.swift</summary>
               <pre class="code-body"><span class="cm">// Container.resolve()는</span>
 <span class="cm">// thread-safe하지 않음</span>
 <span class="cm">// → synchronize()로 직렬 큐 보호</span>
@@ -1080,8 +1069,7 @@
 ) -&gt; <span class="ct">T</span>? {
     resolver.resolve(type)
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>
@@ -1124,9 +1112,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">PurchaseRepository.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">PurchaseRepository.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">actor</span> <span class="ct">PurchaseRepository</span> {
     <span class="ck">func</span> listen() {
         <span class="ck">for await</span> update <span class="ck">in</span> <span class="ct">Transaction</span>.updates {
@@ -1146,8 +1133,7 @@
         <span class="ck">await</span> tx.finish()
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 13: 퀴즈 상태머신 (code panel, flip) -->
@@ -1173,14 +1159,15 @@
                 <p class="row-body">불가능한 상태가 타입 차원에서 사라지고, 빠른 연타에도 화면과 서버가 어긋나지 않습니다.</p>
               </div>
             </div>
+          </div>
+          <div class="case-right">
             <div class="case-clip">
               <video autoplay muted loop playsinline poster="../assets/kira/poster-quiz.webp" src="../assets/kira/quiz-demo.mp4" aria-label="퀴즈 풀이 흐름 데모"></video>
               <p class="clip-cap">실기기 데모 &middot; 퀴즈 플로우</p>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">QuizProgressType.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">QuizProgressType.swift</summary>
               <pre class="code-body"><span class="ck">enum</span> <span class="ct">QuizProgressType</span>: <span class="ct">Equatable</span> {
     <span class="ck">case</span> study(stage: <span class="ct">Int</span>)
     <span class="cm">// 풀이</span>
@@ -1195,8 +1182,7 @@
     <span class="cm">// "복습이면서 완료" 같은 조합이</span>
     <span class="cm">// 타입 차원에서 불가능해진다</span>
 }</pre>
-            </div>
-          </div>
+          </details>
         
         
         </article>
@@ -1224,14 +1210,15 @@
                 <p class="row-body">어떤 진입 경로에서도 연출이 한 번씩만 올바른 순서로 재생되고, 마감 시각을 영속 저장해 껐다 켜도 이미 본 연출은 다시 나오지 않습니다.</p>
               </div>
             </div>
+          </div>
+          <div class="case-right">
             <div class="case-clip">
               <video autoplay muted loop playsinline poster="../assets/kira/poster-quest.webp" src="../assets/kira/quest-demo.mp4" aria-label="퀘스트 보상 진행과 완료 연출 데모"></video>
               <p class="clip-cap">데모 &middot; 진행 바와 완료 연출</p>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">QuestStorageImpl.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">QuestStorageImpl.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">actor</span> <span class="ct">QuestStorageImpl</span>: <span class="ct">QuestStorage</span> {
     <span class="ck">private var</span> snapshot: [<span class="ct">Quest</span>] = []  <span class="cm">// 직전(본) 상태</span>
     <span class="ck">private var</span> current:  [<span class="ct">Quest</span>] = []
@@ -1258,8 +1245,7 @@
     <span class="ck">var</span> isResumed = <span class="ck">false</span>
     gemFly { <span class="ck">if</span> !isResumed { isResumed = <span class="ck">true</span>; cont.resume() } }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>

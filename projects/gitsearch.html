@@ -11,7 +11,7 @@
   <meta name="description" content="Clean Architecture에서 Micro Feature Architecture로. 같은 앱을 두 번 만들며 무엇을 고쳤나.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=16">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=17">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -303,7 +303,7 @@
       .page-toc a.active { color: var(--ink); border-color: var(--accent); }
     }
   </style>
-  <link rel="stylesheet" href="../assets/design-system.css?v=8">
+  <link rel="stylesheet" href="../assets/design-system.css?v=9">
   <link rel="stylesheet" href="../assets/theme.css?v=10">
   <script src="../assets/analytics.js?v=2" defer></script>
 </head>
@@ -385,9 +385,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">FeatureProfile/Project.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">FeatureProfile/Project.swift</summary>
               <pre class="code-body"><span class="ck">let</span> project = <span class="ct">Project</span>.module(
     name: <span class="ct">ModulePaths</span>.<span class="ct">Feature</span>.FeatureProfile.rawValue,
     targets: [
@@ -411,12 +410,11 @@
         .demo(<span class="cm">/* 단독 실행 앱 */</span>)
     ]
 )</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 02: Tuist 툴링 (flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 02: 반복 선언을 플러그인과 scaffold로">
+        <article class="case-cell fi" aria-label="케이스 02: 반복 선언을 플러그인과 scaffold로">
           <div class="case-left">
             <p class="cell-tag">Case 02 &middot; Tuist / Local Plugin</p>
             <h3 class="cell-title">반복 선언은 플러그인으로, 새 피처는 scaffold 한 줄로</h3>
@@ -439,9 +437,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">DependencyPlugin &middot; ModulePaths.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">DependencyPlugin &middot; ModulePaths.swift</summary>
               <pre class="code-body"><span class="ck">public enum</span> <span class="ct">ModulePaths</span> {
     <span class="ck">case</span> shared(<span class="ct">Shared</span>)
     <span class="ck">case</span> core(<span class="ct">Core</span>)
@@ -465,8 +462,7 @@
         <span class="cm">// 새 피처 = 케이스 한 줄, 워크스페이스는 allCases 순회</span>
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>
@@ -509,9 +505,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">RequestInterceptor.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">RequestInterceptor.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">public protocol</span> <span class="ct">RequestInterceptor</span>: <span class="ct">Sendable</span> {
     <span class="ck">func</span> adapt(<span class="ck">_</span> request: <span class="ct">URLRequest</span>,
                endpoint: <span class="ck">some</span> <span class="ct">NetworkEndpoint</span>) <span class="ck">throws</span> -&gt; <span class="ct">URLRequest</span>
@@ -537,12 +532,11 @@
     ) { <span class="ck">return</span> after }
 }
 <span class="ck">return nil</span>  <span class="cm">// 아무도 원하지 않으면 에러 그대로</span></pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 04: 멱등과 재시도 (flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 04: 멱등 게이트와 재시도">
+        <article class="case-cell fi" aria-label="케이스 04: 멱등 게이트와 재시도">
           <div class="case-left">
             <p class="cell-tag">Case 04 &middot; HTTP / Idempotency</p>
             <h3 class="cell-title">멱등과 재시도 &middot; 게이트가 뚫리지 않는 자리</h3>
@@ -565,9 +559,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">TransientErrorRetryInterceptor.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">TransientErrorRetryInterceptor.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">public struct</span> <span class="ct">TransientErrorRetryInterceptor</span>: <span class="ct">RequestInterceptor</span> {
     <span class="ck">public func</span> retry(
         <span class="ck">_</span> endpoint: <span class="ck">some</span> <span class="ct">NetworkEndpoint</span>,
@@ -593,8 +586,7 @@
     <span class="ck">case</span> .post, .patch: <span class="ck">false</span>  <span class="cm">// 부수효과 중복 위험</span>
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>
@@ -637,9 +629,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">ManagedTask.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">ManagedTask.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">@MainActor</span>
 <span class="ck">public final class</span> <span class="ct">ManagedTask</span> {
     <span class="ck">private var</span> task: <span class="ct">Task</span>&lt;<span class="ct">Void</span>, <span class="ct">Never</span>&gt;?
@@ -671,8 +662,7 @@
         }
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>
@@ -715,9 +705,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">KeychainTokenStorage.swift &middot; 요지</div>
+          <details class="case-code">
+            <summary class="code-filename">KeychainTokenStorage.swift &middot; 요지</summary>
               <pre class="code-body"><span class="ck">public final class</span> <span class="ct">KeychainTokenStorage</span>: <span class="ct">TokenStorage</span>, <span class="ct">Sendable</span> {
     <span class="ck">public func</span> store(<span class="ck">_</span> token: <span class="ct">String</span>) {
         <span class="ct">SecItemDelete</span>(baseQuery <span class="ck">as</span> <span class="ct">CFDictionary</span>)  <span class="cm">// 저빈도라 delete 후 add</span>
@@ -744,12 +733,11 @@
         ]
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
         <!-- Case 07: 이미지 파이프라인 (flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 07: 아바타 이미지 파이프라인">
+        <article class="case-cell fi" aria-label="케이스 07: 아바타 이미지 파이프라인">
           <div class="case-left">
             <p class="cell-tag">Case 07 &middot; ImageIO / Prefetch</p>
             <h3 class="cell-title">아바타 이미지 파이프라인 &middot; 2계층 캐시와 다운샘플</h3>
@@ -772,9 +760,8 @@
               </div>
             </div>
           </div>
-          <div class="case-right">
-            <div class="code-panel">
-              <div class="code-filename">ImageDownsampler.swift</div>
+          <details class="case-code">
+            <summary class="code-filename">ImageDownsampler.swift</summary>
               <pre class="code-body"><span class="ck">enum</span> <span class="ct">ImageDownsampler</span> {
     <span class="ck">static func</span> makeImage(
         from data: <span class="ct">Data</span>,
@@ -801,8 +788,7 @@
         <span class="ck">return</span> <span class="ct">UIImage</span>(cgImage: cgImage, scale: scale, orientation: .up)
     }
 }</pre>
-            </div>
-          </div>
+          </details>
         </article>
 
       </div>

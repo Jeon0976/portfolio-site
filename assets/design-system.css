@@ -252,7 +252,7 @@ h1, h2, h3 { color: var(--ds-ink); text-wrap: balance; }
 }
 
 /* Technical evidence */
-.code-panel,
+.case-code,
 .code-contact {
   overflow: hidden;
   border: 1px solid #2f3d3a;
@@ -273,20 +273,22 @@ h1, h2, h3 { color: var(--ds-ink); text-wrap: balance; }
   font-family: var(--ds-font-mono);
 }
 
-.code-panel .code-filename {
+.case-code > summary {
   background: #182320;
   border-bottom-color: #2f3d3a;
 }
 
-.code-panel .code-body,
+.case-code .code-body,
 .code-contact .code-contact-body {
   background: #111817;
 }
 
-.ck { color: #79d8ba; }
-.ct { color: #e7b36c; }
-.cn { color: #9bc7ff; }
-.cm, .cc-comment { color: #8d9d98; }
+/* Swift 문법 강조 — Xcode 다크 팔레트 */
+.ck { color: #fc5fa3; }              /* 키워드 */
+.ct { color: #5dd8ff; }              /* 타입 */
+.cs { color: #fc6a5d; }              /* 문자열 */
+.cn { color: #d0bf69; }              /* 숫자 */
+.cm, .cc-comment { color: #6c7986; } /* 주석 */
 
 .phone-wrap,
 .cell-visual {
