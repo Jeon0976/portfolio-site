@@ -400,39 +400,6 @@ reactor.state.<span class="ct">map</span>(\.sections)
           </div>
         </article>
 
-        <!-- 03 · 회고 -->
-        <article class="cell fi" aria-label="회고: 같은 프로젝트 안에서의 성장">
-          <div class="cell-desc">
-            <p class="cell-tag">회고 &middot; 성장 기록</p>
-            <h3 class="cell-title">같은 프로젝트 안에서 고쳐 나갔습니다</h3>
-            <div class="ba-wrap">
-              <div class="ba-block">
-                <span class="ba-label">그때</span>
-                <p class="ba-text">초기 체크리스트 코드에는 낙관적 업데이트의 서버 실패 롤백이 없었고, Reactor가 State 밖 보조 딕셔너리를 들고 있었고, 화면 간 데이터 전달에 UserDefaults를 썼습니다.</p>
-              </div>
-              <div class="ba-block ba-block--after">
-                <span class="ba-label">지금 보이는 것</span>
-                <p class="ba-text">후반에 맡은 마이페이지에서는 모든 상태를 State 안으로 모으고 에러를 타입으로 나눠 처리하는 구조로 정리했습니다. 남은 한계는 그대로 기록해 두었습니다.</p>
-              </div>
-            </div>
-            <div class="imp-wrap">
-              <span class="imp-label">배운 것</span>
-              <p class="imp-text">초기 코드의 한계를 후반 마이페이지에서 스스로 정리한 것처럼, 짧은 참여 기간에도 구조를 남기려 했습니다.</p>
-            </div>
-          </div>
-          <div class="cell-visual">
-            <div class="code-panel">
-              <div class="code-filename">그때의 한계 &middot; 코드가 말해 주는 것</div>
-              <pre class="code-body"><span class="cm">// 1. 낙관적 업데이트에 롤백 경로 없음</span>
-<span class="cm">//    → 서버 실패 시 화면·저장소 불일치</span>
-<span class="cm">// 2. Reactor의 State 밖 보조 딕셔너리</span>
-<span class="cm">//    → 단일 진실 원천이 흔들림</span>
-<span class="cm">// 3. UserDefaults를 화면 간 전달 버스로 사용</span>
-<span class="cm">// 후반 마이페이지: 상태는 State 안에, 에러는 타입으로</span></pre>
-            </div>
-          </div>
-        </article>
-
       </div>
     </div>
   </section>
