@@ -222,7 +222,7 @@ nav {
 
 .case-row {
       display: grid;
-      grid-template-columns: 52px minmax(0, 1fr);
+      grid-template-columns: 72px minmax(0, 1fr);
       gap: 12px;
       padding: 12px 0;
       border-top: 1px solid var(--border);
@@ -231,7 +231,7 @@ nav {
 .case-row:last-child { border-bottom: 1px solid var(--border); }
 
 .row-label {
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       letter-spacing: 0.01em;
       color: var(--ink);
@@ -506,31 +506,31 @@ footer {
     }
 
 .ba-wrap {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 12px;
+      display: block;
       margin-bottom: 18px;
     }
 
 .ba-block {
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg);
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
     }
 
+.ba-block:last-child { border-bottom: 1px solid var(--border); }
+
 .ba-block--after {
-      border-color: rgba(0, 113, 227,0.30);
-      background: rgba(0, 113, 227,0.03);
+      border-color: var(--border);
+      background: none;
     }
 
 .ba-label {
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       color: var(--ink);
       letter-spacing: 0.01em;
-      display: block;
-      margin-bottom: 7px;
+      padding-top: 2px;
     }
 
 .ba-block--after .ba-label { color: var(--accent); }
@@ -542,19 +542,19 @@ footer {
     }
 
 .imp-wrap {
-      padding: 12px 14px;
-      border-left: 2px solid var(--border);
-      background: rgba(0, 113, 227,0.04);
-      border-radius: 0 6px 6px 0;
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
     }
 
 .imp-label {
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       color: var(--accent);
       letter-spacing: 0.01em;
-      display: block;
-      margin-bottom: 5px;
+      padding-top: 2px;
     }
 
 .imp-text {
