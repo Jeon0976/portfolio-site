@@ -751,7 +751,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body"><code>matchedGeometryEffect</code>로 두 바를 잇는 방법은 아이콘&middot;크기&middot;정렬이 함께 변하는 '한 몸' 변형이 어긋나기 쉽습니다. <strong>상태 하나에 모든 시각 속성을 묶는 명시적 모핑</strong>을 택했습니다.</p>
+                <p class="row-body"><code>matchedGeometryEffect</code>는 두 뷰의 위치와 크기를 이어 주는 도구라, 아이콘 모양과 정렬까지 같이 바뀌는 전환에는 맞지 않았습니다. <strong>탭바를 직접 그리고, 바뀌는 값을 상태 하나로 묶어 제어하기로 했습니다.</strong></p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
@@ -759,7 +759,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">영역 전환이 끊김 없이 한 호흡으로 이어집니다.</p>
+                <p class="row-body">탭을 옮기면 바가 끊기지 않고 이어서 모양을 바꿉니다.</p>
               </div>
             </div>
           </div>
