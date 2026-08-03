@@ -223,6 +223,18 @@ nav {
 
 .case-code > summary::-webkit-details-marker { display: none; }
 
+.code-note {
+      margin-left: auto;
+      padding: 3px 9px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      opacity: .65;
+      white-space: nowrap;
+    }
+
 .case-code > summary::before {
       content: "\25B8";
       font-size: 1.05em;
