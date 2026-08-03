@@ -214,6 +214,16 @@ nav {
 
 .case-cell.flip .case-right { order: 1; }
 
+.case-right {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 36px;
+      min-height: 320px;
+      transition: transform 500ms ease;
+    }
+
 .case-rows {
       display: flex;
       flex-direction: column;
@@ -469,28 +479,10 @@ footer {
       line-height: 1.4;
     }
 
-.cell {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      border: 1px solid var(--border);
-      border-radius: var(--r-card);
-      overflow: hidden;
-      background: var(--surface);
-      box-shadow: var(--shadow);
-      transition: border-color 200ms var(--ease-snap);
-    }
 
-.cell:hover { border-color: rgba(0,113,227,0.4); }
 
-.cell:hover .cell-visual { transform: scale(1.04); }
 
-.cell.flip .cell-desc {
-      order: 2;
-      border-right: none;
-      border-left: 1px solid var(--border);
-    }
 
-.cell.flip .cell-visual { order: 1; }
 
 .hero-tagline {
       font-size: 1.0625rem;
@@ -499,12 +491,6 @@ footer {
       max-width: 560px;
     }
 
-.cells {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      margin-top: 56px;
-    }
 
 
 
@@ -522,22 +508,22 @@ footer {
       margin-top: 48px;
     }
 
-.cells .fi:nth-child(2) { transition-delay: 40ms; }
+.cases-stack .fi:nth-child(2) { transition-delay: 40ms; }
 
-.cells .fi:nth-child(3) { transition-delay: 80ms; }
+.cases-stack .fi:nth-child(3) { transition-delay: 80ms; }
 
-.cells .fi:nth-child(4) { transition-delay: 120ms; }
+.cases-stack .fi:nth-child(4) { transition-delay: 120ms; }
 
 /* ═══ 모바일 가로 넘침 방지 (Claude, 2026-07-31) ═══
    코드 패널(white-space:pre)이 뷰포트보다 넓어도 페이지가 늘어나지 않게
    그리드 자식을 축소 가능(min-width:0)하게 하고 코드는 내부 스크롤. */
 .case-left, .case-right,
-.cell-desc, .cell-visual { min-width: 0; }
+
 .code-panel { max-width: 100%; overflow: hidden; }
 .code-body { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
 .case-clip video, .case-clip img,
 .case-media video, .case-media img,
-.cell-visual img, .cell-visual video { max-width: 100%; }
+.case-right img, .case-right video { max-width: 100%; }
 @media (max-width: 768px) {
   html, body { overflow-x: clip; }
   .case-clip video, .case-clip img { width: 220px; }
@@ -548,13 +534,13 @@ footer {
 
 /* ═══ 모바일 단일 열 붕괴 (case-shared가 인라인보다 늦게 로드되므로 여기서 확정) ═══ */
 @media (max-width: 768px) {
-  .case-cell, .cell { grid-template-columns: minmax(0, 1fr); }
-  .case-cell .case-right, .cell .cell-visual { order: 2; }
-  .case-cell .case-left, .cell .cell-desc { order: 1; }
+  .case-cell { grid-template-columns: minmax(0, 1fr); }
+  .case-cell .case-right { order: 2; }
+  .case-cell .case-left { order: 1; }
 }
 
 .cell--solo { grid-template-columns: minmax(0, 1fr); }
-.cell--solo .cell-desc { border-right: none; }
+.case-cell--solo .case-left { border-right: none; }
 
 /* ── 케이스 페이지 공통 이동분(5페이지 동일 인라인 규칙, 2026-08 공통화) ── */
 .nav-links a[aria-current="page"] {

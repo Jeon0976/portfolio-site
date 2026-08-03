@@ -11,7 +11,7 @@
   <title>KIRA (Katsby) · 전성훈 iOS</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=13">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=14">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -158,14 +158,6 @@
 
     /* ── Case visual ─────────────────────────────────────── */
 
-    .case-right {
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 36px 36px;
-      min-height: 320px;
-    }
 
     /* ── Code panel ──────────────────────────────────────── */
 
@@ -297,8 +289,6 @@
     /* ── Responsive ──────────────────────────────────────── */
 
     @media (max-width: 1024px) {
-      .case-left { padding: 36px 32px; }
-      .case-right { padding: 28px 28px; }
     }
 
     @media (max-width: 768px) {
@@ -316,21 +306,6 @@
       .case-media { padding: 14px 20px 20px; }
       .case-media video,
       .case-media img { width: calc(50% - 6px); }
-      .case-left {
-        padding: 32px 24px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        order: 1 !important;
-      }
-      .case-cell.flip .case-left {
-        border-left: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .case-right {
-        order: 2 !important;
-        min-height: 240px;
-        padding: 28px 24px;
-      }
 
       .footer-top { flex-direction: column; align-items: flex-start; gap: 16px; }
       .footer-nav { flex-wrap: wrap; gap: 16px; }

@@ -11,7 +11,7 @@
   <title>AVIRO · 전성훈 포트폴리오</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=13">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=14">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -79,19 +79,12 @@
       gap: 24px;
     }
 
-    .cell-visual { transition: transform 500ms ease; min-width: 0; }
+    .case-right { transition: transform 500ms ease; min-width: 0; }
 
-    .cell-desc {
-      padding: 52px 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      border-right: 1px solid var(--border);
-    }
 
-    .cell-desc h2 { margin-bottom: 20px; }
+    .case-left h2 { margin-bottom: 20px; }
 
-    .cell-desc .sec-eyebrow { margin-bottom: 10px; }
+    .case-left .sec-eyebrow { margin-bottom: 10px; }
 
     /* ── Bullet list ─────────────────────────────────────── */
 
@@ -156,14 +149,6 @@
 
     /* ── Code panel ──────────────────────────────────────── */
 
-    .cell-visual {
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 44px 36px;
-      min-height: 280px;
-    }
 
     .code-body {
       padding: 20px 18px;
@@ -282,7 +267,7 @@
       .fi { transform: none !important; transition: opacity 240ms var(--ease-snap); transition-delay: 0ms !important; }
       .fi.vis { opacity: 1; }
       *::after { transition: none !important; transform: scaleX(0) !important; }
-      .cell-visual { transition: none !important; transform: none !important; }
+      .case-right { transition: none !important; transform: none !important; }
     }
 
     /* ── Responsive ──────────────────────────────────────── */
@@ -301,19 +286,6 @@
       .metric:nth-child(3) { border-top: 1px solid var(--border); }
       .metric:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
 
-      .cell { grid-template-columns: minmax(0, 1fr); }
-      .cell-desc {
-        padding: 36px 28px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .cell.flip .cell-desc {
-        order: 0;
-        border-left: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .cell.flip .cell-visual { order: 1; }
-      .cell-visual { min-height: 220px; padding: 32px 24px; }
 
       .footer-top { flex-direction: column; align-items: flex-start; gap: 16px; }
       .footer-nav { flex-wrap: wrap; gap: 16px; }
@@ -375,8 +347,8 @@
       <div class="cases">
 
         <!-- Cell 2 (flip): phones + architecture -->
-        <article class="cell flip fi" aria-label="지도와 데이터">
-          <div class="cell-desc">
+        <article class="case-cell flip fi" aria-label="지도와 데이터">
+          <div class="case-left">
             <p class="sec-eyebrow">지도 · 데이터</p>
             <h2 id="arch-hd">지도와 데이터를 다루며</h2>
             <p class="arch-intro">MVP 패턴으로 빠르게 출시해 3년을 운영했습니다. 지도와 데이터를 다루며 마주친 문제들을 코드로 풀었고, 유지보수의 한계도 몸으로 배웠습니다.</p>
@@ -404,7 +376,7 @@
               </li>
             </ul>
           </div>
-          <div class="cell-visual">
+          <div class="case-right">
             <div class="code-panel">
               <div class="code-filename">MarkerModelManager.swift &middot; 요지</div>
               <pre class="code-body"><span class="ck">func</span> fetchRawData() {

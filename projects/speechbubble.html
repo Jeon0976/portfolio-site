@@ -11,7 +11,7 @@
   <meta name="description" content="UIBezierPath·CAShapeLayer 커스텀 드로잉과 OptionSet API로 설계해 SPM·CocoaPods로 배포한 UIKit 말풍선 라이브러리.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=13">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=14">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -66,16 +66,8 @@
 
     /* ── Cells ───────────────────────────────────────────── */
 
-    .cell-visual { transition: transform 500ms ease; min-width: 0; }
+    .case-right { transition: transform 500ms ease; min-width: 0; }
 
-    .cell-desc {
-      min-width: 0;
-      padding: 48px 44px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-right: 1px solid var(--border);
-    }
 
     .cell-tag {
       font-size: 0.6875rem;
@@ -94,14 +86,6 @@
       margin-bottom: 22px;
     }
 
-    .cell-visual {
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 36px;
-      min-height: 280px;
-    }
 
     /* ── Before / After ──────────────────────────────────── */
 
@@ -218,7 +202,7 @@
       .fi { transform: none !important; transition: opacity 240ms var(--ease-snap); transition-delay: 0ms !important; }
       .fi.vis { opacity: 1; }
       *::after { transition: none !important; transform: scaleX(0) !important; }
-      .cell-visual { transition: none !important; transform: none !important; }
+      .case-right { transition: none !important; transform: none !important; }
     }
 
     /* ── Responsive ──────────────────────────────────────── */
@@ -246,19 +230,6 @@
       .metric:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
       .metric:nth-child(5) { border-top: 1px solid var(--border); border-right: none; }
 
-      .cell { grid-template-columns: minmax(0, 1fr); }
-      .cell-desc {
-        padding: 32px 24px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        order: 0 !important;
-      }
-      .cell.flip .cell-desc {
-        order: 0 !important;
-        border-left: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .cell-visual { order: 1 !important; min-height: 200px; padding: 28px 24px; }
 
       .code-grid { grid-template-columns: 1fr; }
       .record-grid { grid-template-columns: 1fr; }
@@ -320,11 +291,11 @@
     <div class="wrap">
       <p class="sec-eyebrow fi">설계 포인트</p>
       <h2 id="improvements-hd" class="fi" style="margin-top:4px;">무엇을 결정했나</h2>
-      <div class="cells">
+      <div class="cases-stack">
 
         <!-- 01 · 드로잉 -->
-        <article class="cell fi" aria-label="드로잉: 본체와 꼬리를 다른 기법으로">
-          <div class="cell-desc">
+        <article class="case-cell fi" aria-label="드로잉: 본체와 꼬리를 다른 기법으로">
+          <div class="case-left">
             <p class="cell-tag">Case 01 &middot; 드로잉</p>
             <h3 class="cell-title">본체와 꼬리를 다른 기법으로 그린다</h3>
             <div class="case-rows">
@@ -342,7 +313,7 @@
               </div>
             </div>
           </div>
-          <div class="cell-visual">
+          <div class="case-right">
             <div class="code-panel">
               <div class="code-filename">ArrowView.swift &middot; 꼬리 3점 계산·조립</div>
               <pre class="code-body"><span class="cm">// 모서리 길이 x 비율로 기준점</span>
@@ -361,8 +332,8 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
         </article>
 
         <!-- 02 · API (flip) -->
-        <article class="cell flip fi" aria-label="API: OptionSet 스타일과 반응형 프로퍼티">
-          <div class="cell-desc">
+        <article class="case-cell flip fi" aria-label="API: OptionSet 스타일과 반응형 프로퍼티">
+          <div class="case-left">
             <p class="cell-tag">Case 02 &middot; API</p>
             <h3 class="cell-title">OptionSet 스타일과 15개 반응형 프로퍼티</h3>
             <div class="case-rows">
@@ -380,7 +351,7 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
               </div>
             </div>
           </div>
-          <div class="cell-visual">
+          <div class="case-right">
             <div class="code-panel">
               <div class="code-filename">SpeechBubbleStyleOptions.swift &middot; 조합 가능한 스타일</div>
               <pre class="code-body"><span class="ck">public struct</span> <span class="ct">SpeechBubbleStyleOptions</span>: <span class="ct">OptionSet</span> {
@@ -398,8 +369,8 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
         </article>
 
         <!-- 03 · 회고 -->
-        <article class="cell fi" aria-label="회고: 개선 로드맵">
-          <div class="cell-desc">
+        <article class="case-cell fi" aria-label="회고: 개선 로드맵">
+          <div class="case-left">
             <p class="cell-tag">회고 &middot; 개선 로드맵</p>
             <h3 class="cell-title">지금 다시 본다면 고칠 것들</h3>
             <div class="case-rows">
@@ -413,7 +384,7 @@ path.<span class="ct">addLine</span>(to: arrowPoints.right)
               </div>
             </div>
           </div>
-          <div class="cell-visual">
+          <div class="case-right">
             <div class="code-panel">
               <div class="code-filename">개선 로드맵</div>
               <pre class="code-body"><span class="cm">// 1. UIViewRepresentable 래퍼 &#8594; SwiftUI 지원</span>

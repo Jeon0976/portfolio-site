@@ -11,7 +11,7 @@
   <meta name="description" content="Clean Architecture에서 Micro Feature Architecture로. 같은 앱을 두 번 만들며 무엇을 고쳤나.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="../assets/case-shared.css?v=13">
+  <link rel="stylesheet" href="../assets/case-shared.css?v=14">
   <style>
     /* ── Layout ─────────────────────────────────────────── */
 
@@ -118,14 +118,6 @@
 
     /* ── Case visual ─────────────────────────────────────── */
 
-    .case-right {
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 36px 36px;
-      min-height: 320px;
-    }
 
     /* ── Code panel ──────────────────────────────────────── */
 
@@ -220,8 +212,6 @@
     /* ── Responsive ──────────────────────────────────────── */
 
     @media (max-width: 1024px) {
-      .case-left { padding: 36px 32px; }
-      .case-right { padding: 28px 28px; }
     }
 
     @media (max-width: 768px) {
@@ -235,21 +225,6 @@
 
       .case-cell {
         grid-template-columns: minmax(0, 1fr);
-      }
-      .case-left {
-        padding: 32px 24px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        order: 1 !important;
-      }
-      .case-cell.flip .case-left {
-        border-left: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .case-right {
-        order: 2 !important;
-        min-height: 240px;
-        padding: 28px 24px;
       }
 
       .record-grid { grid-template-columns: 1fr; }
