@@ -527,11 +527,11 @@
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">URLSession async API 기반 자체 클라이언트로 재설계해 취소가 HTTP 레벨까지 전파되게 했습니다. <strong>취소는 자원을, generation 비교는 정합을 책임지는 이중 방어입니다.</strong></p>
+                <p class="row-body">URLSession async API 기반 자체 클라이언트로 재설계해 취소가 HTTP 레벨까지 전파되게 했습니다. <strong>취소로 요청 자체를 끊고, generation 비교로 늦게 도착한 응답을 걸러냅니다.</strong></p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body">Store의 <code>Task.cancel()</code>이 UseCase → Repository → APIClient를 타고 URLSession까지 내려갑니다. 요청마다 세대 번호를 매겨 최신 요청의 결과만 반영합니다(latest-wins).</p>
+                <p class="row-body">Store의 <code>Task.cancel()</code>이 UseCase → Repository → APIClient를 타고 URLSession까지 내려갑니다. 요청마다 <strong>generation을 매겨 최신 요청의 결과만 반영합니다.</strong></p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
@@ -647,7 +647,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">복잡해진 화면 이동을 한 자리에서 일관되게 다룹니다. 안을 들여다볼 수 없는 <code>NavigationPath</code>로는 불가능한 동작입니다.</p>
+                <p class="row-body">깊은 화면에서 <strong>원하는 지점으로 한 번에 돌아가고, 같은 화면이 중복으로 쌓이지 않습니다.</strong> 새 화면을 추가할 때도 <code>Route</code>에 케이스만 더하면 됩니다.</p>
               </div>
             </div>
           </div>
@@ -693,7 +693,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">DragGesture로 직접 그리고 표시를 코디네이터로 일원화했습니다. <strong>마운트는 여러 곳, 렌더는 한 곳</strong>이라는 원칙으로 설계했습니다.</p>
+                <p class="row-body">SwiftUI 기본 시트 대신 <strong>DragGesture로 직접 만들고, 띄우는 창구는 코디네이터 하나로 모았습니다.</strong> 어느 화면에서든 시트를 요청할 수 있지만 실제로 그리는 곳은 한 군데입니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
@@ -733,67 +733,16 @@
     <span class="ck">func</span> popSheet() { <span class="cm">/* … */</span> }
 }
 
-<span class="cm">// 마운트는 여러 곳, 렌더는 한 곳</span>
+<span class="cm">// 요청은 어느 화면에서든, 그리는 곳은 한 군데</span>
 <span class="ct">NavigationStack</span> { … }.<span class="ct">bottomSheetCoordinator</span>()
 <span class="ct">StreakView</span>().<span class="ct">bottomSheetCoordinator</span>(screenId: <span class="cs">"streak"</span>)</pre>
           </details>
         </article>
 
-        <!-- Case 06: 스트릭 달력 (code panel, flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 06: 연속학습 스트릭 달력">
+        <!-- Case 06: 커스텀 탭바 모핑 -->
+        <article class="case-cell flip fi" aria-label="케이스 06: 커스텀 탭바 전환 애니메이션">
           <div class="case-left">
-            <p class="cell-tag">Case 06 &middot; SwiftUI / Custom Calendar</p>
-            <h3 class="cell-title">연속학습 스트릭 달력 &middot; 3분할 브릿지 + 2-패스 계산</h3>
-            <div class="case-rows">
-              <div class="case-row">
-                <span class="row-label">문제</span>
-                <p class="row-body">연속한 날들이 하나의 선으로 이어지려면 주 경계에서 끊겼다 다음 줄에 이어져야 합니다. 기본 캘린더 컴포넌트로는 셀 사이를 가로지르는 이 표현이 안 됩니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">접근</span>
-                <p class="row-body">그리드는 직접 계산하고 연속선은 셀 위 오버레이 조각으로 합성했습니다. <strong>선을 시작·중간·끝으로 나누면 각 셀이 자기 조각만 그리면 되고, 주 경계는 조각 타입 교체로 풀립니다.</strong></p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">구현</span>
-                <p class="row-body">7열 <code>LazyVGrid</code> + 2-패스 계산(셀 상태를 깔고 → 이전/다음 연속 여부 검사)으로 브릿지 타입을 확정합니다. 달마다 주 수가 달라 높이를 동적 계산합니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">결과</span>
-                <p class="row-body">주 경계·불연속·월 전환·단독일 어느 경우에도 브릿지가 어긋나지 않습니다.</p>
-              </div>
-            </div>
-          </div>
-          <div class="case-right">
-            <div class="case-clip">
-              <img src="../assets/kira/streak-1.webp" alt="연속학습 달력: 연속일 브릿지 표시" loading="lazy">
-              <p class="clip-cap">실기기 화면 &middot; 스트릭 달력</p>
-            </div>
-          </div>
-          <details class="case-code">
-            <summary class="code-filename">StreakCalendarView.swift <span class="code-note">재구현 예제</span></summary>
-              <pre class="code-body"><span class="ck">enum</span> <span class="ct">StreakBridgeType</span> {
-    <span class="ck">case</span> solo
-    <span class="cm">// 앞뒤 연속 없음</span>
-    <span class="ck">case</span> start, middle, end
-    <span class="cm">// 연속 구간의 시작·중간·끝</span>
-    <span class="ck">case</span> startEdge, endEdge
-    <span class="cm">// 주·월 경계: 캡을 바꿔</span>
-    <span class="cm">// 자연스럽게 끊는다</span>
-}
-
-<span class="cm">// 2-패스</span>
-<span class="cm">// 1) 날짜 상태 매핑</span>
-<span class="cm">// 2) 이전/다음 연속 검사</span>
-<span class="cm">//    → 타입 확정</span></pre>
-          </details>
-        
-        
-        </article>
-
-        <!-- Case 07: 커스텀 탭바 모핑 -->
-        <article class="case-cell flip fi" aria-label="케이스 07: 커스텀 탭바 전환 애니메이션">
-          <div class="case-left">
-            <p class="cell-tag">Case 07 &middot; SwiftUI / Animation</p>
+            <p class="cell-tag">Case 06 &middot; SwiftUI / Animation</p>
             <h3 class="cell-title">커스텀 탭바 &middot; 탭에 따라 모양이 바뀐다</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -849,10 +798,10 @@
           </details>
         </article>
 
-        <!-- Case 08: 딥링크 보류와 재개 -->
-        <article class="case-cell fi" aria-label="케이스 08: 딥링크 보류와 재개">
+        <!-- Case 07: 딥링크 보류와 재개 -->
+        <article class="case-cell fi" aria-label="케이스 07: 딥링크 보류와 재개">
           <div class="case-left">
-            <p class="cell-tag">Case 08 &middot; DeepLink / Pending</p>
+            <p class="cell-tag">Case 07 &middot; DeepLink / Pending</p>
             <h3 class="cell-title">딥링크 보류와 재개 &middot; 오버레이가 닫힌 뒤 한 번만</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -906,56 +855,6 @@
           </details>
         </article>
 
-        <!-- Case 09: 토스트 별도 윈도우 -->
-        <article class="case-cell fi" aria-label="케이스 09: 토스트 별도 윈도우">
-          <div class="case-left">
-            <p class="cell-tag">Case 09 &middot; UIWindow / Presentation</p>
-            <h3 class="cell-title">토스트 &middot; 뷰 계층 밖 별도 윈도우로</h3>
-            <div class="case-rows">
-              <div class="case-row">
-                <span class="row-label">문제</span>
-                <p class="row-body">토스트는 시트나 풀스크린, 시스템 얼럿이 떠 있어도 그 위에 보여야 합니다. SwiftUI의 표시 수단은 전부 "지금 화면"의 뷰 계층이나 그 화면이 시작한 프레젠테이션 컨텍스트에 묶입니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">접근</span>
-                <p class="row-body">화면마다 ZStack 오버레이를 두거나 루트 뷰에 modifier로 주입하는 방법은 시트나 시스템 얼럿 위로는 못 올라갑니다. <strong>"무엇이 떠 있든 그 위"라는 요구는 뷰 계층 안에서는 답이 없어, 별도 <code>UIWindow</code>로 올리는 윈도우 레벨의 문제였습니다.</strong></p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">구현</span>
-                <p class="row-body">시스템 얼럿보다 높은 <code>windowLevel(.alert + 1)</code>의 새 <code>UIWindow</code>에 <code>UIHostingController</code>로 토스트를 올립니다. 윈도우를 화면 전체가 아니라 토스트 크기만큼만 만들어 hitTest 오버라이드 없이 밖 터치가 밑 화면에 그대로 전달됩니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">결과</span>
-                <p class="row-body">시트와 풀스크린, 시스템 얼럿 위에도 일관되게 토스트가 뜹니다. 최대 2개까지 쌓이고 시간이 지나면 사라지며 남은 토스트 위치를 다시 잡습니다.</p>
-              </div>
-            </div>
-          </div>
-          <details class="case-code">
-            <summary class="code-filename">ToastWindowManager.swift <span class="code-note">재구현 예제</span></summary>
-              <pre class="code-body"><span class="ck">@MainActor</span>
-<span class="ck">final class</span> <span class="ct">ToastWindowManager</span> {
-    <span class="ck">private var</span> toastWindows: [<span class="ct">ToastWindow</span>] = []
-    <span class="ck">private let</span> maxToastCount = 2
-
-    <span class="ck">func</span> showToast(_ view: <span class="ck">some</span> <span class="ct">View</span>, duration: <span class="ct">Double</span> = 1.5) {
-        <span class="ck">guard let</span> scene = <span class="ct">UIApplication</span>.shared.connectedScenes
-            .compactMap({ $0 <span class="ck">as?</span> <span class="ct">UIWindowScene</span> }).first <span class="ck">else</span> { <span class="ck">return</span> }
-
-        <span class="ck">let</span> window = <span class="ct">UIWindow</span>(windowScene: scene)
-        window.windowLevel = .alert + 1   <span class="cm">// 시트·얼럿 위에도</span>
-        window.backgroundColor = .clear
-        <span class="cm">// 화면 전체가 아니라 토스트 크기만큼만</span>
-        window.frame = toastFrame
-        window.rootViewController = <span class="ct">UIHostingController</span>(rootView: view)
-        window.makeKeyAndVisible()
-
-        toastWindows.append(<span class="ct">ToastWindow</span>(window: window))
-        repositionToasts()
-    }
-}</pre>
-          </details>
-        </article>
-
       </div>
     </div>
   </section>
@@ -972,10 +871,10 @@
 
       <div class="cases-stack">
 
-        <!-- Case 10: severe hang → Store 분리 (phone frame) -->
-        <article class="case-cell fi" aria-label="케이스 10: severe hang Store 분리">
+        <!-- Case 08: severe hang → Store 분리 (phone frame) -->
+        <article class="case-cell fi" aria-label="케이스 08: severe hang Store 분리">
           <div class="case-left">
-            <p class="cell-tag">Case 10 &middot; @Observable / Instruments</p>
+            <p class="cell-tag">Case 08 &middot; @Observable / Instruments</p>
             <h3 class="cell-title">severe hang &middot; 거대 Store를 책임별로 분리</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -1027,10 +926,10 @@
           </details>
         </article>
 
-        <!-- Case 11: DI 스레드 안전성 (code panel, flip) -->
-        <article class="case-cell fi" aria-label="케이스 11: DI 컨테이너 스레드 안전성">
+        <!-- Case 09: DI 스레드 안전성 (code panel, flip) -->
+        <article class="case-cell fi" aria-label="케이스 09: DI 컨테이너 스레드 안전성">
           <div class="case-left">
-            <p class="cell-tag">Case 11 &middot; Swinject / Crashlytics</p>
+            <p class="cell-tag">Case 09 &middot; Swinject / Crashlytics</p>
             <h3 class="cell-title">런치 간헐 크래시 &middot; Crashlytics 리포트에서 DI 스레드 문제까지</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -1085,58 +984,10 @@
 
       <div class="cases-stack">
 
-        <!-- Case 12: StoreKit 2 결제 (phone frame) -->
-        <article class="case-cell fi" aria-label="케이스 12: StoreKit 2 결제">
+        <!-- Case 10: 퀴즈 상태머신 (code panel, flip) -->
+        <article class="case-cell flip fi" aria-label="케이스 10: 퀴즈 상태머신 + 제출 배리어">
           <div class="case-left">
-            <p class="cell-tag">Case 12 &middot; StoreKit 2 / actor</p>
-            <h3 class="cell-title">StoreKit 2 결제 &middot; 어디서 끊겨도 지급은 정확히 한 번</h3>
-            <div class="case-rows">
-              <div class="case-row">
-                <span class="row-label">문제</span>
-                <p class="row-body">소모성 재화 결제에서 앱 강제 종료, 네트워크 단절, 재로그인, 어느 시점에 끊겨도 거래가 유실되면 안 됩니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">접근</span>
-                <p class="row-body">지급 확정의 기준을 클라이언트가 아닌 서버에 뒀습니다. <strong>서버가 확인한 후에만 <code>finish</code>하고, 그 전에 끊긴 거래는 "미완료"로 남겨 복구 대상으로 삼습니다.</strong></p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">구현</span>
-                <p class="row-body"><code>actor</code> 리포지토리가 <code>Transaction.updates</code> 스트림을 상시 구독해 미완료 거래를 복구합니다. 3회 지수 백오프 + 409 처리로 중복 지급을 막고, <code>appAccountToken</code>으로 재로그인 후에도 계정별 추적합니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">결과</span>
-                <p class="row-body">결제 흐름의 어느 지점에서 끊겨도 지급은 정확히 한 번 일어납니다.</p>
-              </div>
-            </div>
-          </div>
-          <details class="case-code">
-            <summary class="code-filename">PurchaseRepository.swift <span class="code-note">재구현 예제</span></summary>
-              <pre class="code-body"><span class="ck">actor</span> <span class="ct">PurchaseRepository</span> {
-    <span class="ck">func</span> listen() {
-        <span class="ck">for await</span> update <span class="ck">in</span> <span class="ct">Transaction</span>.updates {
-            <span class="cm">// 앱이 어디서 죽었든</span>
-            <span class="cm">// 미완료 거래가 여기로 돌아온다</span>
-            <span class="ck">await</span> grant(update)
-        }
-    }
-
-    <span class="ck">private func</span> grant(_ tx: <span class="ct">Transaction</span>) <span class="ck">async</span> {
-        <span class="cm">// 1) 서버에 지급 요청 (appAccountToken 계정 추적)</span>
-        <span class="cm">//    재시도 3회 지수 백오프, 409는 이미 지급으로 간주</span>
-        <span class="ck">guard await</span> api.grant(tx) <span class="ck">else</span> { <span class="ck">return</span> }
-        <span class="cm">// 실패하면 finish하지 않는다. 미완료로 남아 복구 대상</span>
-
-        <span class="cm">// 2) 서버가 확인한 뒤에만 finish</span>
-        <span class="ck">await</span> tx.finish()
-    }
-}</pre>
-          </details>
-        </article>
-
-        <!-- Case 13: 퀴즈 상태머신 (code panel, flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 13: 퀴즈 상태머신 + 제출 배리어">
-          <div class="case-left">
-            <p class="cell-tag">Case 13 &middot; enum FSM / AsyncStream</p>
+            <p class="cell-tag">Case 10 &middot; enum FSM / AsyncStream</p>
             <h3 class="cell-title">퀴즈 상태머신 + 제출 배리어 &middot; 불가능한 상태를 타입으로 제거</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -1184,10 +1035,10 @@
         
         </article>
 
-        <!-- Case 14: 퀘스트 보상 연출 정확히 한 번 -->
-        <article class="case-cell fi" aria-label="케이스 14: 퀘스트 보상 연출 정확히 한 번">
+        <!-- Case 11: 퀘스트 보상 연출 정확히 한 번 -->
+        <article class="case-cell fi" aria-label="케이스 11: 퀘스트 보상 연출 정확히 한 번">
           <div class="case-left">
-            <p class="cell-tag">Case 14 &middot; actor / CheckedContinuation</p>
+            <p class="cell-tag">Case 11 &middot; actor / CheckedContinuation</p>
             <h3 class="cell-title">퀘스트 보상 연출 &middot; 순서대로, 껐다 켜도 한 번만</h3>
             <div class="case-rows">
               <div class="case-row">
