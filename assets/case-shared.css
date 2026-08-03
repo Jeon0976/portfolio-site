@@ -533,13 +533,31 @@ footer {
 .row-body code { word-break: break-all; }
 
 /* ═══ 모바일 단일 열 붕괴 (case-shared가 인라인보다 늦게 로드되므로 여기서 확정) ═══ */
-@media (max-width: 768px) {
-  .case-cell { grid-template-columns: minmax(0, 1fr); }
-  .case-cell .case-right { order: 2; }
-  .case-cell .case-left { order: 1; }
+@media (max-width: 1024px) {
+  .case-left  { padding: 36px 32px; }
+  .case-right { padding: 28px 28px; }
 }
 
-.cell--solo { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 768px) {
+  .case-cell { grid-template-columns: minmax(0, 1fr); }
+  .case-left {
+    padding: 32px 24px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    order: 1 !important;
+  }
+  .case-cell.flip .case-left {
+    border-left: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .case-right {
+    order: 2 !important;
+    min-height: 240px;
+    padding: 28px 24px;
+  }
+}
+
+.case-cell--solo { grid-template-columns: minmax(0, 1fr); }
 .case-cell--solo .case-left { border-right: none; }
 
 /* ── 케이스 페이지 공통 이동분(5페이지 동일 인라인 규칙, 2026-08 공통화) ── */
