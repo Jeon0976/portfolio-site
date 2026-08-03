@@ -191,7 +191,7 @@
         </div>
         <ul>
           <li>베타 출시 1주일 전 합류해 QA 공백을 메우며 시작, 비동기 혼재와 흩어진 상태 관리를 진단해 네트워크&middot;상태&middot;화면 인프라의 <strong>뼈대를 다시 세움</strong></li>
-          <li>퀴즈&middot;퀘스트 진행을 <strong>enum 상태머신으로 모델링</strong>해 불가능한 상태를 타입에서 제거, 기능이 늘어나도 확장되는 구조로 구현</li>
+          <li>화면 상태를 <strong>enum으로 모델링</strong>해 불가능한 조합을 타입에서 제거, 기능이 늘어나도 무너지지 않는 구조로 구현</li>
           <li>Crashlytics&middot;Instruments로 <strong>런치 간헐 크래시(DI 스레드 비안전)와 탭 전환 severe hang(거대 Store)</strong>을 원인 단위로 해결</li>
           <li>푸시&middot;URL <strong>딥링크가 온보딩&middot;오버레이 위로 도착하면 보류했다 닫히는 시점에 한 번만 실행</strong>하도록 설계 (최신 링크만 유지, 1회 소비)</li>
           <li><strong>AI 브리핑 콘텐츠 파이프라인</strong>을 설계해 생성부터 발행까지 사람 개입 없이 <strong>매일 자동 발행</strong>, 브리핑을 보여주는 iOS 화면도 구현</li>
