@@ -312,7 +312,8 @@ h1, h2, h3 { color: var(--ds-ink); text-wrap: balance; }
 /* About */
 .prose-grid { border-color: var(--ds-line); }
 
-.prose-label {
+.prose-label,
+.arch-label {
   color: var(--ds-brand);
   font-family: var(--ds-font-sans);
 }
