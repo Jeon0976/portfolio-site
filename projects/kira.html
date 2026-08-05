@@ -689,7 +689,7 @@
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body">화면마다 <code>@State</code>로 시트를 띄우면 중첩·복원 제어가 어렵고, 빠른 연타에 중복으로 쌓입니다. 표시 위치도 오버레이 아래에 깔리거나 화면을 벗어나도 시트가 남는 문제가 있었습니다.</p>
+                <p class="row-body">화면마다 <code>@State</code>로 시트를 띄우면 중첩과 복원 제어가 어렵고, 빠른 연타에 중복으로 쌓입니다. 표시 위치도 오버레이 아래에 깔리거나 화면을 벗어나도 시트가 남는 문제가 있었습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
@@ -755,7 +755,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body">탭바를 직접 그리고 <code>mode</code> 상태 하나에 너비&middot;높이&middot;아이콘의 투명도와 크기를 모두 묶었습니다. 스프링 하나를 <code>mode</code>에 걸어 상태만 바꾸면 바 전체가 한 호흡으로 변형됩니다.</p>
+                <p class="row-body">탭바를 직접 그리고 <code>mode</code> 상태 하나에 너비, 높이, 아이콘의 투명도와 크기를 모두 묶었습니다. 스프링 하나를 <code>mode</code>에 걸어 상태만 바꾸면 바 전체가 한 호흡으로 변형됩니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
@@ -783,7 +783,7 @@
             .<span class="ct">opacity</span>(mode == .play ? 1 : 0)
             .<span class="ct">scaleEffect</span>(mode == .play ? 1 : 0.3)
     }
-    <span class="cm">// 너비·높이·정렬까지 변형</span>
+    <span class="cm">// 너비, 높이, 정렬까지 변형</span>
     .<span class="ct">frame</span>(
         width:  mode == .main ? mainWidth : subWidth,
         height: mode == .main ? 83 : 64,
@@ -887,7 +887,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
-                <p class="row-body">책임별 8개의 <code>@Observable</code> Store(탭 선택·퀘스트·쿨다운·전역 팝업 등)로 분리했습니다. 타이머는 퀘스트 시트의 로컬로 내려 시트가 떠 있을 때만 돌게 했습니다.</p>
+                <p class="row-body">책임별 8개의 <code>@Observable</code> Store(탭 선택, 퀘스트, 쿨다운, 전역 팝업 등)로 분리했습니다. 타이머는 퀘스트 시트의 로컬로 내려 시트가 떠 있을 때만 돌게 했습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
@@ -992,7 +992,7 @@
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body"><code>isReviewing</code>·<code>isEnd</code> 불리언 조합은 "복습이면서 완료" 같은 불가능한 상태가 컴파일을 통과합니다. 빠른 연타 시 화면과 서버가 어긋나는 문제도 남아 있었습니다.</p>
+                <p class="row-body"><code>isReviewing</code>과 <code>isEnd</code> 불리언 조합은 "복습이면서 완료" 같은 불가능한 상태가 컴파일을 통과합니다. 빠른 연타 시 화면과 서버가 어긋나는 문제도 남아 있었습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
