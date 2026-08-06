@@ -1,5 +1,6 @@
 name: Deploy GitHub Pages
 
+# Keep deployment explicit instead of relying on the legacy Pages build queue.
 on:
   push:
     branches: [main]
