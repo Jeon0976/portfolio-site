@@ -1,0 +1,46 @@
+name: Deploy GitHub Pages
+
+# 레거시(브랜치) 빌드 대신 이 워크플로 하나만 배포를 맡는다.
+# 레거시와 동시에 돌면 서로의 배포를 취소해 "Deployment cancelled"가 난다.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 배포는 한 번에 하나씩, 순서대로 끝낸다.
+# cancel-in-progress: true 로 두면 앞선 배포를 죽여 실패로 기록된다.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          # 기본 10분으로는 Pages 배포 큐가 밀릴 때 버티지 못하고 중단된다.
+          # 파일은 이미 올라갔는데 상태 보고만 늦어 실패로 찍히는 일이 반복돼 30분으로 늘렸다.
+          timeout: 1800000
+          error_count: 20
