@@ -163,6 +163,20 @@
     }
     .narr p:last-child { margin-bottom: 0; }
 
+
+    /* ── 좁은 화면: A4 고정 폭을 풀고 흐르게 (인쇄에는 영향 없음) ── */
+    @media screen and (max-width: 860px) {
+      body { background: #fff; }
+      .sheet { width: 100%; min-height: 0; margin: 0; padding: 16px 14px; box-shadow: none; }
+      .row { flex-wrap: wrap; gap: 1px 10px; }
+      .row-side { white-space: normal; }
+      .subrow { flex-direction: column; }
+      .sec-cols { flex-direction: column; gap: 0; }
+      .skill-row { flex-direction: column; gap: 0; }
+      .skill-label { flex: none; }
+      .narr p { text-align: left; }
+      .doc-break { margin-top: 22px; }
+    }
     /* ── 인쇄 ── */
     @page { size: A4; margin: 12mm 0; }
     @media print {
