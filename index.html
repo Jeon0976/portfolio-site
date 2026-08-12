@@ -1012,9 +1012,9 @@
               <p class="hero-id-role">iOS Developer</p>
             </div>
           </div>
-          <h1>문제가 발생한 후에 고치기보다<br><span style="color:var(--accent)">문제가 발생하기 전에 막는 쪽을 택합니다.</span></h1>
+          <h1>명확하게 책임을 나눠<br><span style="color:var(--accent)">유지보수와 확장이 쉬운 코드를 만듭니다.</span></h1>
           <p class="hero-sub">
-            유지보수하기 쉬운 구조와 확장 가능한 코드로, 기능이 늘어나도 서비스가 흔들리지 않게 만듭니다.
+            한 제품의 iOS를 설계부터 출시와 운영까지 단독으로 맡았고, 같은 제품의 Android 출시와 WKWebView 전환까지 이어서 담당했습니다.
           </p>
           <div class="hero-cta">
             <a href="work.html" class="btn-primary">
@@ -1028,17 +1028,16 @@
 
         <aside class="hero-code" aria-label="코드로 쓴 자기소개">
 <pre><span class="hc-kw">struct</span> <span class="hc-type">SeonghunJeon</span>: <span class="hc-type">iOSDeveloper</span> {
-    <span class="hc-kw">let</span> years = <span class="hc-num">3</span>
     <span class="hc-kw">let</span> primary: <span class="hc-type">Platform</span> = .iOS
     <span class="hc-kw">let</span> secondary: [<span class="hc-type">Platform</span>] =
         [.android, .web]
     <span class="hc-kw">let</span> career: [<span class="hc-type">Company</span>] =
         [.우리요, .일루미나리안, .키라앤컴퍼니]
 
-    <span class="hc-kw">func</span> work(on problem: <span class="hc-type">Problem</span>) {
-        prevent(problem)
-        <span class="hc-kw">let</span> lesson = document(problem)
-        share(lesson, with: .team)
+    <span class="hc-kw">func</span> build(_ f: <span class="hc-type">Feature</span>) {
+        <span class="hc-kw">let</span> bounds = separate(f)
+        implement(f, in: bounds)
+        share(bounds, with: .team)
     }
 }</pre>
         </aside>
@@ -1062,7 +1061,7 @@
         <div class="project-card">
           <span class="status-badge">2025.05 &ndash; 2026.07 · 1년 3개월</span>
           <h3 class="project-title">KIRA (Katsby)</h3>
-          <p class="project-sub">금융 교육 앱, iOS 주도 (Android·Web 겸업)</p>
+          <p class="project-sub">금융 교육 앱, iOS 단독 주도 · Android 출시 · 웹 전환</p>
           <div class="project-tags">
             <span class="tag">SwiftUI</span>
             <span class="tag">Swift Concurrency</span>
@@ -1078,7 +1077,7 @@
 
         <div class="project-card">
           <span class="status-badge">2025.03 &ndash; 2026</span>
-          <h3 class="project-title">GitSearch: Clean Architecture → Micro Feature Architecture</h3>
+          <h3 class="project-title">iOS-TheModularArchitecture-Sample: Clean → Micro Feature</h3>
           <p class="project-sub">같은 앱을 두 아키텍처로 다시 구현</p>
           <div class="project-tags">
             <span class="tag">Swift 6</span>
@@ -1131,7 +1130,7 @@
           <div class="project-tags">
             <span class="tag">UIKit</span>
             <span class="tag">Realm</span>
-            <span class="tag">NaverMap</span>
+            <span class="tag">MVP</span>
           </div>
           <a href="projects/aviro.html" class="project-link">
             자세히 보기
@@ -1154,25 +1153,33 @@
         <div class="wid-row fi">
           <div class="wid-left">
             <span class="wid-num">01</span>
-            <span class="wid-title">iOS 개발</span>
+            <span class="wid-title">복잡한 상태 설계</span>
           </div>
-          <p class="wid-desc">UIKit에서 SwiftUI까지 화면 구현부터 내비게이션, 딥링크, 상태 관리를 다루고, 제품 상황에 맞는 아키텍처를 골라 적용합니다.</p>
+          <p class="wid-desc">갈래가 많은 흐름은 상태를 타입으로 들고, 다음 단계를 정하는 판정은 순수 함수로 뺍니다. 무엇이 달라졌는지는 데이터 영역이 알고, 그걸 어떻게 보여줄지는 화면이 압니다.</p>
         </div>
 
         <div class="wid-row fi">
           <div class="wid-left">
             <span class="wid-num">02</span>
-            <span class="wid-title">Android &middot; 웹</span>
+            <span class="wid-title">사용자 경험 개선</span>
           </div>
-          <p class="wid-desc">우리요에서 Android QA 대응으로 시작해 KIRA(Katsby)에서는 퀴즈 등 피처를 직접 구현했습니다. React 웹은 Claude Code와 Codex로 구현해 배포했습니다.</p>
+          <p class="wid-desc">제가 만드는 서비스는 하루에도 수십 번씩 직접 눌러 보고 실제로도 씁니다. 쓰면서 걸리는 지점을 목록으로 모아 두고 일정이 허락하는 만큼 하나씩 처리해 왔습니다.</p>
         </div>
 
         <div class="wid-row fi">
           <div class="wid-left">
             <span class="wid-num">03</span>
-            <span class="wid-title">AI 워크플로우</span>
+            <span class="wid-title">변경에 대응하는 구조</span>
           </div>
-          <p class="wid-desc">콘텐츠 생성부터 발행까지 도는 자동화 파이프라인을 설계하고 운영합니다. AI 산출물 검증까지 묶어 반복 작업을 제거합니다.</p>
+          <p class="wid-desc">데이터와 로직, 화면이 섞인 채로 운영하다 손대지 못한 지점이 생기는 걸 겪었습니다. 일정이 빠듯할 때도 어느 코드가 어디까지 책임지는지는 먼저 정해 두고 시작합니다.</p>
+        </div>
+
+        <div class="wid-row fi">
+          <div class="wid-left">
+            <span class="wid-num">04</span>
+            <span class="wid-title">AI로 만든 생산성</span>
+          </div>
+          <p class="wid-desc">혼자서는 일정 안에 끝낼 수 없는 일에 씁니다. 구조와 판단은 제가 하고 구현 속도를 벌었으며, 그렇게 아낀 시간은 생성된 것이 실제 환경에서 도는지 확인하는 데 썼습니다.</p>
         </div>
 
       </div>
@@ -1209,7 +1216,6 @@
             <span class="tag">MVI</span>
             <span class="tag">MVVM-C</span>
             <span class="tag">XCTest</span>
-            <span class="tag">Swift Testing</span>
           </div>
         </div>
 

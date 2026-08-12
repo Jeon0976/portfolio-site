@@ -410,7 +410,7 @@
       <div class="hero">
         <p class="eyebrow">PROJECT</p>
         <h1>KIRA (Katsby)</h1>
-        <p class="hero-meta">iOS 주도, Android·Web 겸업 &middot; 금융 교육/게이미피케이션</p>
+        <p class="hero-meta">iOS 단독 주도, Android 출시와 웹 전환 &middot; 금융 교육/게이미피케이션</p>
         <span class="status-badge">베타 1주 전 합류 &rarr; 정식 서비스</span>
         <p class="hero-sub">베타 출시 일주일 전 합류해 SwiftUI 기반으로 화면 구현부터 내비게이션, 딥링크, 결제, 분석까지 iOS 전반을 맡았습니다.</p>
         <p class="hero-note">아래 코드는 회사 소스가 아니라 설계 아이디어를 공개 가능한 수준으로 다시 구현한 최소 예제입니다. 화면은 출시된 앱에서 누구나 보던 공개 화면만 사용했습니다.</p>
@@ -420,30 +420,158 @@
 
   <nav class="page-toc" aria-label="페이지 목차">
     <p class="toc-label">목차</p>
-    <a href="#ch1-hd">1장 &middot; 끊기지 않게 만든다</a>
-    <a href="#ch2-hd">2장 &middot; 화면 흐름을 직접 만든다</a>
-    <a href="#ch3-hd">3장 &middot; 원인까지 파고든다</a>
-    <a href="#ch4-hd">4장 &middot; 상태는 한 번만</a>
+    <a href="#ch1-hd">1장 &middot; 타입으로 다룬 상태</a>
+    <a href="#ch2-hd">2장 &middot; 프리페치와 요청 취소</a>
+    <a href="#ch3-hd">3장 &middot; 직접 만든 화면 인프라</a>
+    <a href="#ch4-hd">4장 &middot; 크래시와 행 진단</a>
   </nav>
 
   <main id="main-content">
 
   <!-- ═══════════════════════════════════════════════════════
-       1장 · 끊기지 않게 만든다
+       1장 · 타입으로 다룬 상태
   ════════════════════════════════════════════════════════ -->
   <section class="section" aria-labelledby="ch1-hd">
     <div class="wrap">
       <div class="group-header fi">
         <p class="group-chapter">1장</p>
-        <h2 id="ch1-hd">끊기지 않게 만든다</h2>
+        <h2 id="ch1-hd">타입으로 다룬 상태</h2>
       </div>
 
       <div class="cases-stack">
 
-        <!-- Case 01: 브리핑 뷰어 프리로드 (code panel) -->
-        <article class="case-cell fi" aria-label="케이스 01: 브리핑 뷰어 프리로드">
+        <!-- Case 01: 퀴즈 상태머신 (code panel, flip) -->
+        <article class="case-cell flip fi" aria-label="케이스 1: 퀴즈 상태머신 + 제출 배리어">
           <div class="case-left">
-            <p class="cell-tag">Case 01 &middot; Prefetch / Cache</p>
+            <p class="cell-tag">Case 01 &middot; enum FSM / AsyncStream</p>
+            <h3 class="cell-title">퀴즈 상태머신 + 제출 배리어 &middot; 불가능한 상태를 타입으로 제거</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body"><code>isReviewing</code>과 <code>isEnd</code> 불리언 조합은 "복습이면서 완료" 같은 불가능한 상태가 컴파일을 통과합니다. 빠른 연타 시 화면과 서버가 어긋나는 문제도 남아 있었습니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">enum 상태머신으로 불가능한 상태를 타입 차원에서 제거했습니다. 제출은 <strong>낙관 진행 + 체크포인트 배리어</strong>로 사용자는 기다리지 않고 정합은 경계에서 한 번만 맞춥니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body">진행 상태를 enum 하나로 모델링하고 전이 규칙을 전용 UseCase에 모았습니다. 경계에서 <code>withCheckedContinuation</code>으로 다음 진행을 붙들고 실패분은 큐에 모아 재전송합니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">불가능한 상태가 타입 차원에서 사라지고, 빠른 연타에도 화면과 서버가 어긋나지 않습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="case-clip">
+              <video autoplay muted loop playsinline poster="../assets/kira/poster-quiz.webp" src="../assets/kira/quiz-demo.mp4" aria-label="퀴즈 풀이 흐름 데모"></video>
+              <p class="clip-cap">실기기 데모 &middot; 퀴즈 플로우</p>
+            </div>
+          </div>
+          <details class="case-code">
+            <summary class="code-filename">QuizProgressType.swift <span class="code-note">재구현 예제</span></summary>
+              <pre class="code-body"><span class="ck">enum</span> <span class="ct">QuizProgressType</span>: <span class="ct">Equatable</span> {
+    <span class="ck">case</span> study(stage: <span class="ct">Int</span>)
+    <span class="cm">// 풀이</span>
+    <span class="ck">case</span> review(stage: <span class="ct">Int</span>)
+    <span class="cm">// 복습 (틀린 문제만)</span>
+    <span class="ck">case</span> survey(stage: <span class="ct">Int</span>)
+    <span class="cm">// 설문</span>
+    <span class="ck">case</span> end(
+        stage: <span class="ct">Int</span>,
+        adType: <span class="ct">QuizADType</span>)
+    <span class="ck">case</span> completed
+    <span class="cm">// "복습이면서 완료" 같은 조합이</span>
+    <span class="cm">// 타입 차원에서 불가능해진다</span>
+}</pre>
+          </details>
+        
+        
+        </article>
+
+        <!-- Case 02: 퀘스트 보상 연출 정확히 한 번 -->
+        <article class="case-cell fi" aria-label="케이스 2: 퀘스트 보상 연출 정확히 한 번">
+          <div class="case-left">
+            <p class="cell-tag">Case 02 &middot; actor / CheckedContinuation</p>
+            <h3 class="cell-title">퀘스트 보상 연출 &middot; 순서대로, 껐다 켜도 한 번만</h3>
+            <div class="case-rows">
+              <div class="case-row">
+                <span class="row-label">문제</span>
+                <p class="row-body">퀘스트가 완료되면 진행 바, 보상 획득, 완료 표시가 순서대로 떠야 합니다. 불리언 플래그로는 순서가 꼬이고, 화면을 벗어나면 보상이 두 번 더해지고, 앱을 껐다 켜면 이미 본 애니메이션이 다시 재생됩니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">접근</span>
+                <p class="row-body">무엇이 바뀌었는지를 판단하는 일을 저장소로 옮겼습니다. <strong><code>actor</code> 저장소가 이전 스냅샷과 지금 상태의 차이(<code>QuestChange</code>)를 계산</strong>하고, 화면은 그 결과만 받아 순서대로 보여줍니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">구현</span>
+                <p class="row-body">진행&rarr;보상&rarr;완료 순서로 애니메이션을 async/await로 이어서 실행하고, 도중에 화면을 벗어나면 Task를 취소합니다. 보상 애니메이션만 콜백으로 끝나서 <code>withCheckedContinuation</code>으로 감쌌고, <strong>콜백이 두 번 불려도 한 번만 통과하도록</strong> 했습니다. 스냅샷은 애니메이션이 다 끝난 뒤에 확정합니다.</p>
+              </div>
+              <div class="case-row">
+                <span class="row-label">결과</span>
+                <p class="row-body">어떤 진입 경로에서도 애니메이션이 한 번씩만 올바른 순서로 재생되고, 마감 시각을 영속 저장해 껐다 켜도 이미 본 애니메이션은 다시 나오지 않습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="case-right">
+            <div class="case-clip">
+              <video autoplay muted loop playsinline poster="../assets/kira/poster-quest.webp" src="../assets/kira/quest-demo.mp4" aria-label="퀘스트 보상 진행과 완료 애니메이션 데모"></video>
+              <p class="clip-cap">데모 &middot; 진행 바와 완료 애니메이션</p>
+            </div>
+          </div>
+          <details class="case-code">
+            <summary class="code-filename">QuestStorageImpl.swift <span class="code-note">재구현 예제</span></summary>
+              <pre class="code-body"><span class="ck">actor</span> <span class="ct">QuestStorageImpl</span>: <span class="ct">QuestStorage</span> {
+    <span class="ck">private var</span> snapshot: [<span class="ct">Quest</span>] = []  <span class="cm">// 직전(본) 상태</span>
+    <span class="ck">private var</span> current:  [<span class="ct">Quest</span>] = []
+
+    <span class="ck">func</span> getChangedQuests() -&gt; [<span class="ct">QuestChange</span>] {
+        current.compactMap { quest <span class="ck">in</span>
+            <span class="ck">guard let</span> prev = snapshot.first(
+                where: { $0.id == quest.id }) <span class="ck">else</span> { … }
+            <span class="cm">// 변경 없으면 스킵</span>
+            <span class="ck">guard</span> prev.currentCount != quest.currentCount
+               || prev.isCompleted  != quest.isCompleted
+            <span class="ck">else</span> { <span class="ck">return nil</span> }
+            <span class="ck">return</span> <span class="ct">QuestChange</span>(quest: quest,
+                previousCount: prev.currentCount,
+                previousCompleted: prev.isCompleted)
+        }
+    }
+    <span class="cm">// 애니메이션이 끝난 뒤에만 확정</span>
+    <span class="ck">func</span> commitSnapshot() { snapshot = current }
+}
+
+<span class="cm">// 콜백 보상 애니메이션을 async로: 두 번 불려도 한 번만</span>
+<span class="ck">await</span> withCheckedContinuation { cont <span class="ck">in</span>
+    <span class="ck">var</span> isResumed = <span class="ck">false</span>
+    gemFly { <span class="ck">if</span> !isResumed { isResumed = <span class="ck">true</span>; cont.resume() } }
+}</pre>
+          </details>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       2장 · 프리페치와 요청 취소
+  ════════════════════════════════════════════════════════ -->
+  <section class="section section--surface" aria-labelledby="ch2-hd">
+    <div class="wrap">
+      <div class="group-header fi">
+        <p class="group-chapter">2장</p>
+        <h2 id="ch2-hd">프리페치와 요청 취소</h2>
+      </div>
+
+      <div class="cases-stack">
+
+        <!-- Case 03: 브리핑 뷰어 프리로드 (code panel) -->
+        <article class="case-cell fi" aria-label="케이스 3: 브리핑 뷰어 프리로드">
+          <div class="case-left">
+            <p class="cell-tag">Case 03 &middot; Prefetch / Cache</p>
             <h3 class="cell-title">인스타식 브리핑 뷰어 &middot; URL을 HTML로 미리 받아 캐싱</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -515,10 +643,10 @@
         
         </article>
 
-        <!-- Case 02: 요청 취소 + generation 토큰 (code panel, flip) -->
-        <article class="case-cell fi" aria-label="케이스 02: 요청 자동 취소 + generation 토큰">
+        <!-- Case 04: 요청 취소 + generation 토큰 (code panel, flip) -->
+        <article class="case-cell fi" aria-label="케이스 4: 요청 자동 취소 + generation 토큰">
           <div class="case-left">
-            <p class="cell-tag">Case 02 &middot; URLSession / Concurrency</p>
+            <p class="cell-tag">Case 04 &middot; URLSession / Concurrency</p>
             <h3 class="cell-title">네트워크 요청 자동 취소 + generation 토큰</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -559,10 +687,10 @@
           </details>
         </article>
 
-        <!-- Case 03: 세로 맵 스크롤 선 로딩 -->
-        <article class="case-cell fi" aria-label="케이스 03: 세로 맵 스크롤 선 로딩">
+        <!-- Case 05: 세로 맵 스크롤 선 로딩 -->
+        <article class="case-cell fi" aria-label="케이스 5: 세로 맵 스크롤 선 로딩">
           <div class="case-left">
-            <p class="cell-tag">Case 03 &middot; ScrollView / Prefetch</p>
+            <p class="cell-tag">Case 05 &middot; ScrollView / Prefetch</p>
             <h3 class="cell-title">세로 맵 선 로딩 &middot; 닿기 전에 다음 코스 준비</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -571,7 +699,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">도착한 뒤 로드하면 경계마다 끊기고, 코스 전체를 미리 받으면 서버 부하와 데이터 낭비가 큽니다. 그래서 <strong>스크롤 위치를 신호로 삼아 다음 코스만 미리 받기로 했습니다.</strong> 사용자의 행동을 예측하는 게 아니라 명시적인 위치에 반응하는 편이 비용과 경험의 균형점이었습니다.</p>
+                <p class="row-body">도착한 뒤 로드하면 경계마다 끊기고, 코스 전체를 미리 받으면 서버 부하와 데이터 낭비가 큽니다. 그래서 <strong>스크롤이 코스 끝 지점에 닿을 때 다음 코스만 미리 받기로 했습니다.</strong> 행동을 예측하지 않고 화면에 드러난 위치에만 반응해, 서버 부하와 끊김 사이의 균형을 맞췄습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
@@ -616,21 +744,21 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
-       2장 · 화면 흐름을 직접 만든다
+       3장 · 직접 만든 화면 인프라
   ════════════════════════════════════════════════════════ -->
-  <section class="section section--surface" aria-labelledby="ch2-hd">
+  <section class="section" aria-labelledby="ch3-hd">
     <div class="wrap">
       <div class="group-header fi">
-        <p class="group-chapter">2장</p>
-        <h2 id="ch2-hd">화면 흐름을 직접 만든다</h2>
+        <p class="group-chapter">3장</p>
+        <h2 id="ch3-hd">직접 만든 화면 인프라</h2>
       </div>
 
       <div class="cases-stack">
 
-        <!-- Case 04: Route 단일 스택 -->
-        <article class="case-cell fi" aria-label="케이스 04: Route 단일 스택">
+        <!-- Case 06: Route 단일 스택 -->
+        <article class="case-cell fi" aria-label="케이스 6: Route 단일 스택">
           <div class="case-left">
-            <p class="cell-tag">Case 04 &middot; SwiftUI / Navigation</p>
+            <p class="cell-tag">Case 06 &middot; SwiftUI / Navigation</p>
             <h3 class="cell-title">Route 단일 스택 &middot; 화면 이동을 배열 하나로</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -681,10 +809,10 @@
           </details>
         </article>
 
-        <!-- Case 05: 바텀시트 코디네이터 (phone frame) -->
-        <article class="case-cell fi" aria-label="케이스 05: 바텀시트 코디네이터">
+        <!-- Case 07: 바텀시트 코디네이터 (phone frame) -->
+        <article class="case-cell fi" aria-label="케이스 7: 바텀시트 코디네이터">
           <div class="case-left">
-            <p class="cell-tag">Case 05 &middot; SwiftUI / Navigation</p>
+            <p class="cell-tag">Case 07 &middot; SwiftUI / Navigation</p>
             <h3 class="cell-title">바텀시트 코디네이터 &middot; 표시 계층 + 흐름 + 연타 방지</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -739,10 +867,10 @@
           </details>
         </article>
 
-        <!-- Case 06: 커스텀 탭바 모핑 -->
-        <article class="case-cell flip fi" aria-label="케이스 06: 커스텀 탭바 전환 애니메이션">
+        <!-- Case 08: 커스텀 탭바 모핑 -->
+        <article class="case-cell flip fi" aria-label="케이스 8: 커스텀 탭바 전환 애니메이션">
           <div class="case-left">
-            <p class="cell-tag">Case 06 &middot; SwiftUI / Animation</p>
+            <p class="cell-tag">Case 08 &middot; SwiftUI / Animation</p>
             <h3 class="cell-title">커스텀 탭바 &middot; 탭에 따라 모양이 바뀐다</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -798,10 +926,10 @@
           </details>
         </article>
 
-        <!-- Case 07: 딥링크 보류와 재개 -->
-        <article class="case-cell fi" aria-label="케이스 07: 딥링크 보류와 재개">
+        <!-- Case 09: 딥링크 보류와 재개 -->
+        <article class="case-cell fi" aria-label="케이스 9: 딥링크 보류와 재개">
           <div class="case-left">
-            <p class="cell-tag">Case 07 &middot; DeepLink / Pending</p>
+            <p class="cell-tag">Case 09 &middot; DeepLink / Pending</p>
             <h3 class="cell-title">딥링크 보류와 재개 &middot; 오버레이가 닫힌 뒤 한 번만</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -810,7 +938,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">바로 라우팅하면 진행 중이던 맥락이 깨지고, 큐에 모두 쌓아 두면 오버레이가 닫히는 순간 화면이 연달아 점프합니다. <strong>그래서 최신 링크 한 건만 보류했다 재개하기로 했습니다.</strong> 사용자의 의도는 결국 마지막으로 누른 그곳이기 때문입니다.</p>
+                <p class="row-body">바로 라우팅하면 진행 중이던 맥락이 깨지고, 큐에 모두 쌓아 두면 오버레이가 닫히는 순간 화면이 연달아 점프합니다. <strong>그래서 최신 링크 한 건만 보류했다 재개하기로 했습니다.</strong> 마지막으로 누른 링크가 사용자가 가려던 곳입니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
@@ -860,26 +988,26 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
-       3장 · 원인까지 파고든다
+       4장 · 크래시와 행 진단
   ════════════════════════════════════════════════════════ -->
-  <section class="section" aria-labelledby="ch3-hd">
+  <section class="section section--surface" aria-labelledby="ch4-hd">
     <div class="wrap">
       <div class="group-header fi">
-        <p class="group-chapter">3장</p>
-        <h2 id="ch3-hd">원인까지 파고든다</h2>
+        <p class="group-chapter">4장</p>
+        <h2 id="ch4-hd">크래시와 행 진단</h2>
       </div>
 
       <div class="cases-stack">
 
-        <!-- Case 08: severe hang → Store 분리 (phone frame) -->
-        <article class="case-cell fi" aria-label="케이스 08: severe hang Store 분리">
+        <!-- Case 10: severe hang → Store 분리 (phone frame) -->
+        <article class="case-cell fi" aria-label="케이스 10: severe hang Store 분리">
           <div class="case-left">
-            <p class="cell-tag">Case 08 &middot; @Observable / Instruments</p>
+            <p class="cell-tag">Case 10 &middot; @Observable / Instruments</p>
             <h3 class="cell-title">severe hang &middot; 거대 Store를 책임별로 분리</h3>
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
-                <p class="row-body"><code>TabBarStore</code> 한 곳에 800줄 가까운 상태가 몰려 있었습니다. 퀘스트 타이머가 1초마다 값을 바꿀 때마다 이 Store를 구독하던 탭바 주변 화면이 통째로 다시 그려졌고, Instruments에서 메인 스레드를 오래 붙잡는 severe hang으로 잡혔습니다.</p>
+                <p class="row-body"><code>TabBarStore</code> 한 곳에 성격이 다른 상태가 전부 몰려 있었습니다. 퀘스트 타이머가 1초마다 값을 바꿀 때마다 이 Store를 구독하던 탭바 주변 화면이 통째로 다시 그려졌고, Instruments에서 메인 스레드를 오래 붙잡는 severe hang으로 잡혔습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
@@ -897,7 +1025,7 @@
           </div>
           <details class="case-code">
             <summary class="code-filename">거대 Store 분리 &middot; Before / After</summary>
-              <pre class="code-body"><span class="cm">// Before: 약 800줄, 성격 다른 책임이 한 객체에</span>
+              <pre class="code-body"><span class="cm">// Before: 성격 다른 책임이 한 객체에</span>
 <span class="ck">final class</span> <span class="ct">TabBarStore</span>: <span class="ct">ObservableObject</span> {
     <span class="ck">@Published var</span> selection: <span class="ct">MainTab</span> = .home
     <span class="ck">@Published var</span> questsState: <span class="ct">DataState</span>&lt;[<span class="ct">Quest</span>]&gt; = .idle
@@ -926,10 +1054,10 @@
           </details>
         </article>
 
-        <!-- Case 09: DI 스레드 안전성 (code panel, flip) -->
-        <article class="case-cell fi" aria-label="케이스 09: DI 컨테이너 스레드 안전성">
+        <!-- Case 11: DI 스레드 안전성 (code panel, flip) -->
+        <article class="case-cell fi" aria-label="케이스 11: DI 컨테이너 스레드 안전성">
           <div class="case-left">
-            <p class="cell-tag">Case 09 &middot; Swinject / Crashlytics</p>
+            <p class="cell-tag">Case 11 &middot; Swinject / Crashlytics</p>
             <h3 class="cell-title">런치 간헐 크래시 &middot; Crashlytics 리포트에서 DI 스레드 문제까지</h3>
             <div class="case-rows">
               <div class="case-row">
@@ -972,134 +1100,6 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════
-       4장 · 상태는 정확히 한 번
-  ════════════════════════════════════════════════════════ -->
-  <section class="section section--surface" aria-labelledby="ch4-hd">
-    <div class="wrap">
-      <div class="group-header fi">
-        <p class="group-chapter">4장</p>
-        <h2 id="ch4-hd">상태는 정확히 한 번만 바뀐다</h2>
-      </div>
-
-      <div class="cases-stack">
-
-        <!-- Case 10: 퀴즈 상태머신 (code panel, flip) -->
-        <article class="case-cell flip fi" aria-label="케이스 10: 퀴즈 상태머신 + 제출 배리어">
-          <div class="case-left">
-            <p class="cell-tag">Case 10 &middot; enum FSM / AsyncStream</p>
-            <h3 class="cell-title">퀴즈 상태머신 + 제출 배리어 &middot; 불가능한 상태를 타입으로 제거</h3>
-            <div class="case-rows">
-              <div class="case-row">
-                <span class="row-label">문제</span>
-                <p class="row-body"><code>isReviewing</code>과 <code>isEnd</code> 불리언 조합은 "복습이면서 완료" 같은 불가능한 상태가 컴파일을 통과합니다. 빠른 연타 시 화면과 서버가 어긋나는 문제도 남아 있었습니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">접근</span>
-                <p class="row-body">enum 상태머신으로 불가능한 상태를 타입 차원에서 제거했습니다. 제출은 <strong>낙관 진행 + 단원 경계 배리어</strong>로 사용자는 기다리지 않고 정합은 경계에서 한 번만 맞춥니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">구현</span>
-                <p class="row-body">진행 상태를 enum 하나로 모델링하고 전이 규칙을 전용 UseCase에 모았습니다. 경계에서 <code>withCheckedContinuation</code>으로 다음 진행을 붙들고 실패분은 큐에 모아 재전송합니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">결과</span>
-                <p class="row-body">불가능한 상태가 타입 차원에서 사라지고, 빠른 연타에도 화면과 서버가 어긋나지 않습니다.</p>
-              </div>
-            </div>
-          </div>
-          <div class="case-right">
-            <div class="case-clip">
-              <video autoplay muted loop playsinline poster="../assets/kira/poster-quiz.webp" src="../assets/kira/quiz-demo.mp4" aria-label="퀴즈 풀이 흐름 데모"></video>
-              <p class="clip-cap">실기기 데모 &middot; 퀴즈 플로우</p>
-            </div>
-          </div>
-          <details class="case-code">
-            <summary class="code-filename">QuizProgressType.swift <span class="code-note">재구현 예제</span></summary>
-              <pre class="code-body"><span class="ck">enum</span> <span class="ct">QuizProgressType</span>: <span class="ct">Equatable</span> {
-    <span class="ck">case</span> study(stage: <span class="ct">Int</span>)
-    <span class="cm">// 풀이</span>
-    <span class="ck">case</span> review(stage: <span class="ct">Int</span>)
-    <span class="cm">// 복습 (틀린 문제만)</span>
-    <span class="ck">case</span> survey(stage: <span class="ct">Int</span>)
-    <span class="cm">// 설문</span>
-    <span class="ck">case</span> end(
-        stage: <span class="ct">Int</span>,
-        adType: <span class="ct">QuizADType</span>)
-    <span class="ck">case</span> completed
-    <span class="cm">// "복습이면서 완료" 같은 조합이</span>
-    <span class="cm">// 타입 차원에서 불가능해진다</span>
-}</pre>
-          </details>
-        
-        
-        </article>
-
-        <!-- Case 11: 퀘스트 보상 연출 정확히 한 번 -->
-        <article class="case-cell fi" aria-label="케이스 11: 퀘스트 보상 연출 정확히 한 번">
-          <div class="case-left">
-            <p class="cell-tag">Case 11 &middot; actor / CheckedContinuation</p>
-            <h3 class="cell-title">퀘스트 보상 연출 &middot; 순서대로, 껐다 켜도 한 번만</h3>
-            <div class="case-rows">
-              <div class="case-row">
-                <span class="row-label">문제</span>
-                <p class="row-body">퀘스트가 완료되면 진행 바, 젬 획득, 완료 표시가 순서대로 떠야 합니다. 불리언 플래그로는 순서가 꼬이고, 화면을 벗어나면 젬이 두 번 더해지고, 앱을 껐다 켜면 이미 본 연출이 다시 재생됩니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">접근</span>
-                <p class="row-body">무엇이 바뀌었는지는 화면이 아니라 저장소가 판단하게 했습니다. <strong><code>actor</code> 저장소가 이전 스냅샷과 지금 상태의 차이(<code>QuestChange</code>)를 계산</strong>하고, 화면은 그 결과만 받아 순서대로 보여줍니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">구현</span>
-                <p class="row-body">진행&rarr;젬&rarr;완료 순서로 연출을 async/await로 이어서 실행하고, 도중에 화면을 벗어나면 Task를 취소합니다. 젬 연출만 콜백으로 끝나서 <code>withCheckedContinuation</code>으로 감쌌고, <strong>resume이 두 번 불리지 않게 막아 보상이 중복으로 쌓이지 않도록</strong> 했습니다. 스냅샷은 연출이 다 끝난 뒤에 확정합니다.</p>
-              </div>
-              <div class="case-row">
-                <span class="row-label">결과</span>
-                <p class="row-body">어떤 진입 경로에서도 연출이 한 번씩만 올바른 순서로 재생되고, 마감 시각을 영속 저장해 껐다 켜도 이미 본 연출은 다시 나오지 않습니다.</p>
-              </div>
-            </div>
-          </div>
-          <div class="case-right">
-            <div class="case-clip">
-              <video autoplay muted loop playsinline poster="../assets/kira/poster-quest.webp" src="../assets/kira/quest-demo.mp4" aria-label="퀘스트 보상 진행과 완료 연출 데모"></video>
-              <p class="clip-cap">데모 &middot; 진행 바와 완료 연출</p>
-            </div>
-          </div>
-          <details class="case-code">
-            <summary class="code-filename">QuestStorageImpl.swift <span class="code-note">재구현 예제</span></summary>
-              <pre class="code-body"><span class="ck">actor</span> <span class="ct">QuestStorageImpl</span>: <span class="ct">QuestStorage</span> {
-    <span class="ck">private var</span> snapshot: [<span class="ct">Quest</span>] = []  <span class="cm">// 직전(본) 상태</span>
-    <span class="ck">private var</span> current:  [<span class="ct">Quest</span>] = []
-
-    <span class="ck">func</span> getChangedQuests() -&gt; [<span class="ct">QuestChange</span>] {
-        current.compactMap { quest <span class="ck">in</span>
-            <span class="ck">guard let</span> prev = snapshot.first(
-                where: { $0.id == quest.id }) <span class="ck">else</span> { … }
-            <span class="cm">// 변경 없으면 스킵</span>
-            <span class="ck">guard</span> prev.currentCount != quest.currentCount
-               || prev.isCompleted  != quest.isCompleted
-            <span class="ck">else</span> { <span class="ck">return nil</span> }
-            <span class="ck">return</span> <span class="ct">QuestChange</span>(quest: quest,
-                previousCount: prev.currentCount,
-                previousCompleted: prev.isCompleted)
-        }
-    }
-    <span class="cm">// 연출이 끝난 뒤에만 확정</span>
-    <span class="ck">func</span> commitSnapshot() { snapshot = current }
-}
-
-<span class="cm">// 콜백 젬 연출을 async로: 두 번 불려도 한 번만</span>
-<span class="ck">await</span> withCheckedContinuation { cont <span class="ck">in</span>
-    <span class="ck">var</span> isResumed = <span class="ck">false</span>
-    gemFly { <span class="ck">if</span> !isResumed { isResumed = <span class="ck">true</span>; cont.resume() } }
-}</pre>
-          </details>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
   </main>
 
   <!-- ── Nav strip ─────────────────────────────────────── -->
@@ -1108,7 +1108,7 @@
       <div class="nav-strip-inner">
           <a href="gitsearch.html" class="nav-proj nav-proj--next">
             <span class="nav-proj-hint">다음 프로젝트</span>
-            <span class="nav-proj-title">GitSearch &rarr;</span>
+            <span class="nav-proj-title">TheModularArchitecture &rarr;</span>
           </a>
         </div>
       </div>
