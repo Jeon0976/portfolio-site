@@ -198,7 +198,7 @@
           <li>Crashlytics&middot;Instruments로 <strong>런치 간헐 크래시(DI 스레드 비안전)와 탭 전환 severe hang(거대 Store)</strong>을 원인 단위로 해결</li>
           <li>푸시&middot;URL <strong>딥링크가 온보딩&middot;오버레이 위로 도착하면 보류했다 닫히는 시점에 한 번만 실행</strong>하도록 설계 (최신 링크만 유지, 1회 소비)</li>
           <li><strong>AI 브리핑 콘텐츠 파이프라인</strong>을 설계해 생성부터 발행까지 사람 개입 없이 <strong>매일 자동 발행</strong>, 브리핑을 보여주는 iOS 화면도 구현</li>
-          <li>보상 축소가 결정된 상황에서 <strong>&ldquo;어디까지 내려도 이탈이 없는가&rdquo;를 A/B 테스트로 설계</strong>, 세 수준을 동시에 내보내고 활동 빈도로 층화 배정해 구간별 이탈을 비교, <strong>판정 기준을 시작 전에 정해두고 그대로 정책 확정</strong></li>
+          <li>보상 축소가 결정된 상황에서 <strong>어디까지 내려도 이탈이 없는지를 A/B 테스트로 설계해 검증</strong>, 사용자를 활동 빈도로 나눠 구간별 이탈을 비교하고 보상 정책을 확정</li>
           <li>Android 앱 <strong>출시에 참여해 퀴즈 등 피처를 iOS와 동일한 화면과 동작 스펙으로 구현</strong>, <strong>플랫폼 차이 문서화</strong>까지 병행. React 웹은 Claude Code와 Codex로 구현&middot;배포</li>
           <li>개발 외 <strong>기획 회의, 채용, 온보딩, CS까지 참여</strong>하며 초기 스타트업의 제품 결정에 함께 관여</li>
         </ul>
@@ -212,7 +212,7 @@
         <div class="subrow"><span>크라우드 펀딩 앱 MIRAOTO &middot; 신규 프로젝트 아키텍처 설계&middot;기능 개발</span></div>
         <div class="subrow subrow--stack"><span>Stack: Swift &middot; MVVM + Combine(단방향) &middot; Coordinator + DIContainer &middot; Moya</span></div>
         <ul>
-          <li>신규 프로젝트의 <strong>내비게이션 아키텍처를 제안해 확정하고 구현까지 진행</strong>, 서드파티 의존을 최소화하는 기술 선택 기준을 세움</li>
+          <li>신규 프로젝트의 <strong>내비게이션 아키텍처를 제안해 확정하고 구현까지 진행</strong></li>
           <li>신규 프로젝트의 3D 카드 표현을 검증하는 <strong>SceneKit 데모 구현</strong>, Blender 모델을 노드 계층(카메라&middot;조명&middot;재질)으로 통합하고 SCNAction 인터랙션 적용 (<a href="https://velog.io/@jeon0976/SceneKit%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-3D-%ED%94%84%EB%A1%9C%ED%95%84-%EC%84%A4%EA%B3%84" target="_blank" rel="noopener noreferrer">최소 예제로 다시 만들어 블로그에 정리</a>)</li>
         </ul>
       </div>
@@ -273,7 +273,7 @@
 
       <div class="entry">
         <div class="row">
-          <span class="row-main">AVIRO <span class="proj-tech">| Swift, UIKit, MVVM + Clean Architecture, Realm</span></span>
+          <span class="row-main">AVIRO <span class="proj-tech">| Swift, UIKit, MVP, MVVM, Realm</span></span>
           <span class="row-side">2023.05 &ndash; 2026.04 (약 3년)</span>
         </div>
         <div class="subrow"><span>전국 비건 식당 공유 플랫폼 &middot; 동아리 팀 중 iOS 전담 &middot; App Store 출시&middot;운영(종료) &middot; <a href="https://github.com/AVIRO-official/AVIRO-iOS" target="_blank" rel="noopener noreferrer">github.com/AVIRO-official/AVIRO-iOS</a></span></div>
