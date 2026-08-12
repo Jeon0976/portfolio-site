@@ -429,7 +429,7 @@
         <article class="case-cell fi" aria-label="케이스 02: ManagedTask">
           <div class="case-left">
             <p class="cell-tag">Case 02 &middot; Swift Concurrency / Task</p>
-            <h3 class="cell-title">ManagedTask &middot; Task 관리 규칙 5가지를 타입으로</h3>
+            <h3 class="cell-title">Task 수명을 타입에 맡긴다</h3>
             <div class="case-rows">
               <div class="case-row">
                 <span class="row-label">문제</span>
@@ -437,7 +437,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">접근</span>
-                <p class="row-body">핸들 보관, 재진입 시 취소, deinit 취소, 취소 후 결과 무시, CancellationError 무시. <strong>ViewModel마다 지켜야 하는 규칙 5가지인데 컴파일러는 하나도 잡아 주지 않습니다.</strong> task를 만들 때마다 이 규칙을 다시 챙기는 대신, ManagedTask 타입이 대신 지키도록 했습니다.</p>
+                <p class="row-body">핸들 보관, 재진입 시 취소, deinit 취소, 취소 후 결과 무시, CancellationError 무시. <strong>ViewModel마다 매번 지켜야 하는데 컴파일러는 하나도 잡아 주지 않습니다.</strong> task를 만들 때마다 이걸 다시 챙기는 대신, ManagedTask 타입이 대신 지키도록 했습니다.</p>
               </div>
               <div class="case-row">
                 <span class="row-label">구현</span>
@@ -445,7 +445,7 @@
               </div>
               <div class="case-row">
                 <span class="row-label">결과</span>
-                <p class="row-body">화면을 닫으면 요청이 실제로 끊기고, <strong>늦게 도착한 이전 응답이 최신 결과를 덮어쓰지 않습니다.</strong> 규칙 5가지는 각각 테스트로 고정해 두어 나중에 고쳐도 깨지지 않습니다.</p>
+                <p class="row-body">화면을 닫으면 요청이 실제로 끊기고, <strong>늦게 도착한 이전 응답이 최신 결과를 덮어쓰지 않습니다.</strong> 각 동작을 테스트로 고정해 두어 나중에 고쳐도 깨지지 않습니다.</p>
               </div>
             </div>
           </div>
