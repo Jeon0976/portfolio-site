@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d1d1f'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='ui-sans-serif, system-ui, sans-serif' font-size='15' font-weight='600' letter-spacing='-0.5' fill='%23f5f5f7'%3ESJ%3C/text%3E%3Crect x='10.5' y='24' width='11' height='1.6' rx='0.8' fill='%230071e3'/%3E%3C/svg%3E">
   <title>전성훈 이력서</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -114,6 +113,11 @@
     }
     li::before { content: "\2022"; position: absolute; left: 2px; }
 
+    /* 하위 항목: 한 단계 들여쓰고 마커를 en dash 로 */
+    li ul { margin-top: 2.5px; margin-bottom: 2px; }
+    li li { padding-left: 11px; font-size: 9.6pt; color: #2c2c2e; }
+    li li::before { content: "\2013"; left: 1px; }
+
     strong { font-weight: 700; }
 
     /* ── 스킬 표 ── */
@@ -139,6 +143,26 @@
     .sec-cols .sec { flex: 1; margin-top: 0; }
     .sec-cols .cert-row:last-child { margin-bottom: 0; }
 
+    /* ── 상세 경력 (산문) ── */
+    /* 화면에서는 앞 섹션과 크게 띄우고, 인쇄에서는 페이지를 넘긴다 */
+    .doc-break { break-before: page; margin-top: 34px; }
+
+    .narr { padding: 0 2mm; margin-bottom: 12px; break-inside: auto; }
+    .narr + .narr { border-top: 0.5pt solid #e3e3e6; padding-top: 12px; }
+    .narr:last-child { margin-bottom: 0; }
+    .narr-title {
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+    }
+    .narr p {
+      line-height: 1.62;
+      margin-bottom: 6px;
+      text-align: justify;
+    }
+    .narr p:last-child { margin-bottom: 0; }
+
     /* ── 인쇄 ── */
     @page { size: A4; margin: 12mm 0; }
     @media print {
@@ -146,13 +170,19 @@
       .sheet { width: auto; min-height: 0; margin: 0; padding: 0 15mm; box-shadow: none; }
       a { text-decoration-color: #777; }
       .sec, .entry { break-inside: avoid-page; }
-      .sec-experience { break-inside: auto; }
+      .sec-experience, .sec-projects, .sec-doc { break-inside: auto; }
+      .sec-title { break-after: avoid-page; }
+      .sec-experience .entry { break-inside: auto; }
+      .sec-experience .entry > .row,
+      .sec-experience .entry > .subrow,
+      .sec-experience li { break-inside: avoid-page; }
+      .doc-break { break-before: auto; margin-top: 12px; }
+      .narr-title { break-after: avoid-page; }
     }
   </style>
 </head>
 <body>
   <main class="sheet">
-
     <!-- ── 헤더 ── -->
     <h1 class="name">전성훈</h1>
     <p class="headline">iOS Developer</p>
@@ -168,15 +198,14 @@
       <span><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm4.9 6.3h-2a10.7 10.7 0 0 0-.9-3.7 5.7 5.7 0 0 1 2.9 3.7Zm-4.9-3.9c.5.8 1.1 2.1 1.3 3.9H6.7c.2-1.8.8-3.1 1.3-3.9ZM2.4 8.7h2c.1 1.4.4 2.6.8 3.7a5.7 5.7 0 0 1-2.8-3.7Zm2-1.4h-2a5.7 5.7 0 0 1 2.8-3.7c-.4 1.1-.7 2.3-.8 3.7Zm3.6 5.3c-.5-.8-1.1-2.1-1.3-3.9h2.6c-.2 1.8-.8 3.1-1.3 3.9Zm2-1.6c.4-1.1.7-2.3.8-3.7h2a5.7 5.7 0 0 1-2.8 3.7Z"/></svg><a href="https://jeon0976.github.io/portfolio-site/" target="_blank" rel="noopener noreferrer">jeon0976.github.io/portfolio-site</a></span>
     </p>
 
-    <!-- ── Summary ── -->
+
     <section class="sec">
       <h2 class="sec-title">Summary</h2>
-      <p class="summary">
-        문제가 생긴 뒤에 고치기보다 생기기 전에 막는 쪽을 택합니다. 기능이 매주 새로 붙는 제품에서도 상태를 타입으로 모델링하고 흐름을 단방향으로 정리해, 불가능한 조합이 런타임까지 가지 않게 합니다. 기술은 유행이 아니라 팀 상황과 트레이드오프로 고릅니다. iOS를 주력으로 하면서 Android 앱 출시까지 맡았고, 익숙하지 않은 React 웹은 Claude Code와 Codex로 구현해 배포했으며, 자동화 파이프라인도 같은 방식으로 만들어 운영했습니다.
+      <p>
+        지금까지의 개발 경험을 토대로, 명확하게 책임을 나눠 유지보수와 확장이 쉬운 코드를 작성하는 데 중점을 둡니다. 기술은 팀 상황과 트레이드오프를 따져 고릅니다. 한 제품의 iOS를 설계부터 출시와 운영까지 단독으로 맡았고, 같은 제품의 Android 출시와 WKWebView 전환까지 이어서 담당했습니다.
       </p>
     </section>
 
-    <!-- ── Experience ── -->
     <section class="sec sec-experience">
       <h2 class="sec-title">Experience</h2>
 
@@ -187,20 +216,34 @@
         </div>
         <div class="subrow">
           <span>금융 교육 게이미피케이션 서비스 KIRA(Katsby) &middot; 초기 스타트업 멤버</span>
-          <span>iOS 주도, Android 겸업 (웹은 AI 도구)</span>
+          <span>iOS 단독 주도, Android 출시, 웹 전환</span>
         </div>
         <div class="subrow subrow--stack">
-          <span>Stack: SwiftUI(iOS 17+) &middot; Clean Architecture + MVI &middot; Tuist &middot; Swift Concurrency &middot; Combine &middot; URLSession &middot; StoreKit 2 &middot; Swinject &middot; Firebase &middot; Amplitude &middot; AppsFlyer</span>
+          <span><strong>사용기술</strong> SwiftUI(iOS 17+), Clean Architecture + MVI, Tuist, Swift Concurrency, Combine, WebKit, URLSession, StoreKit 2, Swinject, Firebase, Amplitude, AppsFlyer</span>
         </div>
         <ul>
-          <li>베타 출시 1주일 전 합류해 QA 공백을 메우며 시작, 비동기 혼재와 흩어진 상태 관리를 진단해 네트워크, 상태, 화면 인프라의 <strong>뼈대를 다시 세움</strong></li>
-          <li>화면 상태를 <strong>enum으로 모델링</strong>해 불가능한 조합을 타입에서 제거, 기능이 늘어나도 무너지지 않는 구조로 구현</li>
-          <li>Crashlytics&middot;Instruments로 <strong>런치 간헐 크래시(DI 스레드 비안전)와 탭 전환 severe hang(거대 Store)</strong>을 원인 단위로 해결</li>
-          <li>푸시&middot;URL <strong>딥링크가 온보딩&middot;오버레이 위로 도착하면 보류했다 닫히는 시점에 한 번만 실행</strong>하도록 설계 (최신 링크만 유지, 1회 소비)</li>
-          <li><strong>AI 브리핑 콘텐츠 파이프라인</strong>을 설계해 생성부터 발행까지 사람 개입 없이 <strong>매일 자동 발행</strong>, 브리핑을 보여주는 iOS 화면도 구현</li>
-          <li>보상 축소가 결정된 상황에서 <strong>어디까지 내려도 이탈이 없는지를 A/B 테스트로 설계해 검증</strong>, 사용자를 활동 빈도로 나눠 구간별 이탈을 비교하고 보상 정책을 확정</li>
-          <li>Android 앱 <strong>출시에 참여해 퀴즈 등 피처를 iOS와 동일한 화면과 동작 스펙으로 구현</strong>, <strong>플랫폼 차이 문서화</strong>까지 병행. React 웹은 Claude Code와 Codex로 구현&middot;배포</li>
-          <li>개발 외 <strong>기획 회의, 채용, 온보딩, CS까지 참여</strong>하며 초기 스타트업의 제품 결정에 함께 관여</li>
+          <li><strong>변화 데이터와 애니메이션 상태를 각각 다른 계층에서 관리</strong>, 퀘스트 보상은 이전 상태 보관과 전후 비교를 <code>actor</code> 저장소가 맡고 애니메이션 매니저는 계산된 변화만 받아 순서와 표현만 담당
+            <ul>
+              <li>변화를 값으로 모델링해 한 화면에서 놓쳐도 다른 화면이 이어서 표시</li>
+              <li>단계 타입으로 애니메이션 순서를 강제하고 화면 이탈 시 취소</li>
+              <li>마지막 본 주기를 영속 저장해 껐다 켜도 재실행 안 됨</li>
+            </ul>
+          </li>
+          <li><strong>불가능한 상태를 타입에서 제거</strong>, 퀴즈 진행처럼 갈래가 많은 흐름은 Store가 상태를 타입으로 들고 다음 단계 판정은 레슨 상태만 받는 순수 함수 UseCase로 분리. 기능이 늘어나도 검증할 조합이 곱으로 늘지 않음</li>
+          <li><strong>화면 전환과 서버 반영의 비동기 경계 설계</strong>, 응답을 기다려야 다음 문항으로 넘어가던 구조에서 둘을 분리하고 진행 중인 제출 수를 세어 체크포인트에서 0이 될 때까지만 대기, 실패분은 큐에 모아 경계에서 재전송</li>
+        <li><strong>탭 전환 애니메이션을 상태 단위로 설계</strong>, 형태가 다른 두 종류의 탭바를 오가야 해서 너비, 높이, 아이콘의 투명도와 크기를 상태 하나에 묶고 스프링 하나로 제어. 값을 하나씩 잡아 가며 탭이 바뀌는 동안 바가 끊기지 않고 이어지도록 맞춤</li>
+          <li><strong>탭 전환 severe hang 해소</strong>, Instruments로 측정해 성격이 다른 상태들이 <code>ObservableObject</code> 하나에 모여 값 하나만 바뀌어도 구독 뷰가 전부 재렌더되는 것을 원인으로 확인, 상태 수명 범위 기준으로 <code>@Observable</code> Store들로 분리하고 각 뷰가 실제로 읽는 것만 참조하도록 정리</li>
+          <li><strong>앱 런치 간헐 크래시를 DI 컨테이너의 스레드 안전성 문제로 진단</strong>, Crashlytics 스택 트레이스를 따라가 Swinject <code>Container.resolve()</code>가 스레드 세이프하지 않은 것을 확인하고 <code>synchronize()</code> 기반 resolver로 전환</li>
+          <li><strong>URLSession 기반 커스텀 APIClient 전면 재설계</strong>, Moya의 콜백 경계에서 Task 취소가 전파되지 않아 화면 이탈 후에도 요청이 살아 있던 문제를 해결. session&middot;plugins&middot;retryPolicy 주입, <code>isIdempotent</code> 비멱등 가드, 계층형 에러</li>
+          <li>타입이 지워진 <code>NavigationPath</code> 대신 <code>[Route]</code> 배열을 Router가 직접 소유해 중복 push 차단과 특정 화면 복귀 구현, 탭별 스택 보존 탭바&middot;전역 오버레이&middot;바텀시트 코디네이터까지 화면 인프라 직접 설계</li>
+          <li><strong>딥링크 보류와 재개</strong>, 푸시&middot;URL&middot;디퍼드 딥링크(AppsFlyer OneLink)를 파서와 라우터로 나누고 온보딩이나 오버레이 위로 도착하면 보류했다 닫힌 뒤 최신 한 건만 1회 실행</li>
+          <li><strong>WKWebView 전환에서 네이티브와 웹이 지킬 규칙을 정하고 양쪽에 구현</strong>, 세션이 바뀌면 웹 캐시를 비우고, 잘못 올라온 Safe Area 값은 적용하지 않으며, 배경 스크롤 잠금은 웹 CSS로는 뚫려 WKWebView 터치까지 막음. 브리지는 목으로 갈아 끼울 수 있게 만들어 앱 없이도 웹만으로 확인 가능</li>
+                    <li><code>StoreKit 2</code> 인앱 결제를 <code>actor</code> 리포지토리와 <code>Transaction.updates</code>로 구성, 미완료 거래를 앱 재실행 때 자동 복구하고 서버 지급을 확인한 뒤에 거래를 마침</li>
+        <li><strong>Android 개발자와 함께 앱을 구현해 정해진 출시 일정을 지킴</strong>, 판정 규칙과 화면 상태, 예외를 iOS에서 먼저 명세로 정리해 둔 덕에 새로 설계하지 않고 옮기는 작업이 됨. 두 플랫폼이 같은 규칙 위에서 동작하도록 맞춤</li>
+        <li>WebView 전환의 React/Next.js 화면은 요구사항과 구조를 직접 잡고 Claude Code로 구현해 배포, 생성 코드는 실제 Safari와 WKWebView에서 확인하고 고쳐 통합</li>
+                    <li><strong>AI 브리핑 콘텐츠 파이프라인을 설계</strong>해 생성부터 품질 검사, 발행까지 사람 개입 없이 매일 자동으로 돌게 함</li>
+          <li>보상 축소가 결정된 상황에서 어디까지 내려도 이탈이 없는지를 A/B 테스트로 설계해 검증, 사용자를 활동 빈도로 나눠 구간별 이탈을 비교하고 보상 정책을 확정</li>
+        <li>개발 외 기획 회의, 채용, 온보딩, CS까지 참여하며 초기 스타트업의 제품 결정에 함께 관여</li>
         </ul>
       </div>
 
@@ -210,10 +253,10 @@
           <span class="row-side">2024.07 &ndash; 2025.01 (7개월)</span>
         </div>
         <div class="subrow"><span>크라우드 펀딩 앱 MIRAOTO &middot; 신규 프로젝트 아키텍처 설계&middot;기능 개발</span></div>
-        <div class="subrow subrow--stack"><span>Stack: Swift &middot; MVVM + Combine(단방향) &middot; Coordinator + DIContainer &middot; Moya</span></div>
+        <div class="subrow subrow--stack"><span><strong>사용기술</strong> Swift, MVVM + Combine(단방향), Coordinator + DIContainer, Moya</span></div>
         <ul>
-          <li>신규 프로젝트의 <strong>내비게이션 아키텍처를 제안해 확정하고 구현까지 진행</strong></li>
-          <li>신규 프로젝트의 3D 카드 표현을 검증하는 <strong>SceneKit 데모 구현</strong>, Blender 모델을 노드 계층(카메라&middot;조명&middot;재질)으로 통합하고 SCNAction 인터랙션 적용 (<a href="https://velog.io/@jeon0976/SceneKit%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-3D-%ED%94%84%EB%A1%9C%ED%95%84-%EC%84%A4%EA%B3%84" target="_blank" rel="noopener noreferrer">최소 예제로 다시 만들어 블로그에 정리</a>)</li>
+          <li>신규 프로젝트의 내비게이션 아키텍처를 제안해 확정하고 구현까지 진행</li>
+          <li>신규 프로젝트의 3D 카드 표현을 검증하는 SceneKit 데모 구현, Blender 모델을 노드 계층(카메라&middot;조명&middot;재질)으로 통합하고 SCNAction 인터랙션 적용 (최소 예제로 다시 만들어 블로그에 정리)</li>
         </ul>
       </div>
 
@@ -223,11 +266,12 @@
           <span class="row-side">2024.01 &ndash; 2024.04 (4개월)</span>
         </div>
         <div class="subrow"><span>HR&middot;근태관리 서비스(알파요&middot;핀플) &middot; 운영&middot;기능 개발</span></div>
-        <div class="subrow subrow--stack"><span>Stack: Swift &middot; UIKit &middot; AutoLayout &middot; Instruments</span></div>
+        <div class="subrow subrow--stack"><span><strong>사용기술</strong> Swift, UIKit, AutoLayout, Instruments</span></div>
         <ul>
-          <li><strong>Instruments로 메모리 누수 해결</strong>, 클로저 순환 참조를 찾아 화면 전환 구조 정리</li>
-          <li>Massive MVC 화면을 <strong>MVVM으로 개선</strong>하고 StoryBoard를 코드로 전환</li>
-          <li>iOS 개발과 함께 <strong>Android QA 대응</strong>까지 맡음</li>
+          <li>Instruments로 메모리 누수 해결, 클로저 순환 참조를 찾아 화면 전환 구조 정리</li>
+          <li>MVC 패턴을 MVVM으로 개선해 조금이나마 고치기 쉬운 코드로 전환</li>
+          <li>StoryBoard를 코드 기반 오토레이아웃으로 전환</li>
+          <li>iOS 개발과 함께 Android QA 대응까지 맡음</li>
         </ul>
       </div>
 
@@ -237,77 +281,77 @@
           <span class="row-side">2015.08 &ndash; 2022.08 (7년)</span>
         </div>
         <ul>
-          <li>대대급 무인항공기(UAV) 조종사&middot;선임 교관, <strong>5년간 500회 이상 무사고 비행</strong></li>
-          <li>비상상황 조치를 실경험 기반으로 <strong>문서화해 사단과 군단에 전파</strong>, 기체 손상 확률을 낮춰 정비 유공 표창</li>
-          <li>민가 화재 초동조치로 <strong>소방 표창</strong> (<a href="http://cheorwonnews.com/index.do?menu_id=00000521&amp;menu_link=/front/news/icmsNews/view.do&amp;articleId=ARTICLE_00018371" target="_blank" rel="noopener noreferrer">철원신문 보도</a>)</li>
+          <li>대대급 무인항공기(UAV) 조종사&middot;선임 교관, 5년간 500회 이상 무사고 비행. 부대에 처음 생긴 신규 보직이라 참고 절차는 있었으나 운용 세부가 부족해 매뉴얼을 보완하며 절차를 세움</li>
+          <li>비상상황 조치를 실경험 기반으로 문서화해 사단과 군단에 전파, 기체 손상 확률을 낮춰 정비 유공 표창</li>
+          <li>민가 화재 초동조치로 소방 표창 (<a href="http://cheorwonnews.com/index.do?menu_id=00000521&amp;menu_link=/front/news/icmsNews/view.do&amp;articleId=ARTICLE_00018371" target="_blank" rel="noopener noreferrer">철원신문 보도</a>)</li>
         </ul>
       </div>
     </section>
 
-    <!-- ── Projects ── -->
-    <section class="sec">
+    <section class="sec sec-projects">
       <h2 class="sec-title">Projects</h2>
 
       <div class="entry">
         <div class="row">
-          <span class="row-main">iOS-TheModularArchitecture-Sample <span class="proj-tech">| Swift 6, Tuist, Micro Feature Architecture</span></span>
+          <span class="row-main">iOS-TheModularArchitecture-Sample</span>
           <span class="row-side">2026</span>
         </div>
-        <div class="subrow"><span>같은 앱을 두 아키텍처로 구현 &middot; 재구축 후: <a href="https://github.com/Jeon0976/iOS-TheModularArchitecture-Sample" target="_blank" rel="noopener noreferrer">github.com/Jeon0976/iOS-TheModularArchitecture-Sample</a> &middot; 재구축 전(Clean): <a href="https://github.com/Jeon0976/iOS-CleanArchitecture-Sample" target="_blank" rel="noopener noreferrer">github.com/Jeon0976/iOS-CleanArchitecture-Sample</a></span></div>
+        <div class="subrow"><span>같은 앱을 Clean &harr; Micro Feature 두 구조로 구현해 비교 &middot; <a href="https://github.com/Jeon0976/iOS-TheModularArchitecture-Sample" target="_blank" rel="noopener noreferrer">github.com/Jeon0976/iOS-TheModularArchitecture-Sample</a></span></div>
+        <div class="subrow subrow--stack"><span><strong>사용기술</strong> Swift 6, Tuist, Micro Feature Architecture, Swift Concurrency, XCTest</span></div>
         <ul>
-          <li>GitHub 검색 앱을 <strong>Clean Architecture &rarr; Micro Feature Architecture로 재구축</strong>, 피처 단위로 모듈화하고 실무에서 아쉬웠던 지점을 개선 포인트로 반영</li>
-          <li>왜 이 구조인지, 무엇을 포기했는지까지 <strong>docs 노트 8편</strong> + <a href="https://velog.io/@jeon0976/%EA%B0%99%EC%9D%80-%EC%95%B1%EC%9D%84-%EB%91%90-%EB%B2%88-%EB%A7%8C%EB%93%A4%EC%97%88%EB%8B%A4-Clean-Architecture%EC%97%90%EC%84%9C-Micro-Feature-Architecture%EB%A1%9C" target="_blank" rel="noopener noreferrer">기술 블로그 3편</a>으로 문서화</li>
-        </ul>
+          <li>레이어 대신 피처로 나누고 피처당 Interface / Sources / Testing / Tests / Demo(Example) 타겟을 분리해 계약만 노출하는 경계를 설계</li>
+          <li><strong>이미지 파이프라인 책임 분리</strong>, 저장소는 <code>Data</code>만 반환하고 다운샘플링과 2계층 캐시(히트&middot;미스 통계)는 화면 쪽에 배치. 저장소가 렌더링을 모르니 UIKit 의존 없이 단위 테스트 작성</li>
+          <li>Task 관리 규칙 다섯 가지를 호출부 규율에 맡기지 않고 타입으로 강제, 화면을 닫으면 요청이 실제로 끊기고 늦게 도착한 응답이 최신 결과를 덮지 않게 함</li>
+          </ul>
       </div>
 
       <div class="entry">
         <div class="row">
-          <span class="row-main">SERENADE <span class="proj-tech">| Swift, ReactorKit, RxSwift&middot;RxCocoa&middot;RxDataSources, Tuist</span></span>
-          <span class="row-side">2025.02 &ndash; 2025.07 (6개월)</span>
-        </div>
-        <div class="subrow"><span>웨딩 정보 서비스 &middot; iOS 2인 &middot; 체크리스트, 예산, 마이페이지 피처 담당 &middot; <a href="https://apps.apple.com/kr/app/%EC%84%B8%EB%A0%88%EB%82%98%EB%8D%B0-%EA%B3%A0%EB%AF%BC%EC%9D%84-%EC%A4%84%EC%97%AC%EC%A4%84-%EC%A7%84%EC%A7%9C-%EC%9B%A8%EB%94%A9-%EC%95%B1/id6747605861" target="_blank" rel="noopener noreferrer">App Store</a></span></div>
-        <ul>
-          <li><strong>ReactorKit 단방향</strong>으로 상태 관리, RxDataSources로 섹션 diff 렌더링</li>
-        </ul>
-      </div>
-
-      <div class="entry">
-        <div class="row">
-          <span class="row-main">AVIRO <span class="proj-tech">| Swift, UIKit, MVP, MVVM, Realm</span></span>
+          <span class="row-main">AVIRO</span>
           <span class="row-side">2023.05 &ndash; 2026.04 (약 3년)</span>
         </div>
-        <div class="subrow"><span>전국 비건 식당 공유 플랫폼 &middot; 동아리 팀 중 iOS 전담 &middot; App Store 출시&middot;운영(종료) &middot; <a href="https://github.com/AVIRO-official/AVIRO-iOS" target="_blank" rel="noopener noreferrer">github.com/AVIRO-official/AVIRO-iOS</a></span></div>
+        <div class="subrow"><span>전국 비건 식당 공유 플랫폼 &middot; 동아리 팀 중 iOS 전담 &middot; App Store 출시&middot;운영(종료) &middot; 누적 1,300명+ / 평점 4.9 &middot; <a href="https://github.com/AVIRO-official/AVIRO-iOS" target="_blank" rel="noopener noreferrer">github.com/AVIRO-official/AVIRO-iOS</a></span></div>
+        <div class="subrow subrow--stack"><span><strong>사용기술</strong> Swift, UIKit(코드 기반), MVP, Realm</span></div>
         <ul>
-          <li>동아리 팀(기획, 디자인, 서버, Android)에서 <strong>iOS 개발 전담</strong>, 누적 <strong>1,300명+ 유저 / 평점 4.9</strong>, MVP 시점 합류한 Android 팀원 온보딩 가이드</li>
-          <li>전부 코드 기반 <strong>UICollectionView/UITableView 커스텀</strong>, 운영 중 유지보수 한계를 체감하며 아키텍처 학습의 전환점이 된 프로젝트</li>
+          <li>전부 코드 기반으로 UICollectionView/UITableView 커스텀</li>
+          <li>MVP 패턴으로 최초 서비스를 구현하고 운영</li>
+          <li>중간에 합류한 Android 팀원 온보딩 가이드 작성</li>
         </ul>
       </div>
 
       <div class="entry">
         <div class="row">
-          <span class="row-main">SpeechBubble <span class="proj-tech">| UIKit, UIBezierPath, SPM과 CocoaPods 배포</span></span>
+          <span class="row-main">SERENADE</span>
+          <span class="row-side">2025.02 &ndash; 2025.07 (6개월)</span>
         </div>
-        <div class="subrow"><span><a href="https://github.com/Jeon0976/SpeechBubble" target="_blank" rel="noopener noreferrer">github.com/Jeon0976/SpeechBubble</a></span></div>
+        <div class="subrow"><span>웨딩 정보 서비스 &middot; iOS 2인 &middot; 체크리스트, 예산, 마이페이지 담당 &middot; App Store</span></div>
+        <div class="subrow subrow--stack"><span><strong>사용기술</strong> Swift, ReactorKit(단방향), RxSwift, RxCocoa, RxDataSources, Tuist, Kingfisher</span></div>
         <ul>
-          <li><strong>커스텀 말풍선 라이브러리</strong>, UIBezierPath 커스텀 드로잉&middot;OptionSet API 설계</li>
+          <li>ReactorKit 단방향 상태 관리, RxDataSources 섹션 diff, 체크 토글은 낙관적 업데이트로 UI 선반영 후 서버 반영</li>
         </ul>
+      </div>
+
+      <div class="entry">
+        <div class="row">
+          <span class="row-main">SpeechBubble</span>
+        </div>
+        <div class="subrow"><span>커스텀 말풍선 라이브러리 &middot; <a href="https://github.com/Jeon0976/SpeechBubble" target="_blank" rel="noopener noreferrer">github.com/Jeon0976/SpeechBubble</a></span></div>
+        <div class="subrow subrow--stack"><span><strong>사용기술</strong> Swift, UIKit, UIBezierPath, OptionSet API, SPM, CocoaPods 배포</span></div>
       </div>
     </section>
 
-    <!-- ── Technical Skills ── -->
     <section class="sec">
       <h2 class="sec-title">Technical Skills</h2>
-      <div class="skill-row"><span class="skill-label">언어</span><span class="skill-body">Swift 6, Objective-C(유지보수)</span></div>
-      <div class="skill-row"><span class="skill-label">UI</span><span class="skill-body">UIKit, SwiftUI, AutoLayout, SnapKit, UICollectionView&middot;UITableView 커스텀</span></div>
-      <div class="skill-row"><span class="skill-label">아키텍처</span><span class="skill-body">Tuist, Micro Feature Architecture, Clean Architecture, MVI, MVVM-C, DIContainer</span></div>
-      <div class="skill-row"><span class="skill-label">비동기</span><span class="skill-body">Swift Concurrency(async/await, actor, AsyncStream), Combine, RxSwift, GCD</span></div>
-      <div class="skill-row"><span class="skill-label">네트워크&middot;저장소</span><span class="skill-body">URLSession, REST, Realm, CoreData, Keychain</span></div>
-      <div class="skill-row"><span class="skill-label">모듈화&middot;도구</span><span class="skill-body">SPM, CocoaPods, Firebase, Amplitude</span></div>
-      <div class="skill-row"><span class="skill-label">테스트</span><span class="skill-body">XCTest, Swift Testing, Mock 단위 테스트</span></div>
-      <div class="skill-row"><span class="skill-label">AI 워크플로우</span><span class="skill-body">콘텐츠 생성&rarr;발행 자동화 파이프라인 설계&middot;운영(매일 발행), AI 산출물 검증&middot;반려</span></div>
+      <div class="skill-row"><span class="skill-label">언어</span><span class="skill-body">Swift, Objective-C(유지보수)</span></div>
+      <div class="skill-row"><span class="skill-label">UI</span><span class="skill-body">SwiftUI, UIKit</span></div>
+      <div class="skill-row"><span class="skill-label">아키텍처</span><span class="skill-body">Clean Architecture, Micro Feature Architecture, MVI, MVVM-C, Tuist</span></div>
+      <div class="skill-row"><span class="skill-label">비동기</span><span class="skill-body">Swift Concurrency, Combine, RxSwift</span></div>
+      <div class="skill-row"><span class="skill-label">네이티브&middot;웹</span><span class="skill-body">WKWebView, React/Next.js</span></div>
+      <div class="skill-row"><span class="skill-label">네트워크&middot;저장소</span><span class="skill-body">URLSession, CoreData, Keychain</span></div>
+      <div class="skill-row"><span class="skill-label">테스트&middot;도구</span><span class="skill-body">XCTest, Instruments, SPM, Firebase, Amplitude</span></div>
+      <div class="skill-row"><span class="skill-label">AI</span><span class="skill-body">Claude Code, Codex</span></div>
     </section>
 
-    <!-- ── Education ── -->
     <section class="sec">
       <h2 class="sec-title">Education</h2>
       <div class="entry">
@@ -319,7 +363,6 @@
       </div>
     </section>
 
-    <!-- ── Others ── -->
     <section class="sec">
       <h2 class="sec-title">Others</h2>
       <div class="entry">
@@ -330,7 +373,6 @@
       </div>
     </section>
 
-    <!-- ── Certifications · Language (2단) ── -->
     <div class="sec-cols">
       <section class="sec">
         <h2 class="sec-title">Certifications</h2>
@@ -345,6 +387,44 @@
       </section>
     </div>
 
+    <!-- ── 상세 경력 (산문) ── -->
+    <section class="sec sec-doc doc-break">
+      <h2 class="sec-title">Work in Detail</h2>
+
+      <div class="narr">
+        <h3 class="narr-title">복잡한 상태 설계</h3>
+        <p>캐츠비는 베타 출시를 일주일 앞두고 합류해 서비스가 끝날 때까지 iOS를 맡은 제품입니다. 금융 교육을 게임처럼 만든 앱이라 화면마다 상태가 많았고 매주 기능이 새로 붙었습니다. 1년 3개월 동안 화면 구현부터 네트워크, 내비게이션, 결제, 분석까지 iOS 전반을 혼자 결정하고 책임졌습니다. 처음부터 끝까지 제 손으로 끌고 간 제품이라 애착이 큽니다.</p>
+        <p>대표적인 기능이 퀘스트 보상입니다. 퀘스트를 달성하면 진행 바가 차오르고 보상이 날아가고 완료 표시가 뜨는데, 이 셋이 순서대로 한 번씩만 나와야 합니다. 어려운 지점은 무엇이 바뀌었는지를 어디서 판단하느냐였습니다. 화면이 판단하면 그 화면에 들어와 있어야만 알 수 있어서, 퀴즈를 풀다 보상을 받고 빠져나가면 이미 바뀐 값은 아무에게도 보이지 않은 채 사라집니다.</p>
+        <p>그래서 변화를 판단하는 일을 데이터 영역으로 옮겼습니다. 저장소가 마지막으로 사용자에게 보여준 스냅샷과 지금 상태를 함께 들고 둘을 비교해 아직 안 보여준 변화만 값으로 만들어 넘깁니다. 화면은 그 값을 받아 순서대로 보여주기만 합니다. 여러 화면이 동시에 읽고 쓰기 때문에 <code>actor</code>로 직렬화했고 스냅샷은 애니메이션이 끝난 뒤에만 확정합니다. 그래서 퀴즈 화면에서 놓친 변화를 퀘스트 보드가 이어서 보여주고 앱을 껐다 켜도 남습니다.</p>
+        <p>보여주는 쪽은 따로 뒀습니다. 애니메이션 단계를 타입으로 정의해 순서를 강제하고 화면을 벗어나면 취소합니다. 무엇이 달라졌는지는 데이터 영역이 알고, 그걸 어떻게 보여줄지는 화면이 압니다.</p>
+        <p>나눠 두니 두 쪽이 서로를 몰라도 됐습니다. 나중에 재화를 얻는 보상 애니메이션이 중간에 하나 더 붙었을 때도 변화를 판단하는 코드는 그대로 두고 보여주는 순서만 고치면 됐습니다. 매주 기능이 붙는 일정에서 손댈 자리가 정해져 있으니 요구가 늘어도 그만큼 빠르게 붙일 수 있었습니다.</p>
+      </div>
+
+      <div class="narr">
+        <h3 class="narr-title">사용자 경험 개선</h3>
+        <p>퀴즈는 캐츠비의 핵심 콘텐츠였습니다. 사용자가 앱에서 가장 오래 머무는 곳이라 여기서 생기는 지연은 한 번으로 끝나지 않고 문제를 풀 때마다 반복됩니다.</p>
+        <p>문제를 풀면 서버 응답을 기다린 뒤에 다음으로 넘어가서, 맞힌 걸 알면서도 매번 한 박자씩 멈췄습니다. 화면 전환과 서버 반영을 떼어내 진행은 곧바로 이어지게 하고, 정합이 필요한 체크포인트에서만 진행 중인 제출이 끝나기를 기다리게 했습니다. 실패한 제출은 큐에 모아 그 지점에서 다시 보냅니다.</p>
+        <p>퀴즈맵은 그 콘텐츠로 들어가는 입구입니다. 챕터별 레슨을 세로로 길게 잇는 스크롤 화면이라, 한 코스가 끝나는 지점에 스크롤이 닿고 다음 코스가 있으면 그때 다음 코스를 미리 받아 둡니다. 코스의 마지막 레슨을 풀고 있을 때도 같은 준비를 합니다. 사용자가 다음 코스로 넘어가면 받아 둔 것을 그대로 써서 네트워크 없이 바로 그립니다.</p>
+        <p>미리 받아 두는 쪽만 만들면 오히려 어긋납니다. 스크롤이 오르내리며 여러 번 요청되지 않게 묶었고 코스가 바뀌면 받아 둔 내용과 트리거 조건을 함께 비웁니다. 화면을 벗어나면 진행 중인 요청을 취소합니다. 코스를 넘나들 때 조금이라도 자연스럽게 이어지도록 붙인 장치들입니다.</p>
+        <p>제가 만드는 서비스는 하루에도 수십 번씩 직접 눌러 보고 실제로도 씁니다. 그러면서 걸리는 지점과 비슷한 서비스를 보며 아쉬웠던 지점을 목록으로 모아 두고, 일정이 허락하는 만큼 하나씩 처리해 왔습니다. 앞의 두 가지도 그 목록에서 나왔습니다.</p>
+      </div>
+
+      <div class="narr">
+        <h3 class="narr-title">변경에 대응하는 구조</h3>
+        <p>첫 앱 AVIRO는 데이터와 로직, 화면이 한 곳에 섞인 채로 출시했습니다. 운영 중 대규모 업데이트가 들어왔을 때 어디를 고치면 어디가 깨지는지 알 수 없어 손대지 못한 지점이 생겼습니다. 그때부터 구조를 먼저 잡는 쪽으로 방향을 바꿨고 다음 실무부터는 계층을 나눠 설계했습니다.</p>
+        <p>실무에서 반영한 건 캐츠비였습니다. 퀴즈는 처음에 학습과 복습 정도만 있어서 불리언 몇 개로 화면 상태를 표현했습니다. 설문과 결말, 완료가 차례로 붙으면서 조합이 곱으로 늘었고 복습이면서 완료 같은 있을 수 없는 상태가 컴파일을 통과했습니다. 진행 단계를 타입으로 바꾸니 단계가 하나 늘 때마다 컴파일러가 처리하지 않은 자리를 전부 짚어 줘서, 상태가 더 붙어도 빠뜨리는 곳 없이 확장할 수 있었습니다. 다음 단계를 정하는 규칙은 레슨 상태만 받는 순수 함수로 빼 화면 없이 확인할 수 있게 했습니다.</p>
+        <p>운영하면서 계층만으로는 아쉬운 지점도 봤습니다. 기능이 커질수록 하나를 고치는 데 열어야 할 모듈이 늘었고, 테스트를 잘게 나누기 어려웠습니다. 그 지점은 개인 프로젝트에서 시험했습니다. 같은 앱을 계층 단위와 피처 단위로 두 번 만들면서 피처마다 모듈을 나누고 계약만 밖으로 내보내, 화면 하나를 고칠 때 그 피처만 열면 되게 했습니다. 대표적으로 이미지 파이프라인은 저장소가 데이터만 돌려주고 크기를 줄이는 일과 캐시는 화면 쪽에 뒀습니다. 저장소가 그리는 일을 모르니 UI 프레임워크 없이 확인할 수 있습니다.</p>
+        <p>나중에 나누는 비용이 지금 나누는 비용보다 훨씬 크다는 걸 한 번 겪었습니다. 그래서 일정이 빠듯할 때도 어느 코드가 어디까지 책임지는지는 먼저 정해 두고 시작합니다.</p>
+      </div>
+
+      <div class="narr">
+        <h3 class="narr-title">AI로 만든 생산성</h3>
+        <p>Android는 출시일이 정해져 있는데 인력이 부족했습니다. iOS를 만들면서 판정 규칙과 화면 상태, 예외 처리를 명세로 정리해 둔 것이 있어서, 그 명세를 기준으로 Android 개발자와 함께 Claude Code로 구현했습니다. 새로 설계할 것이 없었으니 두 플랫폼이 같은 규칙 위에서 도는지만 확인하면 됐고 정해진 일정을 지켜 출시했습니다.</p>
+        <p>WebView 전환의 React와 Next.js 화면도 같은 방식이었습니다. 익숙하지 않은 스택이라 요구사항과 구조를 먼저 잡고 구현을 맡겼습니다. 브라우저에서 되던 것이 웹뷰에서 안 되는 경우가 있어서, 실제 Safari와 <code>WKWebView</code>에서 하나씩 확인하고 고쳐 넣었습니다.</p>
+        <p>브리핑 콘텐츠 파이프라인은 사람이 매일 손대지 않아도 돌아가야 했습니다. 생성부터 품질 검사, 발행까지 자동으로 이어지게 설계하고 검사를 통과하지 못한 것은 나가지 않게 했습니다.</p>
+        <p>셋 다 구조와 판단은 제가 하고 구현 속도를 AI로 벌었습니다. 그렇게 아낀 시간은 생성된 것이 실제 환경에서 도는지 확인하는 데 썼습니다.</p>
+      </div>
+    </section>
   </main>
 </body>
 </html>
